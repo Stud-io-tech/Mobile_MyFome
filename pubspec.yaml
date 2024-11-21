@@ -35,10 +35,25 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  mobx: ^2.4.0
+  flutter_mobx: ^2.2.1+1
+  shared_preferences: ^2.3.3
+  dio: ^5.7.0
+  validatorless: ^1.2.3
+  get_it: ^7.7.0
+  mask_text_input_formatter: ^2.9.0
+  intl: ^0.19.0
+  google_sign_in: ^6.2.2
+  url_launcher: ^6.3.1
+  flutter_getit: ^2.0.0
+  image_picker: ^1.1.2
+  jwt_decode: ^0.3.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  mobx_codegen: ^2.6.2
+  build_runner: ^2.4.13
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -74,11 +89,11 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-Regular.ttf
+        - asset: assets/fonts/Inter-SemiBold.ttf
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:

@@ -2,7 +2,7 @@
 
 Este projeto tem como objetivo desenvolver a parte visual interativa de um sistema de catalogo de produtos chamado MyFome, a fim de simplificar o gerenciamento de lojas virtuais e inttroduzindo o micro e pequeno empresário no mercado digital. 
 
-Neste projeto, você poderá explorar conceitos que vão desde a construção arquitetural MVVM, incluindo views, models, controllers e viewmodels, até design patterns como repositories e services, além de metodologias de design como o Atomic Design.
+Ao decorrer das branches, você poderá observar a presença da arquitetural MVVM até metodologias de design e testes de software, a fim de construir um sistema simples e escalável.
 
 Por fim, caso queira compartilhar sugestões sobre o projeto, entre em contato pelo e-mail: lazaroalexandre.dev@gmail.com ou crie uma nova issue.
 
@@ -14,6 +14,9 @@ Após a configuração, volte ao projeto e execute os seguintes comandos no term
 
 - Baixar e instalar dependências:
     - flutter pub get
+  
+- Crie o build do gerenciamento de estado:
+    - dart run build_runner build
 
 - Esolher o dispositivo:
     - flutter devices
