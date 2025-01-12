@@ -1,6 +1,0 @@
-import 'package:google_sign_in/google_sign_in.dart';
-
-abstract interface class SocialAuthService {
-  Future<GoogleSignInAccount?> login();
-  Future logout();
-}
