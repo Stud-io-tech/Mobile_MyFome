@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_getit/flutter_getit.dart';
-import 'package:my_fome/src/modules/home/home_module.dart';
+import 'package:my_fome/src/ui/modules/home/home_module.dart';
 import 'package:uikit/uikit.dart';
 
 class AppWidget extends StatelessWidget {
