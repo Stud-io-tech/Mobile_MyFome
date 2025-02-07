@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mobx/mobx.dart';
 
-import 'package:my_fome/src/data/services/auth/auth_google_service.dart';
+import 'package:my_fome/src/domain/dtos/users/user_detail_dto.dart';
+import 'package:my_fome/src/ui/viewmodels/users/auth_view_model.dart';
 
 part 'auth_google_controller.g.dart';
 
@@ -10,21 +10,28 @@ class AuthGoogleController = AuthGoogleControllerBase
     with _$AuthGoogleController;
 
 abstract class AuthGoogleControllerBase with Store {
-  final AuthGoogleService authGoogleService;
+  final AuthViewModel authViewModel;
   AuthGoogleControllerBase({
-    required this.authGoogleService,
+    required this.authViewModel,
   });
 
-  @observable
-  GoogleSignInAccount? googleCredentials;
+  @computed
+  bool get isLoading => authViewModel.isLoading;
 
-  @action
+  @computed
+  UserDetailDto? get user => authViewModel.userDetailDto;
+
   login() async {
-    googleCredentials = await authGoogleService.login();
+    await authViewModel.login();
+    load();
   }
 
-  @action
   logout() async {
-    await authGoogleService.logout();
+    await authViewModel.logout();
+    load();
+  }
+
+  load() async {
+    await authViewModel.details();
   }
 }

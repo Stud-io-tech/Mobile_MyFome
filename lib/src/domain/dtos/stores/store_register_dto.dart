@@ -1,14 +1,13 @@
-import 'package:dio/dio.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
 
 class StoreRegisterDto {
   final String name;
   final String description;
-  final MultipartFile image;
   final String whatsapp;
   StoreRegisterDto({
     required this.name,
     required this.description,
-    required this.image,
     required this.whatsapp,
   });
 
@@ -16,7 +15,6 @@ class StoreRegisterDto {
     return <String, dynamic>{
       'name': name,
       'description': description,
-      'image': image,
       'whatsapp': whatsapp,
     };
   }
@@ -25,10 +23,13 @@ class StoreRegisterDto {
     return StoreRegisterDto(
       name: map['name'] as String,
       description: map['description'] as String,
-      image: map['image'] as MultipartFile,
       whatsapp: map['whatsapp'] as String,
     );
   }
+
+  String toJson() => json.encode(toMap());
+
+  factory StoreRegisterDto.fromJson(String source) => StoreRegisterDto.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   bool operator ==(covariant StoreRegisterDto other) {
@@ -37,15 +38,9 @@ class StoreRegisterDto {
     return 
       other.name == name &&
       other.description == description &&
-      other.image == image &&
       other.whatsapp == whatsapp;
   }
 
   @override
-  int get hashCode {
-    return name.hashCode ^
-      description.hashCode ^
-      image.hashCode ^
-      whatsapp.hashCode;
-  }
+  int get hashCode => name.hashCode ^ description.hashCode ^ whatsapp.hashCode;
 }

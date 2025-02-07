@@ -24,7 +24,7 @@ class MenuButtomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: SizeToken.xl4,
+      height: SizeToken.xl5,
       child: BottomNavigationBar(
         showSelectedLabels: true,
         showUnselectedLabels: false,

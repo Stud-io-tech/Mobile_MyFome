@@ -15,6 +15,5 @@ class AuthGoogleServiceImpl implements AuthGoogleService {
   @override
   Future logout() async {
     await googleSignIn.signOut();
-    await googleSignIn.disconnect();
   }
 }

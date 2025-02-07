@@ -2,14 +2,14 @@
 import 'package:flutter/material.dart';
 import 'package:uikit/uikit.dart';
 
-class ModelSheet extends StatelessWidget {
+class ModalSheet extends StatelessWidget {
   final String iconBack;
   final String title;
   final String description;
   final String cancelText;
   final String continueText;
   final void Function() continueOnTap;
-  const ModelSheet({
+  const ModalSheet({
     super.key,
     required this.iconBack,
     required this.title,

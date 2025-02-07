@@ -22,7 +22,7 @@ class ProdutcRepositoryImpl implements ProdutcRepository {
   AsyncResult<List<ProductDetailDto>> listActive() async {
     try {
       final Response response = await clientService.get(ApiConstant.product);
-      final List<dynamic> resultProducts = response.data;
+      final List<dynamic> resultProducts = response.data['products'];
       final List<ProductDetailDto> productsList = resultProducts
           .map((item) => ProductDetailDto.fromMap(item as Map<String, dynamic>))
           .toList();
@@ -31,7 +31,7 @@ class ProdutcRepositoryImpl implements ProdutcRepository {
       return Failure(
         RestException(
             message: TextConstant.errorListProductsMessage,
-            statusCode: e.hashCode),
+            statusCode: e.response?.statusCode ?? 500),
       );
     }
   }
@@ -50,7 +50,7 @@ class ProdutcRepositoryImpl implements ProdutcRepository {
       return Failure(
         RestException(
           message: TextConstant.errorCreatingProductMessage,
-          statusCode: e.hashCode,
+          statusCode: e.response?.statusCode ?? 500,
         ),
       );
     }
@@ -71,7 +71,7 @@ class ProdutcRepositoryImpl implements ProdutcRepository {
       return Failure(
         RestException(
           message: TextConstant.errorUpdatingProductMessage,
-          statusCode: e.hashCode,
+          statusCode: e.response?.statusCode ?? 500,
         ),
       );
     }
@@ -81,15 +81,15 @@ class ProdutcRepositoryImpl implements ProdutcRepository {
   AsyncResult<ProductDetailDto> changeActiveStatus(String id) async {
     try {
       final Response response = await clientService
-          .get("${ApiConstant.product}/toggle/$id", requiresAuth: true);
+          .get("${ApiConstant.product}/active/$id", requiresAuth: true);
       final ProductDetailDto resultProduct =
           ProductDetailDto.fromMap(response.data);
       return Success(resultProduct);
     } on DioException catch (e) {
       return Failure(
         RestException(
-          message: TextConstant.errorSuspendingProductMessage,
-          statusCode: e.hashCode,
+          message: TextConstant.errorExecutingProductMessage,
+          statusCode: e.response?.statusCode ?? 500,
         ),
       );
     }
@@ -98,8 +98,9 @@ class ProdutcRepositoryImpl implements ProdutcRepository {
   @override
   AsyncResult<List<ProductDetailDto>> listInactive() async {
     try {
-      final Response response = await clientService.get(ApiConstant.product);
-      final List<dynamic> resultProducts = response.data;
+      final Response response =
+          await clientService.get("${ApiConstant.product}/disabled");
+      final List<dynamic> resultProducts = response.data['products'];
       final List<ProductDetailDto> productsList = resultProducts
           .map((item) => ProductDetailDto.fromMap(item as Map<String, dynamic>))
           .toList();
@@ -108,7 +109,25 @@ class ProdutcRepositoryImpl implements ProdutcRepository {
       return Failure(
         RestException(
             message: TextConstant.errorListProductsMessage,
-            statusCode: e.hashCode),
+            statusCode: e.response?.statusCode ?? 500),
+      );
+    }
+  }
+
+  @override
+  AsyncResult<List<ProductDetailDto>> listByStore(String id) async {
+    try {
+      final Response response = await clientService.get("${ApiConstant.product}/?store=$id");
+      final List<dynamic> resultProducts = response.data['products'];
+      final List<ProductDetailDto> productsList = resultProducts
+          .map((item) => ProductDetailDto.fromMap(item as Map<String, dynamic>))
+          .toList();
+      return Success(productsList);
+    } on DioException catch (e) {
+      return Failure(
+        RestException(
+            message: TextConstant.errorListProductsMessage,
+            statusCode: e.response?.statusCode ?? 500),
       );
     }
   }

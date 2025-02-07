@@ -5,10 +5,12 @@ import 'package:uikit/uikit.dart';
 class ButtonLarge extends StatelessWidget {
   final String text;
   final void Function()? onPressed;
+  final String icon;
   const ButtonLarge({
     super.key,
     required this.text,
     this.onPressed,
+    required this.icon,
   });
 
   @override
@@ -20,8 +22,15 @@ class ButtonLarge extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: SizeToken.lg),
         backgroundColor: ColorToken.danger,
         onPressed: onPressed,
-        child: TextLabelL1Light(
-          text: text,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconLargeLigth(icon: icon),
+            TextLabelL1Light(
+              text: text,
+            ),
+          ],
         ),
       ),
     );

@@ -1,30 +1,90 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_getit/flutter_getit.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:my_fome/src/constants/icon_constant.dart';
 import 'package:my_fome/src/constants/logo_constant.dart';
 import 'package:my_fome/src/constants/text_constant.dart';
-import 'package:my_fome/src/data/services/auth/auth_google_service_impl.dart';
 import 'package:my_fome/src/ui/modules/home/controllers/auth/auth_google_controller.dart';
 import 'package:my_fome/src/ui/modules/home/controllers/button_navigator/button_navigator_menu_controller.dart';
+import 'package:my_fome/src/ui/modules/home/widgets/screens/home_screen_widget.dart';
+import 'package:my_fome/src/ui/modules/home/widgets/screens/product_screen.dart';
+import 'package:my_fome/src/ui/modules/home/widgets/screens/store_screen.dart';
 import 'package:uikit/uikit.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
 
   final controller = ButtonNavigatorMenuController();
+  final authController = Injector.get<AuthGoogleController>();
+  final GlobalKey<ScaffoldState> drawerKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
+    authController.load();
     return Scaffold(
-      /* appBar: AppBar(
-        title: const Text('Home Page'),
-      ), */
+      key: drawerKey,
+      appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(80),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(
+                SizeToken.md - 3.5, SizeToken.sm, SizeToken.md, 0),
+            child: AppBar(
+              title: SvgPicture.asset(LogoConstant.horizontal,
+                  height: SizeToken.xxl),
+              leading: Padding(
+                padding: const EdgeInsets.all(3.5),
+                child: IconButtonLargeDark(
+                    icon: IconConstant.menu,
+                    onTap: () => drawerKey.currentState?.openDrawer()),
+              ),
+              centerTitle: true,
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.all(3.5),
+                  child: Observer(builder: (_) {
+                    if (authController.user?.image != null) {
+                      if (authController.isLoading) {
+                        return const CircularProgressIndicator();
+                      }
+                      return ClipRRect(
+                          borderRadius: BorderRadius.circular(SizeToken.lg),
+                          child: Image.network(authController.user!.image!));
+                    }
+                    return IconButtonLargeDark(
+                      icon: IconConstant.user,
+                      onTap: () => authController.login(),
+                    );
+                  }),
+                ),
+              ],
+            ),
+          )),
       drawer: DrawerMenu(
-        firstOnPressed: () {},
+        firstOnPressed: () => Navigator.of(context).pushReplacementNamed('/'),
         secoundOnPressed: () {},
         thirdOnPressed: () {},
         fourthOnPressed: () {},
-        logoutOnPressed: () {},
+        logoutOnPressed: () {
+          if (authController.user?.email != null) {
+            showCustomModalBottomSheet(
+              context: context,
+              builder: (context) => ModalSheet(
+                iconBack: IconConstant.arrowLeft,
+                title: TextConstant.logoutAccountTitle,
+                description: TextConstant.logoutAccountMessage(
+                    authController.user!.email),
+                cancelText: TextConstant.no,
+                continueText: TextConstant.yes,
+                continueOnTap: () {
+                  authController.logout();
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                },
+              ),
+            );
+          }
+        },
         firstText: TextConstant.home,
         secoundText: TextConstant.products,
         thirdText: TextConstant.stores,
@@ -38,16 +98,18 @@ class HomePage extends StatelessWidget {
         menuIcon: IconConstant.menu,
         logo: LogoConstant.horizontal,
       ),
-      body: Observer(builder: (_) {
-        return IndexedStack(
-          index: controller.currentIndex,
-          children: [
-            HomeScreen(),
-            ProductScreen(),
-            const StoreScreen(),
-          ],
-        );
-      }),
+      body: ContentDefault(
+        child: Observer(builder: (_) {
+          return IndexedStack(
+            index: controller.currentIndex,
+            children: [
+              HomeScreenWidget(),
+              ProductScreen(),
+              StoreScreen(),
+            ],
+          );
+        }),
+      ),
       bottomNavigationBar: Observer(builder: (_) {
         return ButtonNavigatorMenu(
             currentIndex: controller.currentIndex,
@@ -59,167 +121,6 @@ class HomePage extends StatelessWidget {
             secoundIcon: IconConstant.search,
             thirdIcon: IconConstant.store);
       }),
-    );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
-  final authController =
-      AuthGoogleController(authGoogleService: AuthGoogleServiceImpl());
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ButtonLarge(
-          text: "Clique aqui",
-          onPressed: () => showCustomModalBottomSheet(
-            context: context,
-            builder: (context) => ModelSheet(
-              iconBack: IconConstant.arrowLeft,
-              title: "title",
-              description: "description",
-              cancelText: "Não",
-              continueText: "Sim",
-              continueOnTap: () {
-                authController.logout();
-                debugPrint("Apertou!");
-              },
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        Row(
-          children: [
-            ButtonSmallDark(
-              text: "Tudo",
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBarListview(
-                    title: "title",
-                    subtitle: "subtitle",
-                    iconLeading: IconConstant.success,
-                    iconTrailing: IconConstant.close,
-                    context: context,
-                  ),
-                );
-              },
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            ButtonSmallLight(
-              text: "Originais",
-              onPressed: () {
-                authController.login();
-              },
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: SizeToken.lg,
-        ),
-        Observer(builder: (_) {
-          return Column(
-            children: [
-              Text("Nome: ${authController.googleCredentials?.displayName}"),
-              Text("E-mail: ${authController.googleCredentials?.email}"),
-              Text("Foto: ${authController.googleCredentials?.photoUrl}"),
-            ],
-          );
-        }),
-      ],
-    );
-  }
-}
-
-class ProductScreen extends StatelessWidget {
-  ProductScreen({super.key});
-  final nameEC = TextEditingController();
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ImageDetail(
-            image:
-                "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
-            iconLeft: IconConstant.arrowLeft,
-            onTapIconLeft: () {},
-            iconRigth: IconConstant.edit,
-            onTapIconRight: () {},
-          ),
-          const SizedBox(
-            height: SizeToken.sm,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: InputSearch(
-              onChanged: (String s) {},
-              hintText: TextConstant.search,
-              icon: IconConstant.search,
-            ),
-          ),
-          const SizedBox(
-            height: SizeToken.sm,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: InputForm(
-                hintText: "Nome",
-                controller: nameEC,
-                textInputAction: TextInputAction.done,
-                labelText: "Nome"),
-          ),
-          const SizedBox(
-            height: SizeToken.sm,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: InputUploadImage(
-              onTap: () {},
-              labelText: "Imagem",
-              hintText: "Upload da Imagem",
-              icon: IconConstant.upload,
-            ),
-          ),
-          const SizedBox(
-            height: SizeToken.sm,
-          ),
-          ProductItem(
-            image:
-                "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
-            name: "Fatia de Pizza Pepperoni 200g",
-            quantity: TextConstant.quantityAvailable(15),
-            price: TextConstant.monetaryValue(23.5),
-            onTap: () {},
-            icon: IconConstant.remove,
-            onTapIcon: () {},
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class StoreScreen extends StatelessWidget {
-  const StoreScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: StoreItem(
-          name: "Urban Hot Dogs",
-          description:
-              "The Nike Throwback Pullover Hoodie The Nike Throwback Pullover Hoodie",
-          image: "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
-          icon: IconConstant.chevronRigth,
-          onTap: () {}),
     );
   }
 }

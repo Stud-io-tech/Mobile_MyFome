@@ -1,12 +1,19 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dio/dio.dart';
+
 import 'package:my_fome/src/data/Interceptors/auth_interceptor.dart';
+import 'package:my_fome/src/data/services/local/local_storage_service.dart';
 
 import 'client_service.dart';
 
 class ClientServiceImpl implements ClientService {
   final Dio dio;
-  ClientServiceImpl() : dio = Dio() {
-    dio.interceptors.add(AuthInterceptor());
+  final LocalStorageService localStorageService;
+  ClientServiceImpl(
+    this.localStorageService,
+  ) : dio = Dio() {
+    dio.interceptors
+        .add(AuthInterceptor(localStorageService: localStorageService));
   }
 
   @override
@@ -46,5 +53,4 @@ class ClientServiceImpl implements ClientService {
         options: Options(
             extra: {'requiredAuth': requiresAuth}, contentType: contentType));
   }
-
 }

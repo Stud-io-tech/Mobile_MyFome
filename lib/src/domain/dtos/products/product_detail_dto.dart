@@ -5,19 +5,19 @@ class ProductDetailDto {
   final String name;
   final String description;
   final String image;
-  final bool actived;
-  final double price;
-  final int quantity;
+  final String price;
+  final int amount;
   final String storeId;
+  final bool active;
   ProductDetailDto({
     required this.id,
     required this.name,
     required this.description,
     required this.image,
-    required this.actived,
+    required this.amount,
     required this.price,
-    required this.quantity,
     required this.storeId,
+    required this.active,
   });
 
   Map<String, dynamic> toMap() {
@@ -26,10 +26,9 @@ class ProductDetailDto {
       'name': name,
       'description': description,
       'image': image,
-      'actived': actived,
+      'amount': amount,
       'price': price,
-      'quantity': quantity,
-      'id_store': storeId,
+      'store_id': storeId,
     };
   }
 
@@ -39,39 +38,39 @@ class ProductDetailDto {
       name: map['name'] as String,
       description: map['description'] as String,
       image: map['image'] as String,
-      actived: map['actived'] as bool,
-      price: map['price'] as double,
-      quantity: map['quantity'] as int,
-      storeId: map['id_store'] as String,
+      price: map['price'] as String,
+      amount: map['amount'] as int,
+      storeId: map['store_id'] as String,
+      active: map['active'] as bool,
     );
   }
 
-  factory ProductDetailDto.fromJson(String source) => ProductDetailDto.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory ProductDetailDto.fromJson(String source) =>
+      ProductDetailDto.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   bool operator ==(covariant ProductDetailDto other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.id == id &&
-      other.name == name &&
-      other.description == description &&
-      other.image == image &&
-      other.actived == actived &&
-      other.price == price &&
-      other.quantity == quantity &&
-      other.storeId == storeId;
+
+    return other.id == id &&
+        other.name == name &&
+        other.description == description &&
+        other.image == image &&
+        other.price == price &&
+        other.active == active &&
+        other.amount == amount &&
+        other.storeId == storeId;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-      name.hashCode ^
-      description.hashCode ^
-      image.hashCode ^
-      actived.hashCode ^
-      price.hashCode ^
-      quantity.hashCode ^
-      storeId.hashCode;
+        name.hashCode ^
+        description.hashCode ^
+        image.hashCode ^
+        price.hashCode ^
+        active.hashCode ^
+        amount.hashCode ^
+        storeId.hashCode;
   }
 }

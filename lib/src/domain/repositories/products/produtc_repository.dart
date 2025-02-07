@@ -9,4 +9,5 @@ abstract interface class ProdutcRepository {
   AsyncResult<ProductRegisterDto> register(ProductRegisterDto product);
   AsyncResult<ProductUpdateDto> update(String id, ProductUpdateDto product);
   AsyncResult<ProductDetailDto> changeActiveStatus(String id);
+  AsyncResult<List<ProductDetailDto>> listByStore(String id);
 }

@@ -19,4 +19,7 @@ final class IconConstant {
   static const String upload = 'assets/icons/upload.svg';
   static const String user = 'assets/icons/user.svg';
   static const String whatsapp = 'assets/icons/whatsapp.svg';
+  static const String error = 'assets/icons/error.svg';
+    static const String minius = 'assets/icons/minius.svg';
+
 }

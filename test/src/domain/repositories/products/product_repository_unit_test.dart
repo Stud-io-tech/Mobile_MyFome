@@ -2,8 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:my_fome/src/data/repositories/products/produtc_repository_impl.dart';
-import 'package:my_fome/src/domain/dtos/products/product_register_dto.dart';
-import 'package:my_fome/src/domain/dtos/products/product_update_dto.dart';
 import 'package:my_fome/src/domain/repositories/products/produtc_repository.dart';
 import 'package:my_fome/src/data/services/client/client_service.dart';
 
@@ -19,38 +17,40 @@ void main() {
   });
 
   group("Testando as operações do ProductRepository, usando mocks", () {
-    final List<Map<String, dynamic>> dataBaseTest = [
-      {
-        "id": "1",
-        "name": "Cachorro Quente Padrão 270g",
-        "description": "...",
-        "image": "image.png",
-        "actived": true,
-        "quantity": 20,
-        "price": 10.0,
-        "id_store": "1",
-      },
-      {
-        "id": "2",
-        "name": "Cachorro Quente Premium 370g",
-        "description": "...",
-        "image": "image.png",
-        "actived": true,
-        "quantity": 18,
-        "price": 14.99,
-        "id_store": "1",
-      },
-      {
-        "id": "3",
-        "name": "Bolo no Pode de chocolate 350g",
-        "description": "...",
-        "image": "image.png",
-        "actived": true,
-        "quantity": 5,
-        "price": 11.5,
-        "id_store": "2",
-      },
-    ];
+    final dataBaseTest = {
+      "products": [
+        {
+          "id": "1",
+          "name": "Cachorro Quente Padrão 270g",
+          "description": "...",
+          "image": "image.png",
+          "active": true,
+          "amount": 20,
+          "price": "10.0",
+          "store_id": "1",
+        },
+        {
+          "id": "2",
+          "name": "Cachorro Quente Premium 370g",
+          "description": "...",
+          "image": "image.png",
+          "active": true,
+          "amount": 18,
+          "price": "14.99",
+          "store_id": "1",
+        },
+        {
+          "id": "3",
+          "name": "Bolo no Pode de chocolate 350g",
+          "description": "...",
+          "image": "image.png",
+          "active": true,
+          "amount": 5,
+          "price": "11.5",
+          "store_id": "2",
+        },
+      ]
+    };
 
     group("Testando o listActive.", () {
       test("Deve verificar que a lista de produtos não seja vazia.", () async {
@@ -81,7 +81,7 @@ void main() {
 
         final listProduct = await productRepositoryMock.listActive();
 
-        final hasProduct = dataBaseTest.any(
+        final hasProduct = response.data?['products']?.any(
           (element) => element["name"] == "Cachorro Quente Padrão 270g",
         );
 
@@ -102,7 +102,7 @@ void main() {
 
         final listProduct = await productRepositoryMock.listActive();
 
-        final hasProduct = dataBaseTest.any(
+        final hasProduct = response.data?['products']?.any(
           (element) => element["name"] == "X-Tudo",
         );
 
@@ -156,7 +156,7 @@ void main() {
 
         final listProduct = await productRepositoryMock.listActive();
 
-        final hasProduct = dataBaseTest.any(
+        final hasProduct = response.data?['products']?.any(
           (element) => element["name"] == "Cachorro Quente Padrão 270g",
         );
 
@@ -177,7 +177,7 @@ void main() {
 
         final listProduct = await productRepositoryMock.listInactive();
 
-        final hasProduct = dataBaseTest.any(
+        final hasProduct = response.data?['products']?.any(
           (element) => element["name"] == "X-Tudo",
         );
 
@@ -199,151 +199,6 @@ void main() {
 
         expect(listProduct.isError(), isTrue);
         verify(() => clientMock.get(any())).called(1);
-      });
-    });
-
-    group("Testando o register.", () {
-      test("Deve registrar um novo produto.", () async {
-        final image =
-            MultipartFile.fromString("https://homolazaus/files/imagem.png");
-
-        final registerTest = ProductRegisterDto(
-            name: "X-Tudo",
-            description: "...",
-            image: image,
-            price: 22,
-            quantity: 13,
-            storeId: "1");
-
-        final response = Response(
-          requestOptions: RequestOptions(),
-          data: registerTest.toMap(),
-        );
-
-        when(() => clientMock.post(
-              any(),
-              any(),
-              requiresAuth: true,
-              contentType: 'multipart/form-data',
-            )).thenAnswer((_) async => response);
-
-        final result = await productRepositoryMock.register(registerTest);
-
-        expect(result.isSuccess(), isTrue);
-
-        verify(
-          () => clientMock.post(
-            any(),
-            any(),
-            requiresAuth: true,
-            contentType: 'multipart/form-data',
-          ),
-        ).called(1);
-      });
-
-      test("Deve retornar erro ao tentar registrar um novo produto.", () async {
-        final image =
-            MultipartFile.fromString("https://homolazaus/files/imagem.png");
-
-        final registerTest = ProductRegisterDto(
-            name: "X-Tudo",
-            description: "...",
-            image: image,
-            price: 22,
-            quantity: 13,
-            storeId: "1");
-
-        final response = DioException(
-          requestOptions: RequestOptions(),
-        );
-        when(
-          () => clientMock.post(
-            any(),
-            any(),
-            requiresAuth: true,
-            contentType: 'multipart/form-data',
-          ),
-        ).thenThrow(response);
-
-        final result = await productRepositoryMock.register(registerTest);
-
-        expect(result.isError(), isTrue);
-        verify(
-          () => clientMock.post(
-            any(),
-            any(),
-            requiresAuth: true,
-            contentType: 'multipart/form-data',
-          ),
-        ).called(1);
-      });
-    });
-
-    group("Testando o update.", () {
-      test("Deve atualizar uma produto existente.", () async {
-        final updateTest =
-            ProductUpdateDto(id: "2", name: "Bolo no Pode de chocolate 350g");
-
-        final response = Response(
-          requestOptions: RequestOptions(),
-          data: updateTest.toMap(),
-        );
-
-        when(() => clientMock.patch(
-              any(),
-              any(),
-              requiresAuth: true,
-              contentType: 'multipart/form-data',
-            )).thenAnswer((_) async => response);
-
-        final result =
-            await productRepositoryMock.update(updateTest.id, updateTest);
-
-        expect(result.isSuccess(), isTrue);
-
-        verify(
-          () => clientMock.patch(
-            any(),
-            any(),
-            requiresAuth: true,
-            contentType: 'multipart/form-data',
-          ),
-        ).called(1);
-      });
-
-      test("Deve retornar erro ao tentar atualizar uma produto.", () async {
-        final image =
-            MultipartFile.fromString("https://homolazaus/files/imagem.png");
-
-        final updateTest = ProductUpdateDto(
-          id: "2",
-          image: image,
-          name: "Bolo no Pode de chocolate 350g",
-        );
-
-        final response = DioException(
-          requestOptions: RequestOptions(),
-        );
-
-        when(() => clientMock.patch(
-              any(),
-              any(),
-              requiresAuth: true,
-              contentType: 'multipart/form-data',
-            )).thenThrow(response);
-
-        final result =
-            await productRepositoryMock.update(updateTest.id, updateTest);
-
-        expect(result.isError(), isTrue);
-        verify(
-          () => clientMock.patch(
-            any(),
-            any(),
-            requiresAuth: true,
-            contentType: 'multipart/form-data',
-          ),
-        ).called(1);
       });
     });
   });

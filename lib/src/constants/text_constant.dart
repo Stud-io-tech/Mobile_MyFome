@@ -1,16 +1,22 @@
 final class TextConstant {
-  static String welcome = 'Bem-vindo ao MyFome.';
+  static String welcome = 'Bem-vindo ao My Fome.';
   static String home = 'Home';
   static String products = 'Produtos';
   static String stores = 'Lojas';
   static String myStore = 'Minha Loja';
   static String logout = 'Sair';
   static String seeMore = 'ver mais';
-  static String sucessLoggingAccountTitle = 'Bem-vindo ao MyFome!';
+  static String sucessLoggingAccountTitle = 'Bem-vindo ao My Fome!';
   static String sucessLoggingOutAccountTitle = 'Conta Desvinculada!';
   static String sucessCreatingAccountTitle = 'Conta Criada!';
   static String sucessCreatingStoreTitle = 'Loja Criada!';
   static String sucessCreatingProductTitle = 'Produto Criado!';
+  static String sucessUpdatingStoreTitle = 'Loja Atualizada!';
+  static String sucessUpdatingProductTitle = 'Produto Atualizada!';
+
+  static String sucessSuspendingProductTitle = 'Produto Suspenso!';
+  static String sucessRestoreProductTitle = 'Produto Restaurado!';
+
   static String logoutAccountTitle = 'Sair da Conta?';
   static String suspendProductTitle = 'Suspender o Produto?';
   static String sucessLoggingAccountMessage = 'Que tal fazer um pedido?';
@@ -24,16 +30,17 @@ final class TextConstant {
   static String sucessUpdatingStoreMessage =
       'A loja foi atualizada com sucesso.';
   static String sucessUpdatingProductMessage =
-      'A loja foi atualizado com sucesso.';
+      'O produto foi atualizado com sucesso.';
   static String sucessSuspendingProductMessage =
-      'A loja foi suspenso com sucesso.';
+      'O produto foi suspenso com sucesso.';
+  static String sucessRestoreProductMessage =
+      'O produto foi restaurado com sucesso.';
 
   static String errorTitle = 'Erro!';
   static String errorLoggingAccountMessage = 'Houve um erro ao fazer login.';
   static String errorCreatingAccountMessage =
       'Houve um erro ao criar sua conta.';
-  static String errorListStoresMessage =
-      'Houve um erro ao listar as lojas.';
+  static String errorListStoresMessage = 'Houve um erro ao listar as lojas.';
   static String errorListProductsMessage =
       'Houve um erro ao listar os produtos.';
   static String errorCreatingStoreMessage = 'Houve um erro ao criar a loja.';
@@ -43,18 +50,25 @@ final class TextConstant {
       'Houve um erro ao atualizar a loja.';
   static String errorUpdatingProductMessage =
       'Houve um erro ao atualizar o produto.';
-  static String errorSuspendingProductMessage =
-      'Houve um erro ao suspender o produto.';
+
+  static String errorDetailsUserMessage =
+      'Houve um erro ao encontrar o usuário.';
+
+  static String errorDetailsStoreMessage = 'Houve um erro ao encontrar a loja.';
+  static String errorExecutingProductMessage =
+      'Houve um erro de execeução! Tente novamente.';
 
   static String yes = 'Sim';
   static String no = 'Não';
   static String storeProducts = 'Produtos da Loja';
   static String newProduct = 'Novo Produto';
   static String editProduct = 'Editar Produto';
-  static String helloUser(String userName) => 'Olá, $userName!';
+
+  static String helloUser(String? userName) =>
+      userName != null ? 'Olá, $userName!' : 'Olá!';
   static String quantityAvailable(int quantity) => '$quantity restantes';
   static String monetaryValue(double value) =>
-      'R\$${value.toStringAsFixed(2).replaceAll('.', ',')}';
+      'R\$ ${value.toStringAsFixed(2).replaceAll('.', ',')}';
   static String logoutAccountMessage(String userEmail) =>
       'Ao confirmar, a conta com o email "$userEmail" será desvinculada do sistema até que seja realizado um novo login.';
   static String suspendProductMessage(String productName) =>
@@ -80,4 +94,8 @@ final class TextConstant {
   static String costPerShipping = 'Custo por Frete';
   static String image = 'Imagem';
   static String uploadImage = 'Upload da Imagem';
+  static String placeOrder = 'Fazer Pedido';
+  static String addQuantity = 'Adicionar quantidade';
+
+  static String total = 'Total:';
 }

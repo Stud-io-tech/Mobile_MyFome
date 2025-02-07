@@ -9,42 +9,26 @@ part of 'auth_google_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$AuthGoogleController on AuthGoogleControllerBase, Store {
-  late final _$googleCredentialsAtom = Atom(
-      name: 'AuthGoogleControllerBase.googleCredentials', context: context);
+  Computed<bool>? _$isLoadingComputed;
 
   @override
-  GoogleSignInAccount? get googleCredentials {
-    _$googleCredentialsAtom.reportRead();
-    return super.googleCredentials;
-  }
+  bool get isLoading =>
+      (_$isLoadingComputed ??= Computed<bool>(() => super.isLoading,
+              name: 'AuthGoogleControllerBase.isLoading'))
+          .value;
+  Computed<UserDetailDto?>? _$userComputed;
 
   @override
-  set googleCredentials(GoogleSignInAccount? value) {
-    _$googleCredentialsAtom.reportWrite(value, super.googleCredentials, () {
-      super.googleCredentials = value;
-    });
-  }
-
-  late final _$loginAsyncAction =
-      AsyncAction('AuthGoogleControllerBase.login', context: context);
-
-  @override
-  Future login() {
-    return _$loginAsyncAction.run(() => super.login());
-  }
-
-  late final _$logoutAsyncAction =
-      AsyncAction('AuthGoogleControllerBase.logout', context: context);
-
-  @override
-  Future logout() {
-    return _$logoutAsyncAction.run(() => super.logout());
-  }
+  UserDetailDto? get user =>
+      (_$userComputed ??= Computed<UserDetailDto?>(() => super.user,
+              name: 'AuthGoogleControllerBase.user'))
+          .value;
 
   @override
   String toString() {
     return '''
-googleCredentials: ${googleCredentials}
+isLoading: ${isLoading},
+user: ${user}
     ''';
   }
 }

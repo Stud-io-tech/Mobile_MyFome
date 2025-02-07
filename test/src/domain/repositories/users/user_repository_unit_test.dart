@@ -19,25 +19,35 @@ void main() {
   });
 
   group("Testando as operações do UserRepository, usando mocks.", () {
-    final dataBaseTest = [
-      {
-        "id": "1",
-        "name": "Lázaro",
-        "email": "lazaroalexandre@gmail.com",
-        "image": "image.png",
-        "ativo": true
-      },
-    ];
+    final dataBaseTest = {
+      "user": [
+        {
+          "id": "1",
+          "name": "Lázaro",
+          "email": "lazaroalexandre@gmail.com",
+          "image": "image.png",
+        },
+      ],
+    };
     group("Testando o login.", () {
       test(
         "Deve verificar se é possível fazer login com uma conta existente.",
         () async {
+          late String? token;
           final loginTest = UserLoginDto(email: "lazaroalexandre@gmail.com");
 
-          final response = Response(
-            requestOptions: RequestOptions(),
-            data: loginTest.toMap(),
+          final userExist = dataBaseTest["user"]!.any(
+            (element) => element["email"] == "lazaroalexandre@gmail.com",
           );
+
+          if (userExist) {
+            token = "sldiuaosdiou87123981273e9woew";
+          } else {
+            token = null;
+          }
+
+          final response = Response(
+              requestOptions: RequestOptions(), data: {"token": token});
 
           when(
             () => clientMock.post(any(), any()),
@@ -45,12 +55,8 @@ void main() {
 
           final result = await userRepositoryMock.login(loginTest);
 
-          final userExist = dataBaseTest.any(
-            (element) => element["email"] == loginTest.email,
-          );
-
           expect(result.isSuccess(), isTrue);
-          expect(userExist, isTrue);
+          expect(token, isNotNull);
 
           verify(() => clientMock.post(any(), any())).called(1);
         },
@@ -59,7 +65,19 @@ void main() {
       test(
         "Deve falhar ao tentar fazer login com uma conta inexistente.",
         () async {
+          late String? token;
+
           final loginTest = UserLoginDto(email: "luis@gmail.com");
+
+          final userExist = dataBaseTest["user"]!.any(
+            (element) => element["email"] == "luis@gmail.com",
+          );
+
+          if (userExist) {
+            token = "sldiuaosdiou87123981273e9woew";
+          } else {
+            token = null;
+          }
 
           final response = DioException(
             requestOptions: RequestOptions(),
@@ -71,12 +89,8 @@ void main() {
 
           final result = await userRepositoryMock.login(loginTest);
 
-          final userExist = dataBaseTest.any(
-            (element) => element["email"] == loginTest.email,
-          );
-
           expect(result.isError(), isTrue);
-          expect(userExist, isFalse);
+          expect(token, isNull);
 
           verify(() => clientMock.post(any(), any())).called(1);
         },
@@ -101,7 +115,7 @@ void main() {
 
           final result = await userRepositoryMock.register(registerTest);
 
-          final userExist = dataBaseTest.any(
+          final userExist = dataBaseTest["user"]!.any(
             (element) => element["email"] == registerTest.email,
           );
 
@@ -130,7 +144,7 @@ void main() {
 
           final result = await userRepositoryMock.register(registerTest);
 
-          final userExist = dataBaseTest.any(
+          final userExist = dataBaseTest["user"]!.any(
             (element) => element["email"] == registerTest.email,
           );
 
