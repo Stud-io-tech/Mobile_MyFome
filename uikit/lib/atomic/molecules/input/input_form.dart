@@ -40,6 +40,7 @@ class InputForm extends StatelessWidget {
           keyBoardType: keyBoardType,
           maxLines: maxLines,
           controller: controller,
+          textInputAction: textInputAction,
           inputFormatters: inputFormatters,
           validator: validator,
           hintText: hintText,

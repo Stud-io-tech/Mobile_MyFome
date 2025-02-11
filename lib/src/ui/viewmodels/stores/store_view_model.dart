@@ -76,7 +76,7 @@ abstract class StoreViewModelBase with Store {
           TextConstant.sucessCreatingStoreTitle,
           TextConstant.sucessCreatingStoreMessage,
           IconConstant.success),
-      resultMessageService
+      (failure) => resultMessageService
           .showMessageError(TextConstant.errorCreatingStoreMessage),
     );
     isLoading = false;
@@ -85,7 +85,7 @@ abstract class StoreViewModelBase with Store {
   @action
   Future update(String id, StoreUpdateDto store, XFile? image) async {
     isLoading = true;
-    final result = await storeRepository.update(id, store, image);
+    final result = await storeRepository.update(id, store, image: image);
     result.fold(
       (success) => resultMessageService.showMessageSuccess(
           TextConstant.sucessUpdatingStoreTitle,

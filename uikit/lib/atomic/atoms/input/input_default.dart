@@ -9,6 +9,7 @@ class InputDefault extends StatelessWidget {
   final TextInputType? keyBoardType;
   final String hintText;
   final int maxLines;
+  final FocusNode? focusNode;
   final TextInputAction? textInputAction;
   final List<TextInputFormatter>? inputFormatters;
   final String? Function(String?)? validator;
@@ -27,12 +28,13 @@ class InputDefault extends StatelessWidget {
     this.validator,
     this.controller,
     this.onChanged,
-    this.paddingLeftPrefix,
+    this.paddingLeftPrefix, this.focusNode,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      focusNode: focusNode,
       onTap: onTap,
       readOnly: onTap != null ? true : false,
       keyboardType: keyBoardType,
@@ -49,7 +51,9 @@ class InputDefault extends StatelessWidget {
           isDense: true,
           prefixIconConstraints: const BoxConstraints(),
           prefixIcon: Padding(
-            padding: EdgeInsets.only(right: paddingLeftPrefix != null? paddingLeftPrefix!: 0, left: SizeToken.xxs),
+            padding: EdgeInsets.only(
+                right: paddingLeftPrefix != null ? paddingLeftPrefix! : 0,
+                left: SizeToken.xxs),
             child: icon != null
                 ? IconLargeSemiDark(
                     icon: icon!,

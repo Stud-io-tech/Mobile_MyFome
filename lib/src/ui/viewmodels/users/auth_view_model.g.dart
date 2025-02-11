@@ -57,6 +57,22 @@ mixin _$AuthViewModel on AuthViewModelBase, Store {
     });
   }
 
+  late final _$myStoreAtom =
+      Atom(name: 'AuthViewModelBase.myStore', context: context);
+
+  @override
+  StoreDetailDto? get myStore {
+    _$myStoreAtom.reportRead();
+    return super.myStore;
+  }
+
+  @override
+  set myStore(StoreDetailDto? value) {
+    _$myStoreAtom.reportWrite(value, super.myStore, () {
+      super.myStore = value;
+    });
+  }
+
   late final _$loginAsyncAction =
       AsyncAction('AuthViewModelBase.login', context: context);
 
@@ -89,12 +105,21 @@ mixin _$AuthViewModel on AuthViewModelBase, Store {
     return _$detailsAsyncAction.run(() => super.details());
   }
 
+  late final _$getStoreAsyncAction =
+      AsyncAction('AuthViewModelBase.getStore', context: context);
+
+  @override
+  Future<dynamic> getStore() {
+    return _$getStoreAsyncAction.run(() => super.getStore());
+  }
+
   @override
   String toString() {
     return '''
 isLoading: ${isLoading},
 googleCredentials: ${googleCredentials},
-userDetailDto: ${userDetailDto}
+userDetailDto: ${userDetailDto},
+myStore: ${myStore}
     ''';
   }
 }

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth_google_controller.dart';
+part of 'store_controller.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,34 +8,41 @@ part of 'auth_google_controller.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$AuthGoogleController on AuthGoogleControllerBase, Store {
+mixin _$StoreController on StoreControllerBase, Store {
+  Computed<int>? _$foundsComputed;
+
+  @override
+  int get founds => (_$foundsComputed ??=
+          Computed<int>(() => super.founds, name: 'StoreControllerBase.founds'))
+      .value;
   Computed<bool>? _$isLoadingComputed;
 
   @override
   bool get isLoading =>
       (_$isLoadingComputed ??= Computed<bool>(() => super.isLoading,
-              name: 'AuthGoogleControllerBase.isLoading'))
+              name: 'StoreControllerBase.isLoading'))
           .value;
-  Computed<UserDetailDto?>? _$userComputed;
+  Computed<List<StoreDetailDto>?>? _$storesComputed;
 
   @override
-  UserDetailDto? get user =>
-      (_$userComputed ??= Computed<UserDetailDto?>(() => super.user,
-              name: 'AuthGoogleControllerBase.user'))
+  List<StoreDetailDto>? get stores =>
+      (_$storesComputed ??= Computed<List<StoreDetailDto>?>(() => super.stores,
+              name: 'StoreControllerBase.stores'))
           .value;
   Computed<StoreDetailDto?>? _$storeComputed;
 
   @override
   StoreDetailDto? get store =>
       (_$storeComputed ??= Computed<StoreDetailDto?>(() => super.store,
-              name: 'AuthGoogleControllerBase.store'))
+              name: 'StoreControllerBase.store'))
           .value;
 
   @override
   String toString() {
     return '''
+founds: ${founds},
 isLoading: ${isLoading},
-user: ${user},
+stores: ${stores},
 store: ${store}
     ''';
   }

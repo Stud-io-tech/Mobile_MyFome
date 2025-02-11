@@ -23,4 +23,7 @@ final class MaskToken {
   static String photoOutputMacth(Match m) => '(${m[1]}) ${m[2]}-${m[3]}';
 
   static final RegExp removeMask = RegExp(r'\D');
+  static String removeAllMask(String maskedString) {
+    return maskedString.replaceAll(RegExp(r'[^\d]'), '');
+  }
 }

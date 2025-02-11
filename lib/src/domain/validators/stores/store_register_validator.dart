@@ -5,5 +5,6 @@ class StoreRegisterValidator extends LucidValidator<StoreRegisterDto> {
   StoreRegisterValidator() {
     ruleFor((e) => e.name, key: "name").notEmptyOrNull();
     ruleFor((e) => e.description, key: "description").notEmptyOrNull();
+    ruleFor((e) => e.whatsapp, key: "whatsapp").notEmptyOrNull().minLength(11).maxLength(11);
   }
 }

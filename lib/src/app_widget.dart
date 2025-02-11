@@ -12,6 +12,7 @@ import 'package:my_fome/src/data/services/messages/result_message_service_impl.d
 import 'package:my_fome/src/domain/repositories/users/user_repository.dart';
 import 'package:my_fome/src/ui/modules/home/controllers/auth/auth_google_controller.dart';
 import 'package:my_fome/src/ui/modules/home/home_module.dart';
+import 'package:my_fome/src/ui/modules/store/store_module.dart';
 import 'package:my_fome/src/ui/viewmodels/users/auth_view_model.dart';
 import 'package:uikit/uikit.dart';
 
@@ -28,7 +29,7 @@ class AppWidget extends StatelessWidget {
           Bind.singleton<ResultMessageService>(
               (i) => ResultMessageServiceImpl(navigatorKey: navigatorKey)),
           Bind.singleton<ClientService>((i) => ClientServiceImpl(i())),
-          Bind.singleton<AuthGoogleService>((i)=> AuthGoogleServiceImpl()),
+          Bind.singleton<AuthGoogleService>((i) => AuthGoogleServiceImpl()),
           Bind.singleton<UserRepository>(
               (i) => UserRepositoryImpl(clientService: i())),
           Bind.singleton((i) => AuthViewModel(
@@ -41,6 +42,7 @@ class AppWidget extends StatelessWidget {
       },
       modules: [
         HomeModule(),
+        StoreModule(),
       ],
       builder: (context, routes, flutterGetItNavObserver) {
         return MaterialApp(

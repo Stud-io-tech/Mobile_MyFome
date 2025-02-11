@@ -7,6 +7,7 @@ import 'package:my_fome/src/domain/repositories/stores/store_repository.dart';
 import 'package:my_fome/src/ui/modules/home/controllers/products/product_controller.dart';
 import 'package:my_fome/src/ui/modules/home/controllers/store/store_controller.dart';
 import 'package:my_fome/src/ui/modules/home/pages/home_page.dart';
+import 'package:my_fome/src/ui/modules/home/pages/user_not_found_page.dart';
 import 'package:my_fome/src/ui/viewmodels/products/product_view_model.dart';
 import 'package:my_fome/src/ui/viewmodels/stores/store_view_model.dart';
 
@@ -54,5 +55,6 @@ class HomeModule extends FlutterGetItModule {
   @override
   Map<String, WidgetBuilder> get pages => {
         '/': (context) => HomePage(),
+        '/login': (context) => UserNotFoundPage(),
       };
 }

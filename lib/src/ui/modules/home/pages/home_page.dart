@@ -63,8 +63,19 @@ class HomePage extends StatelessWidget {
       drawer: DrawerMenu(
         firstOnPressed: () => Navigator.of(context).pushReplacementNamed('/'),
         secoundOnPressed: () {},
-        thirdOnPressed: () {},
-        fourthOnPressed: () {},
+        thirdOnPressed: () =>
+            Navigator.of(context).pushReplacementNamed('/store'),
+        fourthOnPressed: () {
+          if (authController.user == null) {
+            Navigator.of(context).pushReplacementNamed('/login');
+            return;
+          }
+          if (authController.store != null) {
+            Navigator.of(context).pushReplacementNamed('/store/my');
+          } else {
+            Navigator.of(context).pushReplacementNamed('/store/register');
+          }
+        },
         logoutOnPressed: () {
           if (authController.user?.email != null) {
             showCustomModalBottomSheet(
@@ -103,7 +114,7 @@ class HomePage extends StatelessWidget {
           return IndexedStack(
             index: controller.currentIndex,
             children: [
-              HomeScreenWidget(),
+              const HomeScreenWidget(),
               ProductScreen(),
               StoreScreen(),
             ],

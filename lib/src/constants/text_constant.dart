@@ -6,7 +6,7 @@ final class TextConstant {
   static String myStore = 'Minha Loja';
   static String logout = 'Sair';
   static String seeMore = 'ver mais';
-  static String sucessLoggingAccountTitle = 'Bem-vindo ao My Fome!';
+  static String sucessLoggingAccountTitle = 'Bem-vindo ao MyFome!';
   static String sucessLoggingOutAccountTitle = 'Conta Desvinculada!';
   static String sucessCreatingAccountTitle = 'Conta Criada!';
   static String sucessCreatingStoreTitle = 'Loja Criada!';
@@ -62,6 +62,8 @@ final class TextConstant {
   static String no = 'Não';
   static String storeProducts = 'Produtos da Loja';
   static String newProduct = 'Novo Produto';
+    static String newStore = 'Nova Loja';
+
   static String editProduct = 'Editar Produto';
 
   static String helloUser(String? userName) =>
@@ -97,5 +99,13 @@ final class TextConstant {
   static String placeOrder = 'Fazer Pedido';
   static String addQuantity = 'Adicionar quantidade';
 
+  static String requiredLogin = 'Você precisa fazer login!';
+    static String loggin = 'Fazer Login';
+
   static String total = 'Total:';
+
+    static String storeName = 'Nome da loja';
+    static String storeDescription = 'Descrição da loja';
+    static String storeWhatsappNumber = 'Whatsapp da loja';
+
 }

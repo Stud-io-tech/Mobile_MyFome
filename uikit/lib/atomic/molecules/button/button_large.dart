@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:uikit/uikit.dart';
 
 class ButtonLarge extends StatelessWidget {
+  final bool isLoading;
   final String text;
   final void Function()? onPressed;
   final String icon;
@@ -11,6 +12,7 @@ class ButtonLarge extends StatelessWidget {
     required this.text,
     this.onPressed,
     required this.icon,
+    this.isLoading = false,
   });
 
   @override
@@ -22,16 +24,22 @@ class ButtonLarge extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: SizeToken.lg),
         backgroundColor: ColorToken.danger,
         onPressed: onPressed,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            IconLargeLigth(icon: icon),
-            TextLabelL1Light(
-              text: text,
-            ),
-          ],
-        ),
+        child: isLoading
+            ? const SizedBox(
+                height: SizeToken.lg,
+                width: SizeToken.lg,
+                child: CircularProgressIndicator(
+                  color: ColorToken.light,
+                ),
+              )
+            : Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconLargeLigth(icon: icon),
+                  TextLabelL1Light(text: text),
+                ],
+              ),
       ),
     );
   }
