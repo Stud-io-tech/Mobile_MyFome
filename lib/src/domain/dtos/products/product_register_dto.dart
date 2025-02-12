@@ -1,18 +1,17 @@
-import 'package:dio/dio.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
 
-class ProductRegisterDto{
+class ProductRegisterDto {
   final String name;
   final String description;
-  final MultipartFile image;
-  final double price;
-  final int quantity;
+  final String price;
+  final String amount;
   final String storeId;
   ProductRegisterDto({
     required this.name,
     required this.description,
-    required this.image,
     required this.price,
-    required this.quantity,
+    required this.amount,
     required this.storeId,
   });
 
@@ -20,9 +19,8 @@ class ProductRegisterDto{
     return <String, dynamic>{
       'name': name,
       'description': description,
-      'image': image,
       'price': price,
-      'quantity': quantity,
+      'amount': amount,
       'store_id': storeId,
     };
   }
@@ -31,33 +29,13 @@ class ProductRegisterDto{
     return ProductRegisterDto(
       name: map['name'] as String,
       description: map['description'] as String,
-      image: map['image'] as MultipartFile,
-      price: map['price'] as double,
-      quantity: map['quantity'] as int,
+      price: map['price'] as String,
+      amount: map['amount'] as String,
       storeId: map['store_id'] as String,
     );
   }
 
-  @override
-  bool operator ==(covariant ProductRegisterDto other) {
-    if (identical(this, other)) return true;
-  
-    return 
-      other.name == name &&
-      other.description == description &&
-      other.image == image &&
-      other.price == price &&
-      other.quantity == quantity &&
-      other.storeId == storeId;
-  }
+  String toJson() => json.encode(toMap());
 
-  @override
-  int get hashCode {
-    return name.hashCode ^
-      description.hashCode ^
-      image.hashCode ^
-      price.hashCode ^
-      quantity.hashCode ^
-      storeId.hashCode;
-  }
+  factory ProductRegisterDto.fromJson(String source) => ProductRegisterDto.fromMap(json.decode(source) as Map<String, dynamic>);
 }

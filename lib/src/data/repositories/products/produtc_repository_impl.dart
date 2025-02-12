@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:my_fome/src/constants/api_constant.dart';
 import 'package:my_fome/src/constants/text_constant.dart';
 import 'package:my_fome/src/data/exceptions/rest_exception.dart';
@@ -37,14 +38,25 @@ class ProdutcRepositoryImpl implements ProdutcRepository {
   }
 
   @override
-  AsyncResult<ProductRegisterDto> register(ProductRegisterDto product) async {
+  AsyncResult<ProductRegisterDto> register(
+      ProductRegisterDto product, XFile image) async {
     try {
-      final FormData formDataProduct = FormData.fromMap(product.toMap());
+      final FormData formDataProduct = FormData.fromMap({
+        'name': product.name,
+        'description': product.description,
+        'price': product.price,
+        'amount': product.amount,
+        'store_id': product.storeId,
+        'image': MultipartFile.fromBytes(
+          await image.readAsBytes(),
+          filename: image.name,
+        ),
+      });
       final Response response = await clientService.post(
           ApiConstant.product, formDataProduct,
           requiresAuth: true, contentType: 'multipart/form-data');
       final ProductRegisterDto resultProduct =
-          ProductRegisterDto.fromMap(response.data);
+          ProductRegisterDto.fromMap(response.data['product']);
       return Success(resultProduct);
     } on DioException catch (e) {
       return Failure(
@@ -57,15 +69,28 @@ class ProdutcRepositoryImpl implements ProdutcRepository {
   }
 
   @override
-  AsyncResult<ProductUpdateDto> update(
-      String id, ProductUpdateDto product) async {
+  AsyncResult<ProductUpdateDto> update(String id, ProductUpdateDto product,
+      {XFile? image}) async {
     try {
-      final FormData formDataProduct = FormData.fromMap(product.toMap());
-      final Response response = await clientService.patch(
+      final FormData formDataProduct = FormData.fromMap({
+        'name': product.name,
+        'description': product.description,
+        'price': product.price,
+        'amount': product.amount,
+        'store_id': product.storeId,
+        '_method': 'PUT',
+      });
+      if (image != null) {
+        formDataProduct.files.add(MapEntry(
+            'image',
+            MultipartFile.fromBytes(await image.readAsBytes(),
+                filename: image.name)));
+      }
+      final Response response = await clientService.post(
           "${ApiConstant.product}/$id", formDataProduct,
           requiresAuth: true, contentType: 'multipart/form-data');
       final ProductUpdateDto resultProduct =
-          ProductUpdateDto.fromMap(response.data);
+          ProductUpdateDto.fromMap(response.data['product']);
       return Success(resultProduct);
     } on DioException catch (e) {
       return Failure(
@@ -78,12 +103,12 @@ class ProdutcRepositoryImpl implements ProdutcRepository {
   }
 
   @override
-  AsyncResult<ProductDetailDto> changeActiveStatus(String id) async {
+  AsyncResult<ProductDetailDto> toggleActive(String id) async {
     try {
       final Response response = await clientService
-          .get("${ApiConstant.product}/active/$id", requiresAuth: true);
+          .put("${ApiConstant.product}/active/$id", requiresAuth: true);
       final ProductDetailDto resultProduct =
-          ProductDetailDto.fromMap(response.data);
+          ProductDetailDto.fromMap(response.data['product']);
       return Success(resultProduct);
     } on DioException catch (e) {
       return Failure(
@@ -117,7 +142,8 @@ class ProdutcRepositoryImpl implements ProdutcRepository {
   @override
   AsyncResult<List<ProductDetailDto>> listByStore(String id) async {
     try {
-      final Response response = await clientService.get("${ApiConstant.product}/?store=$id");
+      final Response response =
+          await clientService.get("${ApiConstant.product}/?store=$id");
       final List<dynamic> resultProducts = response.data['products'];
       final List<ProductDetailDto> productsList = resultProducts
           .map((item) => ProductDetailDto.fromMap(item as Map<String, dynamic>))

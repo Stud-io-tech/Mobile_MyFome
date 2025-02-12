@@ -155,5 +155,129 @@ void main() {
         },
       );
     });
+    
+    group("Testando o detalhe do usuário.", () {
+      test(
+        "Deve retornar os detalhes do usuário com sucesso.",
+        () async {
+          final userDetail = {
+            "id": "9e287ae6-86d5-48ed-aa92-f2aeffe979cb",
+            "name": "Lázaro Alexandre",
+            "email": "lazaroalexandre2002@gmail.com",
+            "image": null,
+            "active": true,
+            "email_verified_at": null,
+            "created_at": "2025-02-07T22:22:58.000000Z",
+            "updated_at": "2025-02-07T22:22:58.000000Z",
+            "deleted_at": null,
+          };
+
+          final response = Response(
+            requestOptions: RequestOptions(),
+            data: {"user": userDetail},
+          );
+
+          when(() => clientMock.get(any(), requiresAuth: true))
+              .thenAnswer((_) async => response);
+
+          final result = await userRepositoryMock.detail();
+
+          expect(result.isSuccess(), isTrue);
+          expect(result.getOrNull()?.email, "lazaroalexandre2002@gmail.com");
+
+          verify(() => clientMock.get(any(), requiresAuth: true)).called(1);
+        },
+      );
+
+      test(
+        "Deve falhar ao tentar obter os detalhes do usuário.",
+        () async {
+          final response = DioException(
+            requestOptions: RequestOptions(),
+          );
+
+          when(() => clientMock.get(any(), requiresAuth: true))
+              .thenThrow(response);
+
+          final result = await userRepositoryMock.detail();
+
+          expect(result.isError(), isTrue);
+
+          verify(() => clientMock.get(any(), requiresAuth: true)).called(1);
+        },
+      );
+    });
+
+    group("Testando a recuperação da loja do usuário.", () {
+      test(
+        "Deve retornar os detalhes da loja do usuário.",
+        () async {
+          final storeDetail = {
+            "id": "9e2edfe8-7511-497f-92d5-eb3347986e45",
+            "owner_id": "9e287ae6-86d5-48ed-aa92-f2aeffe979cb",
+            "name": "Nova Loja",
+            "image": "https:\/\/res.cloudinary.com\/druhyytz3\/image\/upload\/v1739241620\/store_images\/xb703lm8heent1cicqfc.svg",
+            "public_id": "store_images\/xb703lm8heent1cicqfc",
+            "description": "Descrição da loja",
+            "active": true,
+            "whatsapp": "+5511999999999",
+            "created_at": "2025-02-11T02:40:22.000000Z",
+            "updated_at": "2025-02-11T02:40:22.000000Z",
+            "deleted_at": null,
+          };
+
+          final response = Response(
+            requestOptions: RequestOptions(),
+            data: {"store": storeDetail},
+          );
+
+          when(() => clientMock.get(any(), requiresAuth: true))
+              .thenAnswer((_) async => response);
+
+          final result = await userRepositoryMock.getStoreByUser();
+
+          expect(result.isSuccess(), isTrue);
+          verify(() => clientMock.get(any(), requiresAuth: true)).called(1);
+        },
+      );
+
+      test(
+        "Deve retornar sucesso vazio quando não houver loja.",
+        () async {
+          final response = Response(
+            requestOptions: RequestOptions(),
+            data: {"store": null},
+          );
+
+          when(() => clientMock.get(any(), requiresAuth: true))
+              .thenAnswer((_) async => response);
+
+          final result = await userRepositoryMock.getStoreByUser();
+
+          expect(result.isSuccess(), isTrue);
+
+          verify(() => clientMock.get(any(), requiresAuth: true)).called(1);
+        },
+      );
+
+      test(
+        "Deve falhar ao tentar recuperar a loja do usuário.",
+        () async {
+          final response = DioException(
+            requestOptions: RequestOptions(),
+          );
+
+          when(() => clientMock.get(any(), requiresAuth: true))
+              .thenThrow(response);
+
+          final result = await userRepositoryMock.getStoreByUser();
+
+          expect(result.isError(), isTrue);
+
+          verify(() => clientMock.get(any(), requiresAuth: true)).called(1);
+        },
+      );
+    });
+
   });
 }

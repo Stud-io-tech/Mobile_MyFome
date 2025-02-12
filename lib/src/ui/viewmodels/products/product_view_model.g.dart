@@ -160,16 +160,17 @@ mixin _$ProductViewModel on ProductViewModelBase, Store {
       AsyncAction('ProductViewModelBase.register', context: context);
 
   @override
-  Future<dynamic> register(ProductRegisterDto product) {
-    return _$registerAsyncAction.run(() => super.register(product));
+  Future<dynamic> register(ProductRegisterDto product, XFile image) {
+    return _$registerAsyncAction.run(() => super.register(product, image));
   }
 
   late final _$updateAsyncAction =
       AsyncAction('ProductViewModelBase.update', context: context);
 
   @override
-  Future<dynamic> update(String id, ProductUpdateDto product) {
-    return _$updateAsyncAction.run(() => super.update(id, product));
+  Future<dynamic> update(String id, ProductUpdateDto product, {XFile? image}) {
+    return _$updateAsyncAction
+        .run(() => super.update(id, product, image: image));
   }
 
   late final _$ProductViewModelBaseActionController =
