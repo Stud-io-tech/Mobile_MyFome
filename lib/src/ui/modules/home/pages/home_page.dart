@@ -4,12 +4,13 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:my_fome/src/constants/icon_constant.dart';
 import 'package:my_fome/src/constants/logo_constant.dart';
 import 'package:my_fome/src/constants/text_constant.dart';
-import 'package:my_fome/src/ui/modules/home/controllers/auth/auth_google_controller.dart';
+import 'package:my_fome/src/ui/modules/controllers/auth/auth_google_controller.dart';
 import 'package:my_fome/src/ui/modules/home/controllers/button_navigator/button_navigator_menu_controller.dart';
 import 'package:my_fome/src/ui/modules/home/widgets/screens/home_screen_widget.dart';
 import 'package:my_fome/src/ui/modules/home/widgets/screens/product_screen.dart';
 import 'package:my_fome/src/ui/modules/home/widgets/screens/store_screen.dart';
 import 'package:uikit/uikit.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomePage extends StatelessWidget {

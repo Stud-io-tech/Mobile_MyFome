@@ -10,22 +10,24 @@ import 'package:my_fome/src/constants/text_constant.dart';
 import 'package:my_fome/src/ui/modules/controllers/uploads/upload_controller.dart';
 import 'package:validatorless/validatorless.dart';
 
-class StoreRegisterForm extends StatelessWidget {
+class StoreUpdateForm extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final TextEditingController nameEC;
   final TextEditingController descriptionEC;
   final TextEditingController whatsappEC;
+  final String image;
 
   final FocusNode nameFocusNode = FocusNode();
   final FocusNode descriptionFocusNode = FocusNode();
   final FocusNode whatsappFocusNode = FocusNode();
 
-  StoreRegisterForm({
+  StoreUpdateForm({
     super.key,
     required this.formKey,
     required this.nameEC,
     required this.descriptionEC,
-    required this.whatsappEC,
+    required this.whatsappEC, 
+    required this.image,
   });
   final uploadController = Injector.get<UploadController>();
   final validator = StoreRegisterValidator();
@@ -39,6 +41,7 @@ class StoreRegisterForm extends StatelessWidget {
         children: [
           Observer(builder: (_) {
             return InputUploadImage(
+              imageNetwork: image,
               image: uploadController.selectedImageFile,
               onTap: uploadController.uploadImage,
               labelText: TextConstant.image,

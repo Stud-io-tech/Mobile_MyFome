@@ -216,14 +216,10 @@ void main() {
             "id": "9e2edfe8-7511-497f-92d5-eb3347986e45",
             "owner_id": "9e287ae6-86d5-48ed-aa92-f2aeffe979cb",
             "name": "Nova Loja",
-            "image": "https:\/\/res.cloudinary.com\/druhyytz3\/image\/upload\/v1739241620\/store_images\/xb703lm8heent1cicqfc.svg",
-            "public_id": "store_images\/xb703lm8heent1cicqfc",
+            "image": "image",
             "description": "Descrição da loja",
             "active": true,
             "whatsapp": "+5511999999999",
-            "created_at": "2025-02-11T02:40:22.000000Z",
-            "updated_at": "2025-02-11T02:40:22.000000Z",
-            "deleted_at": null,
           };
 
           final response = Response(

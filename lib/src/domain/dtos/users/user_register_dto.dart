@@ -23,20 +23,22 @@ class UserRegisterDto {
     return UserRegisterDto(
       name: map['name'] as String,
       email: map['email'] as String,
-      image: map['image'] != null ? map['image'] as String? : null,
+      image: map['image'] != null ? map['image'] as String : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory UserRegisterDto.fromJson(String source) =>
-      UserRegisterDto.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory UserRegisterDto.fromJson(String source) => UserRegisterDto.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   bool operator ==(covariant UserRegisterDto other) {
     if (identical(this, other)) return true;
-
-    return other.name == name && other.email == email && other.image == image;
+  
+    return 
+      other.name == name &&
+      other.email == email &&
+      other.image == image;
   }
 
   @override

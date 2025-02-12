@@ -11,13 +11,15 @@ class InputUploadImage extends StatelessWidget {
   final String hintText;
   final String icon;
   final File? image;
+  final String? imageNetwork;
   const InputUploadImage({
     super.key,
     required this.onTap,
     required this.labelText,
     required this.hintText,
     required this.icon,
-    this.image,
+    this.image, 
+    this.imageNetwork,
   });
 
   @override
@@ -72,7 +74,38 @@ class InputUploadImage extends StatelessWidget {
                         ),
                       ],
                     )
-                  : Row(
+                  : imageNetwork != null?
+                  Stack(
+                      children: [
+                        Image.network(
+                          imageNetwork!,
+                          height: 120,
+                          width: double.infinity,
+                          fit: BoxFit.contain,
+                        ),
+                        Positioned(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  IconSemiLargeSemiDark(
+                                    icon: icon,
+                                    padding: SizeToken.xxs,
+                                  ),
+                                  TextLabelL3SemiDark(
+                                    text: hintText,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ): Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [

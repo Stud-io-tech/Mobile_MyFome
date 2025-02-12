@@ -1,36 +1,45 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_getit/flutter_getit.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:my_fome/src/constants/icon_constant.dart';
-import 'package:my_fome/src/constants/text_constant.dart';
-import 'package:my_fome/src/domain/dtos/stores/store_register_dto.dart';
-import 'package:my_fome/src/ui/modules/controllers/auth/auth_google_controller.dart';
+import 'package:my_fome/src/domain/dtos/stores/store_detail_dto.dart';
+import 'package:my_fome/src/domain/dtos/stores/store_update_dto.dart';
 import 'package:my_fome/src/ui/modules/controllers/store/store_controller.dart';
-import 'package:my_fome/src/ui/modules/controllers/uploads/upload_controller.dart';
-import 'package:my_fome/src/ui/modules/store/widgets/store_register_form.dart';
+import 'package:my_fome/src/ui/modules/store/widgets/store_update_form.dart';
 import 'package:uikit/uikit.dart';
 
-class RegisterStore extends StatefulWidget {
-  const RegisterStore({super.key});
+import 'package:my_fome/src/constants/icon_constant.dart';
+import 'package:my_fome/src/constants/text_constant.dart';
+import 'package:my_fome/src/ui/modules/controllers/uploads/upload_controller.dart';
+
+class UpdateStore extends StatefulWidget {
+  const UpdateStore({super.key});
 
   @override
-  State<RegisterStore> createState() => _RegisterStoreState();
+  State<UpdateStore> createState() => _UpdateStoreState();
 }
 
-class _RegisterStoreState extends State<RegisterStore> {
+class _UpdateStoreState extends State<UpdateStore> {
   final formKey = GlobalKey<FormState>();
 
   final nameEC = TextEditingController();
-
   final descriptionEC = TextEditingController();
-
   final whatsappEC = TextEditingController();
 
   final storeController = Injector.get<StoreController>();
-
   final uploadController = Injector.get<UploadController>();
 
-  final authController = Injector.get<AuthGoogleController>();
+  late StoreDetailDto store;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    store = ModalRoute.of(context)!.settings.arguments as StoreDetailDto;
+    nameEC.text = store.name;
+    descriptionEC.text = store.description;
+    whatsappEC.text =
+        MaskToken.formatPhoneNumber(store.whatsapp.replaceFirst("+55", ""));
+  }
 
   @override
   void dispose() {
@@ -55,8 +64,8 @@ class _RegisterStoreState extends State<RegisterStore> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       IconButtonLargeDark(
-                        onTap: () =>
-                            Navigator.of(context).pushReplacementNamed('/'),
+                        onTap: () => Navigator.of(context)
+                            .pushReplacementNamed('/store/my'),
                         icon: IconConstant.arrowLeft,
                       ),
                       const SizedBox(width: SizeToken.sm),
@@ -66,7 +75,8 @@ class _RegisterStoreState extends State<RegisterStore> {
                 ],
               ),
               const SizedBox(height: SizeToken.lg),
-              StoreRegisterForm(
+              StoreUpdateForm(
+                image: store.image,
                 nameEC: nameEC,
                 descriptionEC: descriptionEC,
                 whatsappEC: whatsappEC,
@@ -82,28 +92,21 @@ class _RegisterStoreState extends State<RegisterStore> {
           text: TextConstant.save,
           icon: IconConstant.success,
           onPressed: () async {
-            if ((formKey.currentState?.validate() ?? false) &&
-                uploadController.imageFile != null) {
+            if ((formKey.currentState?.validate() ?? false)) {
               String whatsapp = MaskToken.removeAllMask(whatsappEC.text);
               whatsapp = "+55$whatsapp";
-              StoreRegisterDto model = StoreRegisterDto(
+              StoreUpdateDto model = StoreUpdateDto(
                 name: nameEC.text,
                 description: descriptionEC.text,
                 whatsapp: whatsapp,
               );
               try {
-                await storeController.register(
-                    model, uploadController.imageFile!);
+                await storeController.update(store.id, model,
+                    image: uploadController.imageFile);
               } finally {
                 if (storeController.isLoading == false) {
                   uploadController.removeImage();
-                  await authController.load();
-                  if (authController.store != null) {
-                    Navigator.of(context).pushReplacementNamed('/store/my');
-                  } else {
-                    Navigator.of(context)
-                        .pushReplacementNamed('/store/register');
-                  }
+                  Navigator.of(context).pushReplacementNamed('/store/my');
                 }
               }
             }

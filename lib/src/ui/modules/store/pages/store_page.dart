@@ -4,8 +4,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:my_fome/src/constants/icon_constant.dart';
 import 'package:my_fome/src/constants/image_error_constant.dart';
 import 'package:my_fome/src/constants/text_constant.dart';
+import 'package:my_fome/src/ui/modules/controllers/store/store_controller.dart';
 import 'package:my_fome/src/ui/modules/home/widgets/screens/store_detail_screen_widget.dart';
-import 'package:my_fome/src/ui/modules/store/controllers/store/store_controller.dart';
 import 'package:uikit/uikit.dart';
 
 class StorePage extends StatelessWidget {

@@ -3,14 +3,14 @@ import 'package:flutter_getit/flutter_getit.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:my_fome/src/constants/icon_constant.dart';
 import 'package:my_fome/src/constants/text_constant.dart';
-import 'package:my_fome/src/ui/modules/home/controllers/auth/auth_google_controller.dart';
-import 'package:my_fome/src/ui/modules/home/controllers/products/product_controller.dart';
+import 'package:my_fome/src/ui/modules/controllers/product/product_controller.dart';
+import 'package:my_fome/src/ui/modules/controllers/auth/auth_google_controller.dart';
 import 'package:my_fome/src/ui/modules/home/widgets/screens/product_detail_screen_widget.dart';
 import 'package:uikit/uikit.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-class MyStoreScreen extends StatelessWidget {
-  MyStoreScreen({
+class MyStorePage extends StatelessWidget {
+  MyStorePage({
     super.key,
   });
 
@@ -34,7 +34,8 @@ class MyStoreScreen extends StatelessWidget {
               onTapIconLeft: () =>
                   Navigator.of(context).pushReplacementNamed('/'),
               iconRigth: IconConstant.edit,
-              onTapIconRight: () {},
+              onTapIconRight: () => Navigator.of(context)
+                  .pushReplacementNamed('/store/update', arguments: store),
             ),
             const SizedBox(
               height: SizeToken.lg,
