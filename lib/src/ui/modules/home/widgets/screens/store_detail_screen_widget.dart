@@ -6,7 +6,7 @@ import 'package:my_fome/src/constants/icon_constant.dart';
 import 'package:my_fome/src/constants/text_constant.dart';
 
 import 'package:my_fome/src/domain/dtos/stores/store_detail_dto.dart';
-import 'package:my_fome/src/ui/modules/controllers/product/product_controller.dart';
+import 'package:my_fome/src/ui/controllers/product/product_controller.dart';
 import 'package:my_fome/src/ui/modules/home/widgets/screens/product_detail_screen_widget.dart';
 import 'package:uikit/uikit.dart';
 import 'package:url_launcher/url_launcher_string.dart';

@@ -7,7 +7,7 @@ import 'package:uikit/uikit.dart';
 
 import 'package:my_fome/src/constants/icon_constant.dart';
 import 'package:my_fome/src/constants/text_constant.dart';
-import 'package:my_fome/src/ui/modules/controllers/uploads/upload_controller.dart';
+import 'package:my_fome/src/ui/controllers/uploads/upload_controller.dart';
 import 'package:validatorless/validatorless.dart';
 
 class StoreRegisterForm extends StatelessWidget {

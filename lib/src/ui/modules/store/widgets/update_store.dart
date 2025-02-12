@@ -4,13 +4,13 @@ import 'package:flutter_getit/flutter_getit.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:my_fome/src/domain/dtos/stores/store_detail_dto.dart';
 import 'package:my_fome/src/domain/dtos/stores/store_update_dto.dart';
-import 'package:my_fome/src/ui/modules/controllers/store/store_controller.dart';
+import 'package:my_fome/src/ui/controllers/store/store_controller.dart';
 import 'package:my_fome/src/ui/modules/store/widgets/store_update_form.dart';
 import 'package:uikit/uikit.dart';
 
 import 'package:my_fome/src/constants/icon_constant.dart';
 import 'package:my_fome/src/constants/text_constant.dart';
-import 'package:my_fome/src/ui/modules/controllers/uploads/upload_controller.dart';
+import 'package:my_fome/src/ui/controllers/uploads/upload_controller.dart';
 
 class UpdateStore extends StatefulWidget {
   const UpdateStore({super.key});

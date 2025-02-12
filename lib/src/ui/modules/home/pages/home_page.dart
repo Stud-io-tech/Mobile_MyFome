@@ -4,7 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:my_fome/src/constants/icon_constant.dart';
 import 'package:my_fome/src/constants/logo_constant.dart';
 import 'package:my_fome/src/constants/text_constant.dart';
-import 'package:my_fome/src/ui/modules/controllers/auth/auth_google_controller.dart';
+import 'package:my_fome/src/ui/controllers/auth/auth_google_controller.dart';
 import 'package:my_fome/src/ui/modules/home/controllers/button_navigator/button_navigator_menu_controller.dart';
 import 'package:my_fome/src/ui/modules/home/widgets/screens/home_screen_widget.dart';
 import 'package:my_fome/src/ui/modules/home/widgets/screens/product_screen.dart';
@@ -63,7 +63,7 @@ class HomePage extends StatelessWidget {
           )),
       drawer: DrawerMenu(
         firstOnPressed: () => Navigator.of(context).pushReplacementNamed('/'),
-        secoundOnPressed: () {},
+        secoundOnPressed: () => Navigator.of(context).pushReplacementNamed('/product'),
         thirdOnPressed: () =>
             Navigator.of(context).pushReplacementNamed('/store'),
         fourthOnPressed: () {

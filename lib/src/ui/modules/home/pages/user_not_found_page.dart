@@ -4,7 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:my_fome/src/constants/icon_constant.dart';
 import 'package:my_fome/src/constants/image_error_constant.dart';
 import 'package:my_fome/src/constants/text_constant.dart';
-import 'package:my_fome/src/ui/modules/controllers/auth/auth_google_controller.dart';
+import 'package:my_fome/src/ui/controllers/auth/auth_google_controller.dart';
 import 'package:uikit/uikit.dart';
 
 class UserNotFoundPage extends StatelessWidget {
