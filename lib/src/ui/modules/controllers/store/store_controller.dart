@@ -29,7 +29,6 @@ abstract class StoreControllerBase with Store {
   @computed
   StoreDetailDto? get store => storeViewModel.store;
 
-
   listStore() async {
     await storeViewModel.list();
   }
@@ -48,5 +47,6 @@ abstract class StoreControllerBase with Store {
 
   update(String id, StoreUpdateDto store, {XFile? image}) async {
     await storeViewModel.update(id, store, image: image);
+    await detailStore(id);
   }
 }
