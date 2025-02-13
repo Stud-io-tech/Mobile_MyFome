@@ -5,7 +5,7 @@ import 'package:my_fome/src/constants/icon_constant.dart';
 import 'package:my_fome/src/constants/text_constant.dart';
 import 'package:my_fome/src/ui/controllers/product/product_controller.dart';
 import 'package:my_fome/src/ui/controllers/auth/auth_google_controller.dart';
-import 'package:my_fome/src/ui/modules/home/widgets/screens/product_detail_screen_widget.dart';
+import 'package:my_fome/src/ui/modules/product/widgets/screen/my_product_detail_screen.dart';
 import 'package:uikit/uikit.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -71,7 +71,12 @@ class MyStorePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       TextHeadlineH2(text: TextConstant.storeProducts),
-                      LinkSeeMore(text: TextConstant.seeMore, onTap: () {}),
+                      LinkSeeMore(
+                        text: TextConstant.seeMore,
+                        onTap: () => Navigator.of(context).pushReplacementNamed(
+                            '/product/my',
+                            arguments: store),
+                      )
                     ],
                   ),
                   const SizedBox(
@@ -109,6 +114,8 @@ class MyStorePage extends StatelessWidget {
                           final product =
                               productController.productsByStore?[index];
                           return ProductItem(
+                            icon: IconConstant.remove,
+                            onTapIcon: () {},
                             image: product!.image,
                             name: product.name,
                             quantity:
@@ -117,9 +124,9 @@ class MyStorePage extends StatelessWidget {
                                 double.parse(product.price)),
                             onTap: () => Navigator.of(context).push(
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      ProductDetailScreenWidget(
-                                          product: product)),
+                                builder: (context) =>
+                                    MyProductDetailScreen(product: product),
+                              ),
                             ),
                           );
                         },

@@ -1,51 +1,53 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_getit/flutter_getit.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:my_fome/src/domain/dtos/stores/store_detail_dto.dart';
-import 'package:my_fome/src/domain/dtos/stores/store_update_dto.dart';
-import 'package:my_fome/src/ui/controllers/store/store_controller.dart';
-import 'package:my_fome/src/ui/modules/store/widgets/store_update_form.dart';
-import 'package:uikit/uikit.dart';
-
 import 'package:my_fome/src/constants/icon_constant.dart';
 import 'package:my_fome/src/constants/text_constant.dart';
+import 'package:my_fome/src/domain/dtos/products/product_register_dto.dart';
+import 'package:my_fome/src/domain/dtos/stores/store_detail_dto.dart';
+import 'package:my_fome/src/ui/controllers/product/product_controller.dart';
+import 'package:my_fome/src/ui/controllers/store/store_controller.dart';
 import 'package:my_fome/src/ui/controllers/uploads/upload_controller.dart';
+import 'package:my_fome/src/ui/modules/product/widgets/register/product_register_form.dart';
+import 'package:uikit/uikit.dart';
 
-class UpdateStore extends StatefulWidget {
-  const UpdateStore({super.key});
+class RegisterProduct extends StatefulWidget {
+  const RegisterProduct({super.key});
 
   @override
-  State<UpdateStore> createState() => _UpdateStoreState();
+  State<RegisterProduct> createState() => _RegisterStoreState();
 }
 
-class _UpdateStoreState extends State<UpdateStore> {
+class _RegisterStoreState extends State<RegisterProduct> {
   final formKey = GlobalKey<FormState>();
 
   final nameEC = TextEditingController();
-  final descriptionEC = TextEditingController();
-  final whatsappEC = TextEditingController();
 
-  final storeController = Injector.get<StoreController>();
+  final descriptionEC = TextEditingController();
+
+  final priceEC = TextEditingController();
+
+  final amountEC = TextEditingController();
+
+  final productController = Injector.get<ProductController>();
+
   final uploadController = Injector.get<UploadController>();
 
-  late StoreDetailDto store;
+  final storeController = Injector.get<StoreController>();
 
+  late StoreDetailDto store;
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     store = ModalRoute.of(context)!.settings.arguments as StoreDetailDto;
-    nameEC.text = store.name;
-    descriptionEC.text = store.description;
-    whatsappEC.text =
-        MaskToken.formatPhoneNumber(store.whatsapp.replaceFirst("+55", ""));
   }
 
   @override
   void dispose() {
     nameEC.dispose();
     descriptionEC.dispose();
-    whatsappEC.dispose();
+    priceEC.dispose();
+    amountEC.dispose();
     super.dispose();
   }
 
@@ -64,22 +66,23 @@ class _UpdateStoreState extends State<UpdateStore> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       IconButtonLargeDark(
-                        onTap: () => Navigator.of(context)
-                            .pushReplacementNamed('/store/my'),
+                        onTap: () => Navigator.of(context).pushReplacementNamed(
+                            '/product/my',
+                            arguments: store),
                         icon: IconConstant.arrowLeft,
                       ),
                       const SizedBox(width: SizeToken.sm),
-                      TextHeadlineH2(text: TextConstant.updateStore),
+                      TextHeadlineH2(text: TextConstant.newProduct),
                     ],
                   ),
                 ],
               ),
               const SizedBox(height: SizeToken.lg),
-              StoreUpdateForm(
-                image: store.image,
+              ProductRegisterForm(
                 nameEC: nameEC,
                 descriptionEC: descriptionEC,
-                whatsappEC: whatsappEC,
+                priceEC: priceEC,
+                amountEC: amountEC,
                 formKey: formKey,
               ),
             ],
@@ -88,25 +91,29 @@ class _UpdateStoreState extends State<UpdateStore> {
       ),
       bottomNavigationBar: Observer(builder: (_) {
         return ButtonLarge(
-          isLoading: storeController.isLoading,
+          isLoading: productController.isLoading,
           text: TextConstant.save,
           icon: IconConstant.success,
           onPressed: () async {
-            if ((formKey.currentState?.validate() ?? false)) {
-              String whatsapp = MaskToken.removeAllMask(whatsappEC.text);
-              whatsapp = "+55$whatsapp";
-              StoreUpdateDto model = StoreUpdateDto(
+            if ((formKey.currentState?.validate() ?? false) &&
+                uploadController.imageFile != null) {
+              String price = MaskToken.formatCurrency(priceEC.text);
+              ProductRegisterDto model = ProductRegisterDto(
                 name: nameEC.text,
                 description: descriptionEC.text,
-                whatsapp: whatsapp,
+                price: price,
+                amount: amountEC.text,
+                storeId: store.id,
               );
+
               try {
-                await storeController.update(store.id, model,
-                    image: uploadController.imageFile);
+                await productController.register(
+                    model, uploadController.imageFile!);
               } finally {
-                if (storeController.isLoading == false) {
+                if (productController.isLoading == false) {
                   uploadController.removeImage();
-                  Navigator.of(context).pushReplacementNamed('/store/my');
+                  Navigator.of(context)
+                      .pushReplacementNamed('/product/my', arguments: store);
                 }
               }
             }

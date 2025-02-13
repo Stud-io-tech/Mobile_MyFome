@@ -8,14 +8,14 @@ import 'package:my_fome/src/ui/controllers/product/product_controller.dart';
 import 'package:my_fome/src/ui/modules/product/widgets/screen/my_product_detail_screen.dart';
 import 'package:uikit/uikit.dart';
 
-class ProductActiveScreenWidget extends StatelessWidget {
-  ProductActiveScreenWidget({super.key});
+class ProductInactiveScreenWidget extends StatelessWidget {
+  ProductInactiveScreenWidget({super.key});
 
   final productController = Injector.get<ProductController>();
 
   @override
   Widget build(BuildContext context) {
-    productController.listProductsActive();
+    productController.listProductsInactive();
     return Observer(
       builder: (_) {
         if (productController.isLoading) {
@@ -23,7 +23,7 @@ class ProductActiveScreenWidget extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         }
-        if (productController.productsActive!.isEmpty) {
+        if (productController.productsInactive!.isEmpty) {
           return BannerError(
               image: ImageErrorConstant.empty,
               text: TextConstant.productNotFound);
@@ -38,11 +38,11 @@ class ProductActiveScreenWidget extends StatelessWidget {
             crossAxisSpacing: 15,
             mainAxisExtent: 270,
           ),
-          itemCount: productController.productsActive?.length ?? 0,
+          itemCount: productController.productsInactive?.length ?? 0,
           itemBuilder: (context, index) {
-            final product = productController.productsActive?[index];
+            final product = productController.productsInactive?[index];
             return ProductItem(
-              icon: IconConstant.remove,
+              icon: IconConstant.restore,
               onTapIcon: () {},
               image: product!.image,
               name: product.name,

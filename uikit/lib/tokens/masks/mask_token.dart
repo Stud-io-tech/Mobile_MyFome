@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:uikit/tokens/masks/currency_input_formatter.dart';
 
 final class MaskToken {
   static final List<TextInputFormatter> phoneInput = [
@@ -25,5 +26,24 @@ final class MaskToken {
   static final RegExp removeMask = RegExp(r'\D');
   static String removeAllMask(String maskedString) {
     return maskedString.replaceAll(RegExp(r'[^\d]'), '');
+  }
+
+
+  static final List<TextInputFormatter> currencyInput = [
+    FilteringTextInputFormatter.digitsOnly,
+    CurrencyInputFormatter(),
+  ];
+
+  static final RegExp currencyOutput = RegExp(r'^(\d+)(\d{2})$');
+  static String currencyOutputMatch(Match m) => '${m[1]}.${m[2]}';
+
+
+  static String formatCurrency(String value) {
+    final match = MaskToken.currencyOutput
+        .firstMatch(value.replaceAll(MaskToken.removeMask, ''));
+    if (match != null) {
+      return MaskToken.currencyOutputMatch(match);
+    }
+    return value;
   }
 }

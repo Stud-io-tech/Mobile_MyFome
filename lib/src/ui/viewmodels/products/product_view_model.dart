@@ -38,10 +38,16 @@ abstract class ProductViewModelBase with Store {
   List<ProductDetailDto>? productsByStore;
 
   @observable
+  List<ProductDetailDto>? productFilterListByStore;
+
+  @observable
   int activeFounds = 0;
 
   @observable
   int inactiveFounds = 0;
+
+  @observable
+  int foundsByStore = 0;
 
   @action
   Future listActive() async {
@@ -87,14 +93,22 @@ abstract class ProductViewModelBase with Store {
               element.name.toLowerCase().contains(name.toLowerCase()))
           .toList();
 
+      productFilterListByStore = productsByStore
+          ?.where((element) =>
+              element.name.toLowerCase().contains(name.toLowerCase()))
+          .toList();
+
+      foundsByStore = productFilterListByStore?.length ?? 0;
       activeFounds = productFilterListActive?.length ?? 0;
       inactiveFounds = productFilterListInactive?.length ?? 0;
     } else {
       productFilterListActive = productsListActive;
       productFilterListInactive = productsListInactive;
+      productFilterListByStore = productsByStore;
 
       activeFounds = productFilterListActive?.length ?? 0;
       inactiveFounds = productFilterListInactive?.length ?? 0;
+      foundsByStore = productFilterListByStore?.length ?? 0;
     }
   }
 
@@ -107,7 +121,7 @@ abstract class ProductViewModelBase with Store {
           TextConstant.sucessCreatingProductTitle,
           TextConstant.sucessCreatingProductMessage,
           IconConstant.success),
-      resultMessageService
+      (failure) => resultMessageService
           .showMessageError(TextConstant.errorCreatingProductMessage),
     );
     isLoading = false;
@@ -122,7 +136,7 @@ abstract class ProductViewModelBase with Store {
           TextConstant.sucessUpdatingProductTitle,
           TextConstant.sucessUpdatingProductMessage,
           IconConstant.edit),
-      resultMessageService
+      (failure) => resultMessageService
           .showMessageError(TextConstant.errorUpdatingProductMessage),
     );
     isLoading = false;
@@ -155,7 +169,11 @@ abstract class ProductViewModelBase with Store {
     isLoading = true;
     final result = await productRepository.listByStore(id);
     result.fold(
-      (success) => productsByStore = success,
+      (success) {
+        productsByStore = success;
+        productFilterListByStore = productsByStore;
+        foundsByStore = productsByStore?.length ?? 0;
+      },
       (failure) => resultMessageService
           .showMessageError(TextConstant.errorListProductsMessage),
     );

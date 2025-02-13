@@ -75,7 +75,6 @@ class AlertOrder extends StatelessWidget {
                   isBackgroundColor: true,
                   onTap: () {
                     orderController.increment(product.amount);
-                    debugPrint(orderController.value.toString());
                   },
                   icon: IconConstant.add,
                 ),

@@ -1,6 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
 import 'package:my_fome/src/domain/dtos/products/product_detail_dto.dart';
+import 'package:my_fome/src/domain/dtos/products/product_register_dto.dart';
+import 'package:my_fome/src/domain/dtos/products/product_update_dto.dart';
 
 import 'package:my_fome/src/ui/viewmodels/products/product_view_model.dart';
 
@@ -22,6 +25,9 @@ abstract class ProductControllerBase with Store {
 
   @computed
   bool get isLoading => productViewModel.isLoading;
+
+  @computed
+  int get foundsByStore => productViewModel.foundsByStore;
 
   @computed
   List<ProductDetailDto>? get productsActive =>
@@ -49,5 +55,13 @@ abstract class ProductControllerBase with Store {
 
   listProductsByStore(String id) async {
     await productViewModel.listByStore(id);
+  }
+
+  register(ProductRegisterDto product, XFile image) async {
+    await productViewModel.register(product, image);
+  }
+
+  update(String id, ProductUpdateDto product, {XFile? image}) async {
+    await productViewModel.update(id, product, image: image);
   }
 }

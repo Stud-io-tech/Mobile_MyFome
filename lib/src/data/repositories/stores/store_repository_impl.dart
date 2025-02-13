@@ -59,8 +59,6 @@ class StoreRepositoryImpl implements StoreRepository {
 
       return Success(resultStore);
     } on DioException catch (e) {
-      debugPrint(e.message);
-      debugPrint(e.response?.data);
       return Failure(
         RestException(
           message: TextConstant.errorCreatingStoreMessage,

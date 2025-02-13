@@ -30,6 +30,13 @@ mixin _$ProductController on ProductControllerBase, Store {
       (_$isLoadingComputed ??= Computed<bool>(() => super.isLoading,
               name: 'ProductControllerBase.isLoading'))
           .value;
+  Computed<int>? _$foundsByStoreComputed;
+
+  @override
+  int get foundsByStore =>
+      (_$foundsByStoreComputed ??= Computed<int>(() => super.foundsByStore,
+              name: 'ProductControllerBase.foundsByStore'))
+          .value;
   Computed<List<ProductDetailDto>?>? _$productsActiveComputed;
 
   @override
@@ -59,6 +66,7 @@ mixin _$ProductController on ProductControllerBase, Store {
 activeFounds: ${activeFounds},
 inactiveFounds: ${inactiveFounds},
 isLoading: ${isLoading},
+foundsByStore: ${foundsByStore},
 productsActive: ${productsActive},
 productsInactive: ${productsInactive},
 productsByStore: ${productsByStore}

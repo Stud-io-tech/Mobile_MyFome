@@ -62,7 +62,9 @@ final class TextConstant {
   static String no = 'Não';
   static String storeProducts = 'Produtos da Loja';
   static String newProduct = 'Novo Produto';
-    static String newStore = 'Nova Loja';
+  static String newStore = 'Nova Loja';
+   static String updateProduct = 'Editar Produto';
+  static String updateStore = 'Editar Loja';
 
   static String editProduct = 'Editar Produto';
 
@@ -90,7 +92,7 @@ final class TextConstant {
   static String storeNotFound = 'Loja não encontrada!';
   static String name = 'Nome';
   static String description = 'Descrição';
-  static String quantity = 'Quantidade';
+  static String amount = 'Quantidade';
   static String price = 'Preço';
   static String whatsapp = 'Whatsapp';
   static String costPerShipping = 'Custo por Frete';
@@ -100,12 +102,16 @@ final class TextConstant {
   static String addQuantity = 'Adicionar quantidade';
 
   static String requiredLogin = 'Você precisa fazer login!';
-    static String loggin = 'Fazer Login';
+  static String loggin = 'Fazer Login';
 
   static String total = 'Total:';
 
-    static String storeName = 'Nome da loja';
-    static String storeDescription = 'Descrição da loja';
-    static String storeWhatsappNumber = 'Whatsapp da loja';
+  static String storeName = 'Nome da loja';
+  static String storeDescription = 'Descrição da loja';
+  static String storeWhatsappNumber = 'Whatsapp da loja';
 
+  static String productName = 'Nome do produto';
+  static String productDescription = 'Descrição do produto';
+  static String productPrice = 'Preço do produto';
+  static String productAmount = 'Quantidade do produto';
 }

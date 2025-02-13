@@ -2,50 +2,62 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_getit/flutter_getit.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:my_fome/src/domain/dtos/products/product_detail_dto.dart';
+import 'package:my_fome/src/domain/dtos/products/product_update_dto.dart';
 import 'package:my_fome/src/domain/dtos/stores/store_detail_dto.dart';
-import 'package:my_fome/src/domain/dtos/stores/store_update_dto.dart';
+import 'package:my_fome/src/ui/controllers/product/product_controller.dart';
 import 'package:my_fome/src/ui/controllers/store/store_controller.dart';
-import 'package:my_fome/src/ui/modules/store/widgets/store_update_form.dart';
+import 'package:my_fome/src/ui/modules/product/widgets/update/product_update_form.dart';
 import 'package:uikit/uikit.dart';
 
 import 'package:my_fome/src/constants/icon_constant.dart';
 import 'package:my_fome/src/constants/text_constant.dart';
 import 'package:my_fome/src/ui/controllers/uploads/upload_controller.dart';
 
-class UpdateStore extends StatefulWidget {
-  const UpdateStore({super.key});
+class UpdateProduct extends StatefulWidget {
+  const UpdateProduct({super.key});
 
   @override
-  State<UpdateStore> createState() => _UpdateStoreState();
+  State<UpdateProduct> createState() => _UpdateProductState();
 }
 
-class _UpdateStoreState extends State<UpdateStore> {
+class _UpdateProductState extends State<UpdateProduct> {
   final formKey = GlobalKey<FormState>();
 
   final nameEC = TextEditingController();
   final descriptionEC = TextEditingController();
-  final whatsappEC = TextEditingController();
 
+  final priceEC = TextEditingController();
+
+  final amountEC = TextEditingController();
+
+  final productController = Injector.get<ProductController>();
   final storeController = Injector.get<StoreController>();
+
   final uploadController = Injector.get<UploadController>();
+
+  late ProductDetailDto product;
 
   late StoreDetailDto store;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    store = ModalRoute.of(context)!.settings.arguments as StoreDetailDto;
-    nameEC.text = store.name;
-    descriptionEC.text = store.description;
-    whatsappEC.text =
-        MaskToken.formatPhoneNumber(store.whatsapp.replaceFirst("+55", ""));
+    product = ModalRoute.of(context)!.settings.arguments as ProductDetailDto;
+    nameEC.text = product.name;
+    descriptionEC.text = product.description;
+    priceEC.text = product.price;
+    amountEC.text = product.amount.toString();
+    storeController.detailStore(product.id);
+    store = storeController.store!;
   }
 
   @override
   void dispose() {
     nameEC.dispose();
     descriptionEC.dispose();
-    whatsappEC.dispose();
+    priceEC.dispose();
+    amountEC.dispose();
     super.dispose();
   }
 
@@ -64,8 +76,7 @@ class _UpdateStoreState extends State<UpdateStore> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       IconButtonLargeDark(
-                        onTap: () => Navigator.of(context)
-                            .pushReplacementNamed('/store/my'),
+                        onTap: () => Navigator.of(context).pop(),
                         icon: IconConstant.arrowLeft,
                       ),
                       const SizedBox(width: SizeToken.sm),
@@ -75,11 +86,12 @@ class _UpdateStoreState extends State<UpdateStore> {
                 ],
               ),
               const SizedBox(height: SizeToken.lg),
-              StoreUpdateForm(
-                image: store.image,
+              ProductUpdateForm(
+                image: product.image,
                 nameEC: nameEC,
                 descriptionEC: descriptionEC,
-                whatsappEC: whatsappEC,
+                priceEC: priceEC,
+                amountEC: amountEC,
                 formKey: formKey,
               ),
             ],
@@ -88,25 +100,28 @@ class _UpdateStoreState extends State<UpdateStore> {
       ),
       bottomNavigationBar: Observer(builder: (_) {
         return ButtonLarge(
-          isLoading: storeController.isLoading,
+          isLoading: productController.isLoading,
           text: TextConstant.save,
           icon: IconConstant.success,
           onPressed: () async {
             if ((formKey.currentState?.validate() ?? false)) {
-              String whatsapp = MaskToken.removeAllMask(whatsappEC.text);
-              whatsapp = "+55$whatsapp";
-              StoreUpdateDto model = StoreUpdateDto(
+              String price = MaskToken.formatCurrency(priceEC.text);
+
+              ProductUpdateDto model = ProductUpdateDto(
                 name: nameEC.text,
                 description: descriptionEC.text,
-                whatsapp: whatsapp,
+                price: price,
+                amount: amountEC.text,
+                storeId: product.storeId,
               );
               try {
-                await storeController.update(store.id, model,
+                await productController.update(product.id, model,
                     image: uploadController.imageFile);
               } finally {
-                if (storeController.isLoading == false) {
+                if (productController.isLoading == false) {
                   uploadController.removeImage();
-                  Navigator.of(context).pushReplacementNamed('/store/my');
+                  Navigator.of(context)
+                      .pushReplacementNamed('/store/my', arguments: store);
                 }
               }
             }

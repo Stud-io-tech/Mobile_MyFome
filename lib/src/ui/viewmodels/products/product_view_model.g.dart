@@ -108,6 +108,23 @@ mixin _$ProductViewModel on ProductViewModelBase, Store {
     });
   }
 
+  late final _$productFilterListByStoreAtom = Atom(
+      name: 'ProductViewModelBase.productFilterListByStore', context: context);
+
+  @override
+  List<ProductDetailDto>? get productFilterListByStore {
+    _$productFilterListByStoreAtom.reportRead();
+    return super.productFilterListByStore;
+  }
+
+  @override
+  set productFilterListByStore(List<ProductDetailDto>? value) {
+    _$productFilterListByStoreAtom
+        .reportWrite(value, super.productFilterListByStore, () {
+      super.productFilterListByStore = value;
+    });
+  }
+
   late final _$activeFoundsAtom =
       Atom(name: 'ProductViewModelBase.activeFounds', context: context);
 
@@ -137,6 +154,22 @@ mixin _$ProductViewModel on ProductViewModelBase, Store {
   set inactiveFounds(int value) {
     _$inactiveFoundsAtom.reportWrite(value, super.inactiveFounds, () {
       super.inactiveFounds = value;
+    });
+  }
+
+  late final _$foundsByStoreAtom =
+      Atom(name: 'ProductViewModelBase.foundsByStore', context: context);
+
+  @override
+  int get foundsByStore {
+    _$foundsByStoreAtom.reportRead();
+    return super.foundsByStore;
+  }
+
+  @override
+  set foundsByStore(int value) {
+    _$foundsByStoreAtom.reportWrite(value, super.foundsByStore, () {
+      super.foundsByStore = value;
     });
   }
 
@@ -196,8 +229,10 @@ productsListInactive: ${productsListInactive},
 productFilterListActive: ${productFilterListActive},
 productFilterListInactive: ${productFilterListInactive},
 productsByStore: ${productsByStore},
+productFilterListByStore: ${productFilterListByStore},
 activeFounds: ${activeFounds},
-inactiveFounds: ${inactiveFounds}
+inactiveFounds: ${inactiveFounds},
+foundsByStore: ${foundsByStore}
     ''';
   }
 }

@@ -123,8 +123,8 @@ class ProdutcRepositoryImpl implements ProdutcRepository {
   @override
   AsyncResult<List<ProductDetailDto>> listInactive() async {
     try {
-      final Response response =
-          await clientService.get("${ApiConstant.product}/disabled");
+      final Response response = await clientService
+          .get("${ApiConstant.product}/disabled", requiresAuth: true);
       final List<dynamic> resultProducts = response.data['products'];
       final List<ProductDetailDto> productsList = resultProducts
           .map((item) => ProductDetailDto.fromMap(item as Map<String, dynamic>))
