@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:uikit/uikit.dart';
 
 class InputSearch extends StatelessWidget {
-  final void Function(String) onChanged;
+  final void Function(String)? onChanged;
   final String hintText;
   final String icon;
   const InputSearch({
     super.key,
-    required this.onChanged,
+    this.onChanged,
     required this.hintText,
     required this.icon,
   });

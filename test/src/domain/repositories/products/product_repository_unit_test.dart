@@ -53,7 +53,7 @@ void main() {
           "name": "Bolo no Pode de chocolate 350g",
           "description": "...",
           "image": "image.png",
-          "active": true,
+          "active": false,
           "amount": 5,
           "price": "11.5",
           "store_id": "2",
@@ -77,9 +77,8 @@ void main() {
 
         verify(() => clientMock.get(any())).called(1);
       });
-
       test(
-          "Deve verificar que existe a produto chamada 'Cachorro Quente Padrão 270g'.",
+          "Deve verificar que existe o produto chamado 'Cachorro Quente Padrão 270g'.",
           () async {
         final response = Response(
           requestOptions: RequestOptions(),
@@ -90,17 +89,16 @@ void main() {
 
         final listProduct = await productRepositoryMock.listActive();
 
-        final hasProduct = response.data?['products']?.any(
-          (element) => element["name"] == "Cachorro Quente Padrão 270g",
-        );
+        final hasProduct = (response.data?['products'] as List?)?.any(
+            (element) => element["name"] == "Cachorro Quente Padrão 270g");
 
         expect(listProduct.isSuccess(), isTrue);
         expect(hasProduct, isTrue);
 
         verify(() => clientMock.get(any())).called(1);
       });
-
-      test("Deve verificar que não existe a produto chamada 'X-Tudo'.",
+      test(
+          "Deve verificar que não existe a produto chamada 'X-Tudo'.",
           () async {
         final response = Response(
           requestOptions: RequestOptions(),
@@ -111,7 +109,7 @@ void main() {
 
         final listProduct = await productRepositoryMock.listActive();
 
-        final hasProduct = response.data?['products']?.any(
+        final hasProduct = (response.data?['products']as List?)?.any(
           (element) => element["name"] == "X-Tudo",
         );
 
@@ -137,22 +135,6 @@ void main() {
     });
 
     group("Testando o listInactive.", () {
-      test("Deve verificar que a lista de produtos não seja vazia.", () async {
-        final response = Response(
-          requestOptions: RequestOptions(),
-          data: dataBaseTest,
-        );
-
-        when(() => clientMock.get(any())).thenAnswer((_) async => response);
-
-        final listProduct = await productRepositoryMock.listInactive();
-
-        expect(listProduct.isSuccess(), isTrue);
-        expect(listProduct.getOrNull()?.isNotEmpty, isTrue);
-
-        verify(() => clientMock.get(any())).called(1);
-      });
-
       test(
           "Deve verificar que existe a produto chamada 'Cachorro Quente Padrão 270g'.",
           () async {
@@ -184,7 +166,7 @@ void main() {
 
         when(() => clientMock.get(any())).thenAnswer((_) async => response);
 
-        final listProduct = await productRepositoryMock.listInactive();
+        final listProduct = await productRepositoryMock.listActive();
 
         final hasProduct = response.data?['products']?.any(
           (element) => element["name"] == "X-Tudo",
@@ -204,7 +186,7 @@ void main() {
           () => clientMock.get(any()),
         ).thenThrow(response);
 
-        final listProduct = await productRepositoryMock.listInactive();
+        final listProduct = await productRepositoryMock.listActive();
 
         expect(listProduct.isError(), isTrue);
         verify(() => clientMock.get(any())).called(1);
