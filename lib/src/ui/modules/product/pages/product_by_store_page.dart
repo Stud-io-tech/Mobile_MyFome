@@ -11,18 +11,28 @@ import 'package:my_fome/src/ui/controllers/product/product_controller.dart';
 import 'package:my_fome/src/ui/modules/home/widgets/screens/product_detail_screen_widget.dart';
 import 'package:uikit/uikit.dart';
 
-class ProductByStorePage extends StatelessWidget {
+class ProductByStorePage extends StatefulWidget {
   final StoreDetailDto store;
-  ProductByStorePage({
+  const ProductByStorePage({
     super.key,
     required this.store,
   });
 
+  @override
+  State<ProductByStorePage> createState() => _ProductByStorePageState();
+}
+
+class _ProductByStorePageState extends State<ProductByStorePage> {
   final productController = Injector.get<ProductController>();
+
+@override
+  void initState() {
+    super.initState();
+    productController.listProductsByStore(widget.store.id);
+  }
 
   @override
   Widget build(BuildContext context) {
-    productController.listProductsByStore(store.id);
     return Scaffold(
       body: ContentDefault(
         child: Column(
@@ -40,7 +50,7 @@ class ProductByStorePage extends StatelessWidget {
                 const SizedBox(
                   width: SizeToken.sm,
                 ),
-                TextHeadlineH2(text: store.name)
+                TextHeadlineH2(text: widget.store.name)
               ],
             ),
             SingleChildScrollView(

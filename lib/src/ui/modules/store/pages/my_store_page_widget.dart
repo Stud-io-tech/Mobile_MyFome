@@ -28,8 +28,14 @@ class _MyStorePageState extends State<MyStorePage> {
   final storeController = Injector.get<StoreController>();
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     storeController.detailStore(authController.store!.id);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+  
 
     return Observer(builder: (_) {
       if (storeController.isLoading) {

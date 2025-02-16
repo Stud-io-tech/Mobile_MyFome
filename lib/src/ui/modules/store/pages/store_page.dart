@@ -8,10 +8,20 @@ import 'package:my_fome/src/ui/controllers/store/store_controller.dart';
 import 'package:my_fome/src/ui/modules/home/widgets/screens/store_detail_screen_widget.dart';
 import 'package:uikit/uikit.dart';
 
-class StorePage extends StatelessWidget {
-  StorePage({super.key});
+class StorePage extends StatefulWidget {
+  const StorePage({super.key});
 
+  @override
+  State<StorePage> createState() => _StorePageState();
+}
+
+class _StorePageState extends State<StorePage> {
   final storeController = Injector.get<StoreController>();
+  @override
+  void initState() {
+    super.initState();
+    storeController.listStore();
+  }
 
   @override
   Widget build(BuildContext context) {

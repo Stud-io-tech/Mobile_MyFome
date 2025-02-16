@@ -11,7 +11,7 @@ class ProductModule extends FlutterGetItModule {
 
   @override
   Map<String, WidgetBuilder> get pages => {
-        '/': (context) => ProductPage(),
+        '/': (context) => const ProductPage(),
         '/my': (context) => const ProductByMyStorePage(),
         '/register': (context) => const RegisterProduct(),
         '/update': (context) => const UpdateProduct(),

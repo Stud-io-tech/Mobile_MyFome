@@ -48,7 +48,6 @@ class _UpdateProductState extends State<UpdateProduct> {
     descriptionEC.text = product.description;
     priceEC.text = product.price;
     amountEC.text = product.amount.toString();
-    storeController.detailStore(product.id);
     store = storeController.store!;
   }
 
@@ -80,7 +79,7 @@ class _UpdateProductState extends State<UpdateProduct> {
                         icon: IconConstant.arrowLeft,
                       ),
                       const SizedBox(width: SizeToken.sm),
-                      TextHeadlineH2(text: TextConstant.updateStore),
+                      TextHeadlineH2(text: TextConstant.updateProduct),
                     ],
                   ),
                 ],

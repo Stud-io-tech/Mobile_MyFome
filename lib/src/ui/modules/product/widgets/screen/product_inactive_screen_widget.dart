@@ -8,14 +8,23 @@ import 'package:my_fome/src/ui/controllers/product/product_controller.dart';
 import 'package:my_fome/src/ui/modules/product/widgets/screen/my_product_detail_screen.dart';
 import 'package:uikit/uikit.dart';
 
-class ProductInactiveScreenWidget extends StatelessWidget {
-  ProductInactiveScreenWidget({super.key});
+class ProductInactiveScreenWidget extends StatefulWidget {
+  const ProductInactiveScreenWidget({super.key});
 
+  @override
+  State<ProductInactiveScreenWidget> createState() => _ProductInactiveScreenWidgetState();
+}
+
+class _ProductInactiveScreenWidgetState extends State<ProductInactiveScreenWidget> {
   final productController = Injector.get<ProductController>();
+  @override
+  void initState() {
+    super.initState();
+    productController.listProductsInactive();
+  }
 
   @override
   Widget build(BuildContext context) {
-    productController.listProductsInactive();
     return Observer(
       builder: (_) {
         if (productController.isLoading) {

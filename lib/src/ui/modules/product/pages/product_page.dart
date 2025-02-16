@@ -8,10 +8,20 @@ import 'package:my_fome/src/ui/controllers/product/product_controller.dart';
 import 'package:my_fome/src/ui/modules/home/widgets/screens/product_detail_screen_widget.dart';
 import 'package:uikit/uikit.dart';
 
-class ProductPage extends StatelessWidget {
-  ProductPage({super.key});
+class ProductPage extends StatefulWidget {
+  const ProductPage({super.key});
 
+  @override
+  State<ProductPage> createState() => _ProductPageState();
+}
+
+class _ProductPageState extends State<ProductPage> {
   final productController = Injector.get<ProductController>();
+  @override
+  void initState() {
+    super.initState();
+    productController.listProductsActive();
+  }
 
   @override
   Widget build(BuildContext context) {

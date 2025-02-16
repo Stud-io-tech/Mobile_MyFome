@@ -11,20 +11,29 @@ import 'package:my_fome/src/ui/controllers/store/store_controller.dart';
 import 'package:my_fome/src/ui/modules/home/widgets/screens/store_detail_screen_widget.dart';
 import 'package:uikit/uikit.dart';
 
-class MyProductDetailScreen extends StatelessWidget {
+class MyProductDetailScreen extends StatefulWidget {
   final ProductDetailDto product;
-  MyProductDetailScreen({
+  const MyProductDetailScreen({
     super.key,
     required this.product,
   });
 
-  final storeController = Injector.get<StoreController>();
-    final productController = Injector.get<ProductController>();
+  @override
+  State<MyProductDetailScreen> createState() => _MyProductDetailScreenState();
+}
 
+class _MyProductDetailScreenState extends State<MyProductDetailScreen> {
+  final storeController = Injector.get<StoreController>();
+
+  final productController = Injector.get<ProductController>();
+  @override
+  void initState() {
+    super.initState();
+    storeController.detailStore(widget.product.storeId);
+  }
 
   @override
   Widget build(BuildContext context) {
-    storeController.detailStore(product.storeId);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -33,9 +42,10 @@ class MyProductDetailScreen extends StatelessWidget {
           children: [
             ImageDetail(
               iconRigth: IconConstant.edit,
-              onTapIconRight: () => Navigator.of(context)
-                  .pushReplacementNamed('/product/update', arguments: product),
-              image: product.image,
+              onTapIconRight: () => Navigator.of(context).pushReplacementNamed(
+                  '/product/update',
+                  arguments: widget.product),
+              image: widget.product.image,
               iconLeft: IconConstant.arrowLeft,
               onTapIconLeft: () => Navigator.of(context).pop(),
             ),
@@ -50,13 +60,13 @@ class MyProductDetailScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
-                        child: TextHeadlineH1(text: product.name),
+                        child: TextHeadlineH1(text: widget.product.name),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: SizeToken.sm),
                         child: TextHeadlineH1(
                           text: TextConstant.monetaryValue(
-                            double.parse(product.price),
+                            double.parse(widget.product.price),
                           ),
                         ),
                       ),
@@ -66,7 +76,7 @@ class MyProductDetailScreen extends StatelessWidget {
                     height: SizeToken.md,
                   ),
                   TextBodyB1SemiDark(
-                    text: product.description,
+                    text: widget.product.description,
                   ),
                   const SizedBox(
                     height: SizeToken.md,

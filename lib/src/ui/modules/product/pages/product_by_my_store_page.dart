@@ -140,7 +140,7 @@ class _ProductByMyStorePageState extends State<ProductByMyStorePage> {
                 ),
                 IndexedStack(
                   index: controller.currentIndex,
-                  children: [
+                  children: const [
                     ProductActiveScreenWidget(),
                     ProductInactiveScreenWidget(),
                   ],

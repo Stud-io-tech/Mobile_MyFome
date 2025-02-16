@@ -40,7 +40,7 @@ class StoreModule extends FlutterGetItModule {
 
   @override
   Map<String, WidgetBuilder> get pages => {
-        '/': (context) => StorePage(),
+        '/': (context) => const StorePage(),
         '/my': (context) => const MyStorePage(),
         '/register': (context) => const RegisterStore(),
         '/update': (context) => const UpdateStore(),
