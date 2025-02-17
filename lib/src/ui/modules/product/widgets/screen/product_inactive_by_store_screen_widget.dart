@@ -1,26 +1,39 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_getit/flutter_getit.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:my_fome/src/ui/controllers/store/store_controller.dart';
+import 'package:uikit/uikit.dart';
+
 import 'package:my_fome/src/constants/icon_constant.dart';
 import 'package:my_fome/src/constants/image_error_constant.dart';
 import 'package:my_fome/src/constants/text_constant.dart';
 import 'package:my_fome/src/ui/controllers/product/product_controller.dart';
 import 'package:my_fome/src/ui/modules/product/widgets/screen/my_product_detail_screen.dart';
-import 'package:uikit/uikit.dart';
 
-class ProductInactiveScreenWidget extends StatefulWidget {
-  const ProductInactiveScreenWidget({super.key});
+class ProductInactiveByStoreScreenWidget extends StatefulWidget {
+  final String storeId;
+
+  const ProductInactiveByStoreScreenWidget({
+    super.key,
+    required this.storeId,
+  });
 
   @override
-  State<ProductInactiveScreenWidget> createState() => _ProductInactiveScreenWidgetState();
+  State<ProductInactiveByStoreScreenWidget> createState() =>
+      _ProductInactiveScreenWidgetState();
 }
 
-class _ProductInactiveScreenWidgetState extends State<ProductInactiveScreenWidget> {
+class _ProductInactiveScreenWidgetState
+    extends State<ProductInactiveByStoreScreenWidget> {
   final productController = Injector.get<ProductController>();
+  final storeController = Injector.get<StoreController>();
+
   @override
   void initState() {
     super.initState();
-    productController.listProductsInactive();
+    productController.listProductsInactiveByStore(widget.storeId);
+    storeController.detailStore(widget.storeId);
   }
 
   @override
@@ -32,7 +45,7 @@ class _ProductInactiveScreenWidgetState extends State<ProductInactiveScreenWidge
             child: CircularProgressIndicator(),
           );
         }
-        if (productController.productsInactive!.isEmpty) {
+        if (productController.productFilterListInactiveByStore!.isEmpty) {
           return BannerError(
               image: ImageErrorConstant.empty,
               text: TextConstant.productNotFound);
@@ -47,12 +60,29 @@ class _ProductInactiveScreenWidgetState extends State<ProductInactiveScreenWidge
             crossAxisSpacing: 15,
             mainAxisExtent: 270,
           ),
-          itemCount: productController.productsInactive?.length ?? 0,
+          itemCount:
+              productController.productFilterListInactiveByStore?.length ?? 0,
           itemBuilder: (context, index) {
-            final product = productController.productsInactive?[index];
+            final product =
+                productController.productFilterListInactiveByStore?[index];
             return ProductItem(
               icon: IconConstant.restore,
-              onTapIcon: () {},
+              onTapIcon: () => showCustomModalBottomSheet(
+                context: context,
+                builder: (context) => ModalSheet(
+                  iconBack: IconConstant.arrowLeft,
+                  title: TextConstant.reactivedProductTitle,
+                  description: TextConstant.reactivedProductMessage(product.name),
+                  cancelText: TextConstant.no,
+                  continueText: TextConstant.yes,
+                  isLoading: productController.isLoading,
+                  continueOnTap: () {
+                    productController.toggleActive(
+                        product.id, storeController.store!.id);
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
               image: product!.image,
               name: product.name,
               quantity: TextConstant.quantityAvailable(product.amount),

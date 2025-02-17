@@ -35,8 +35,6 @@ class _MyStorePageState extends State<MyStorePage> {
 
   @override
   Widget build(BuildContext context) {
-  
-
     return Observer(builder: (_) {
       if (storeController.isLoading) {
         return const Center(
@@ -44,7 +42,7 @@ class _MyStorePageState extends State<MyStorePage> {
         );
       }
       StoreDetailDto store = storeController.store!;
-      productController.listProductsByStore(store.id);
+      productController.listProductsActiveByStore(store.id);
       return Scaffold(
         body: SingleChildScrollView(
           child: Column(
@@ -113,7 +111,8 @@ class _MyStorePageState extends State<MyStorePage> {
                       height: SizeToken.sm,
                     ),
                     Observer(builder: (context) {
-                      final products = productController.productsByStore;
+                      final products =
+                          productController.productFilterListActiveByStore;
                       if (productController.isLoading) {
                         return const Center(
                           child: CircularProgressIndicator(),
@@ -135,17 +134,40 @@ class _MyStorePageState extends State<MyStorePage> {
                             crossAxisSpacing: 15,
                             mainAxisExtent: 175,
                           ),
-                          itemCount: productController.productsByStore != null
-                              ? (productController.productsByStore!.length > 5
+                          itemCount: productController
+                                      .productFilterListActiveByStore !=
+                                  null
+                              ? (productController
+                                          .productFilterListActiveByStore!
+                                          .length >
+                                      5
                                   ? 5
-                                  : productController.productsByStore!.length)
+                                  : productController
+                                      .productFilterListActiveByStore!.length)
                               : 0,
                           itemBuilder: (context, index) {
-                            final product =
-                                productController.productsByStore?[index];
+                            final product = productController
+                                .productFilterListActiveByStore?[index];
                             return ProductItem(
                               icon: IconConstant.remove,
-                              onTapIcon: () {},
+                              onTapIcon: () => showCustomModalBottomSheet(
+                                context: context,
+                                builder: (context) => ModalSheet(
+                                  iconBack: IconConstant.arrowLeft,
+                                  title: TextConstant.suspendProductTitle,
+                                  description:
+                                      TextConstant.suspendProductMessage(
+                                          product.name),
+                                  cancelText: TextConstant.no,
+                                  continueText: TextConstant.yes,
+                                  isLoading: productController.isLoading,
+                                  continueOnTap: () {
+                                    productController.toggleActive(
+                                        product.id, storeController.store!.id);
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ),
                               image: product!.image,
                               name: product.name,
                               quantity: TextConstant.quantityAvailable(

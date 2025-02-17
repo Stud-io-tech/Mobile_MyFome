@@ -120,11 +120,12 @@ class ProdutcRepositoryImpl implements ProdutcRepository {
     }
   }
 
+
   @override
-  AsyncResult<List<ProductDetailDto>> listInactive() async {
+  AsyncResult<List<ProductDetailDto>> listActiveByStore(String id) async {
     try {
-      final Response response = await clientService
-          .get("${ApiConstant.product}/disabled", requiresAuth: true);
+      final Response response =
+          await clientService.get("${ApiConstant.product}?store=$id");
       final List<dynamic> resultProducts = response.data['products'];
       final List<ProductDetailDto> productsList = resultProducts
           .map((item) => ProductDetailDto.fromMap(item as Map<String, dynamic>))
@@ -138,12 +139,12 @@ class ProdutcRepositoryImpl implements ProdutcRepository {
       );
     }
   }
-
+  
   @override
-  AsyncResult<List<ProductDetailDto>> listByStore(String id) async {
+  AsyncResult<List<ProductDetailDto>> listInactiveByStore(String id) async{
     try {
-      final Response response =
-          await clientService.get("${ApiConstant.product}/?store=$id");
+      final Response response = await clientService
+          .get("${ApiConstant.product}/disabled/$id", requiresAuth: true);
       final List<dynamic> resultProducts = response.data['products'];
       final List<ProductDetailDto> productsList = resultProducts
           .map((item) => ProductDetailDto.fromMap(item as Map<String, dynamic>))

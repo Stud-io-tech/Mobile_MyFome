@@ -58,7 +58,7 @@ class _ProductScreenState extends State<ProductScreen> {
                 child: CircularProgressIndicator(),
               );
             }
-            if (productController.productsActive!.isEmpty) {
+            if (productController.productFilterListActive!.isEmpty) {
               return BannerError(
                   image: ImageErrorConstant.empty,
                   text: TextConstant.productNotFound);
@@ -74,9 +74,9 @@ class _ProductScreenState extends State<ProductScreen> {
                 crossAxisSpacing: 15,
                 mainAxisExtent: 270,
               ),
-              itemCount: productController.productsActive?.length ?? 0,
+              itemCount: productController.productFilterListActive?.length ?? 0,
               itemBuilder: (context, index) {
-                final product = productController.productsActive?[index];
+                final product = productController.productFilterListActive?[index];
                 return ProductItem(
                   image: product!.image,
                   name: product.name,

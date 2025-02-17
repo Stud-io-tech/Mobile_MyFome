@@ -8,6 +8,7 @@ class ModalSheet extends StatelessWidget {
   final String description;
   final String cancelText;
   final String continueText;
+  final bool isLoading;
   final void Function() continueOnTap;
   const ModalSheet({
     super.key,
@@ -16,6 +17,7 @@ class ModalSheet extends StatelessWidget {
     required this.description,
     required this.cancelText,
     required this.continueText,
+    this.isLoading = false,
     required this.continueOnTap,
   });
 
@@ -64,6 +66,7 @@ class ModalSheet extends StatelessWidget {
                 ),
                 Expanded(
                   child: ButtonProgress(
+                    isLoading: isLoading,
                     text: continueText,
                     onPressed: continueOnTap,
                   ),

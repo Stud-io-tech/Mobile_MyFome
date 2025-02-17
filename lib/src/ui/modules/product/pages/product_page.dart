@@ -78,7 +78,7 @@ class _ProductPageState extends State<ProductPage> {
                           child: CircularProgressIndicator(),
                         );
                       }
-                      if (productController.productsActive!.isEmpty) {
+                      if (productController.productFilterListActive!.isEmpty) {
                         return BannerError(
                             image: ImageErrorConstant.empty,
                             text: TextConstant.productNotFound);
@@ -96,10 +96,10 @@ class _ProductPageState extends State<ProductPage> {
                           mainAxisExtent: 270,
                         ),
                         itemCount:
-                            productController.productsActive?.length ?? 0,
+                            productController.productFilterListActive?.length ?? 0,
                         itemBuilder: (context, index) {
                           final product =
-                              productController.productsActive?[index];
+                              productController.productFilterListActive?[index];
                           return ProductItem(
                             image: product!.image,
                             name: product.name,

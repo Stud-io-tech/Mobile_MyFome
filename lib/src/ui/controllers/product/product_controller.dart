@@ -18,43 +18,43 @@ abstract class ProductControllerBase with Store {
   });
 
   @computed
-  int get activeFounds => productViewModel.activeFounds;
+  int get activeFounds => productViewModel.foundActive;
 
   @computed
-  int get inactiveFounds => productViewModel.inactiveFounds;
+  int get activeFoundsByStore => productViewModel.foundActiveByStore;
+
+  @computed
+  int get inactiveFoundsByStore => productViewModel.foundInactiveByStore;
 
   @computed
   bool get isLoading => productViewModel.isLoading;
 
   @computed
-  int get foundsByStore => productViewModel.foundsByStore;
-
-  @computed
-  List<ProductDetailDto>? get productsActive =>
+  List<ProductDetailDto>? get productFilterListActive =>
       productViewModel.productFilterListActive;
 
   @computed
-  List<ProductDetailDto>? get productsInactive =>
-      productViewModel.productFilterListInactive;
+  List<ProductDetailDto>? get productFilterListInactiveByStore =>
+      productViewModel.productFilterListInactiveByStore;
 
   @computed
-  List<ProductDetailDto>? get productsByStore =>
-      productViewModel.productsByStore;
+  List<ProductDetailDto>? get productFilterListActiveByStore =>
+      productViewModel.productFilterListActiveByStore;
 
   listProductsActive() async {
     await productViewModel.listActive();
-  }
-
-  listProductsInactive() async {
-    await productViewModel.listInactive();
   }
 
   filterProducts(String name) {
     productViewModel.listFilterByName(name);
   }
 
-  listProductsByStore(String id) async {
-    await productViewModel.listByStore(id);
+  listProductsActiveByStore(String id) async {
+    await productViewModel.listActiveByStore(id);
+  }
+
+  listProductsInactiveByStore(String id) async {
+    await productViewModel.listInactiveByStore(id);
   }
 
   register(ProductRegisterDto product, XFile image) async {
@@ -63,5 +63,11 @@ abstract class ProductControllerBase with Store {
 
   update(String id, ProductUpdateDto product, {XFile? image}) async {
     await productViewModel.update(id, product, image: image);
+  }
+
+  toggleActive(String productId, String storeId) async {
+    await productViewModel.toggleActive(productId);
+    await listProductsActiveByStore(storeId);
+    await listProductsInactiveByStore(storeId);
   }
 }

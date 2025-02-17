@@ -16,13 +16,20 @@ mixin _$ProductController on ProductControllerBase, Store {
       (_$activeFoundsComputed ??= Computed<int>(() => super.activeFounds,
               name: 'ProductControllerBase.activeFounds'))
           .value;
-  Computed<int>? _$inactiveFoundsComputed;
+  Computed<int>? _$activeFoundsByStoreComputed;
 
   @override
-  int get inactiveFounds =>
-      (_$inactiveFoundsComputed ??= Computed<int>(() => super.inactiveFounds,
-              name: 'ProductControllerBase.inactiveFounds'))
-          .value;
+  int get activeFoundsByStore => (_$activeFoundsByStoreComputed ??=
+          Computed<int>(() => super.activeFoundsByStore,
+              name: 'ProductControllerBase.activeFoundsByStore'))
+      .value;
+  Computed<int>? _$inactiveFoundsByStoreComputed;
+
+  @override
+  int get inactiveFoundsByStore => (_$inactiveFoundsByStoreComputed ??=
+          Computed<int>(() => super.inactiveFoundsByStore,
+              name: 'ProductControllerBase.inactiveFoundsByStore'))
+      .value;
   Computed<bool>? _$isLoadingComputed;
 
   @override
@@ -30,46 +37,44 @@ mixin _$ProductController on ProductControllerBase, Store {
       (_$isLoadingComputed ??= Computed<bool>(() => super.isLoading,
               name: 'ProductControllerBase.isLoading'))
           .value;
-  Computed<int>? _$foundsByStoreComputed;
+  Computed<List<ProductDetailDto>?>? _$productFilterListActiveComputed;
 
   @override
-  int get foundsByStore =>
-      (_$foundsByStoreComputed ??= Computed<int>(() => super.foundsByStore,
-              name: 'ProductControllerBase.foundsByStore'))
+  List<ProductDetailDto>? get productFilterListActive =>
+      (_$productFilterListActiveComputed ??= Computed<List<ProductDetailDto>?>(
+              () => super.productFilterListActive,
+              name: 'ProductControllerBase.productFilterListActive'))
           .value;
-  Computed<List<ProductDetailDto>?>? _$productsActiveComputed;
+  Computed<List<ProductDetailDto>?>? _$productFilterListInactiveByStoreComputed;
 
   @override
-  List<ProductDetailDto>? get productsActive => (_$productsActiveComputed ??=
-          Computed<List<ProductDetailDto>?>(() => super.productsActive,
-              name: 'ProductControllerBase.productsActive'))
-      .value;
-  Computed<List<ProductDetailDto>?>? _$productsInactiveComputed;
-
-  @override
-  List<ProductDetailDto>? get productsInactive =>
-      (_$productsInactiveComputed ??= Computed<List<ProductDetailDto>?>(
-              () => super.productsInactive,
-              name: 'ProductControllerBase.productsInactive'))
+  List<ProductDetailDto>? get productFilterListInactiveByStore =>
+      (_$productFilterListInactiveByStoreComputed ??=
+              Computed<List<ProductDetailDto>?>(
+                  () => super.productFilterListInactiveByStore,
+                  name:
+                      'ProductControllerBase.productFilterListInactiveByStore'))
           .value;
-  Computed<List<ProductDetailDto>?>? _$productsByStoreComputed;
+  Computed<List<ProductDetailDto>?>? _$productFilterListActiveByStoreComputed;
 
   @override
-  List<ProductDetailDto>? get productsByStore => (_$productsByStoreComputed ??=
-          Computed<List<ProductDetailDto>?>(() => super.productsByStore,
-              name: 'ProductControllerBase.productsByStore'))
-      .value;
+  List<ProductDetailDto>? get productFilterListActiveByStore =>
+      (_$productFilterListActiveByStoreComputed ??=
+              Computed<List<ProductDetailDto>?>(
+                  () => super.productFilterListActiveByStore,
+                  name: 'ProductControllerBase.productFilterListActiveByStore'))
+          .value;
 
   @override
   String toString() {
     return '''
 activeFounds: ${activeFounds},
-inactiveFounds: ${inactiveFounds},
+activeFoundsByStore: ${activeFoundsByStore},
+inactiveFoundsByStore: ${inactiveFoundsByStore},
 isLoading: ${isLoading},
-foundsByStore: ${foundsByStore},
-productsActive: ${productsActive},
-productsInactive: ${productsInactive},
-productsByStore: ${productsByStore}
+productFilterListActive: ${productFilterListActive},
+productFilterListInactiveByStore: ${productFilterListInactiveByStore},
+productFilterListActiveByStore: ${productFilterListActiveByStore}
     ''';
   }
 }

@@ -28,7 +28,7 @@ class _ProductByStorePageState extends State<ProductByStorePage> {
 @override
   void initState() {
     super.initState();
-    productController.listProductsByStore(widget.store.id);
+    productController.listProductsActiveByStore(widget.store.id);
   }
 
   @override
@@ -72,7 +72,7 @@ class _ProductByStorePageState extends State<ProductByStorePage> {
                       alignment: Alignment.centerRight,
                       child: TextBodyB2SemiDark(
                         text:
-                            TextConstant.found(productController.foundsByStore),
+                            TextConstant.found(productController.activeFoundsByStore),
                       ),
                     );
                   }),
@@ -86,7 +86,7 @@ class _ProductByStorePageState extends State<ProductByStorePage> {
                           child: CircularProgressIndicator(),
                         );
                       }
-                      if (productController.productsByStore!.isEmpty) {
+                      if (productController.productFilterListActiveByStore!.isEmpty) {
                         return BannerError(
                             image: ImageErrorConstant.empty,
                             text: TextConstant.productNotFound);
@@ -104,10 +104,10 @@ class _ProductByStorePageState extends State<ProductByStorePage> {
                           mainAxisExtent: 270,
                         ),
                         itemCount:
-                            productController.productsByStore?.length ?? 0,
+                            productController.productFilterListActiveByStore?.length ?? 0,
                         itemBuilder: (context, index) {
                           final product =
-                              productController.productsByStore?[index];
+                              productController.productFilterListActiveByStore?[index];
                           return ProductItem(
                             image: product!.image,
                             name: product.name,

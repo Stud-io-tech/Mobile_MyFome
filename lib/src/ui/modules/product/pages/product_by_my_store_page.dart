@@ -7,8 +7,8 @@ import 'package:my_fome/src/constants/text_constant.dart';
 import 'package:my_fome/src/domain/dtos/stores/store_detail_dto.dart';
 import 'package:my_fome/src/ui/controllers/product/product_controller.dart';
 import 'package:my_fome/src/ui/modules/product/controller/button_navigator/button_navigator_menu_controller.dart';
-import 'package:my_fome/src/ui/modules/product/widgets/screen/product_active_screen_widget.dart';
-import 'package:my_fome/src/ui/modules/product/widgets/screen/product_inactive_screen_widget.dart';
+import 'package:my_fome/src/ui/modules/product/widgets/screen/product_active_by_store_screen_widget.dart';
+import 'package:my_fome/src/ui/modules/product/widgets/screen/product_inactive_by_store_screen_widget.dart';
 import 'package:uikit/uikit.dart';
 
 class ProductByMyStorePage extends StatefulWidget {
@@ -84,9 +84,9 @@ class _ProductByMyStorePageState extends State<ProductByMyStorePage> {
                     alignment: Alignment.centerRight,
                     child: TextBodyB2SemiDark(
                       text: controller.currentIndex == 0
-                          ? TextConstant.found(productController.activeFounds)
+                          ? TextConstant.found(productController.activeFoundsByStore)
                           : TextConstant.found(
-                              productController.inactiveFounds),
+                              productController.inactiveFoundsByStore),
                     ),
                   );
                 }),
@@ -140,9 +140,9 @@ class _ProductByMyStorePageState extends State<ProductByMyStorePage> {
                 ),
                 IndexedStack(
                   index: controller.currentIndex,
-                  children: const [
-                    ProductActiveScreenWidget(),
-                    ProductInactiveScreenWidget(),
+                  children: [
+                    ProductActiveByStoreScreenWidget(storeId: store.id,),
+                    ProductInactiveByStoreScreenWidget(storeId: store.id),
                   ],
                 ),
               ],
