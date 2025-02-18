@@ -100,6 +100,7 @@ class DrawerMenu extends StatelessWidget {
                       text: fourthText,
                       icon: fourthIcon,
                       onPressed: fourthOnPressed,
+                      key: const Key('myStoreNavigator'),
                     ),
                   ],
                 ),

@@ -50,6 +50,7 @@ class _HomePageState extends State<HomePage> {
               leading: Padding(
                 padding: const EdgeInsets.all(3.5),
                 child: IconButtonLargeDark(
+                    key: const Key('drawerButton'),
                     icon: IconConstant.menu,
                     onTap: () => drawerKey.currentState?.openDrawer()),
               ),
@@ -67,6 +68,7 @@ class _HomePageState extends State<HomePage> {
                           child: Image.network(authController.user!.image!));
                     }
                     return IconButtonLargeDark(
+                      key: const Key('loginButton'),
                       icon: IconConstant.user,
                       onTap: () => authController.login(),
                     );
