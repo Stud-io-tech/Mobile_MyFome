@@ -20,21 +20,23 @@ void main() {
     await tester.pumpAndSettle();
 
     final drawerButton = find.byKey(const Key('drawerButton'));
-    final myStoreNavigator = find.byKey(const Key('myStoreNavigator'));
     expect(drawerButton, findsOneWidget);
     await tester.tap(drawerButton);
     await tester.pumpAndSettle();
+    
+    final myStoreNavigator = find.byKey(const Key('myStoreNavigator'));
     expect(myStoreNavigator, findsOneWidget);
     await tester.tap(myStoreNavigator);
     await tester.pumpAndSettle();
 
     final goToEditing = find.byKey(const Key('goToEditing'));
-    final descriptionStoreUpdate =
-        find.byKey(const Key('descriptionStoreUpdate'));
-    final buttonUpdateStore = find.byKey(const Key('buttonUpdateStore'));
     expect(goToEditing, findsOneWidget);
     await tester.tap(goToEditing);
     await tester.pumpAndSettle();
+
+    final descriptionStoreUpdate =
+        find.byKey(const Key('descriptionStoreUpdate'));
+    final buttonUpdateStore = find.byKey(const Key('buttonUpdateStore'));
     expect(descriptionStoreUpdate, findsOneWidget);
     await tester.tap(descriptionStoreUpdate);
     await tester.enterText(descriptionStoreUpdate,
@@ -44,8 +46,10 @@ void main() {
     expect(buttonUpdateStore, findsOneWidget);
     await tester.tap(buttonUpdateStore);
     await tester.pumpAndSettle();
+
     expect(messageButton, findsOneWidget);
     await tester.tap(messageButton);
     await tester.pumpAndSettle();
+    await tester.pump(const Duration(seconds: 3));
   });
 }

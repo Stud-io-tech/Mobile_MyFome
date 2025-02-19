@@ -56,6 +56,7 @@ class ProductUpdateForm extends StatelessWidget {
             ),
           ),
           InputForm(
+            key: const Key('descriptionProductUpdate'),
             hintText: TextConstant.productDescription,
             controller: descriptionEC,
             maxLines: 3,
@@ -69,6 +70,7 @@ class ProductUpdateForm extends StatelessWidget {
             children: [
               Expanded(
                 child: InputForm(
+                  key: const Key('priceProductUpdate'),
                   prefix: "R\$ ",
                   inputFormatters: MaskToken.currencyInput,
                   hintText: TextConstant.productPrice,
@@ -87,6 +89,7 @@ class ProductUpdateForm extends StatelessWidget {
               ),
               Expanded(
                 child: InputForm(
+                  key: const Key('amountProductUpdate'),
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   keyBoardType:
                       const TextInputType.numberWithOptions(decimal: true),

@@ -60,6 +60,7 @@ class _ProductByMyStorePageState extends State<ProductByMyStorePage> {
                       ],
                     ),
                     IconButtonLargeDark(
+                      key: const Key("goToProductRegister"),
                       isBackgroundColor: false,
                       onTap: () => Navigator.of(context).pushReplacementNamed(
                           '/product/register',
@@ -84,7 +85,8 @@ class _ProductByMyStorePageState extends State<ProductByMyStorePage> {
                     alignment: Alignment.centerRight,
                     child: TextBodyB2SemiDark(
                       text: controller.currentIndex == 0
-                          ? TextConstant.found(productController.activeFoundsByStore)
+                          ? TextConstant.found(
+                              productController.activeFoundsByStore)
                           : TextConstant.found(
                               productController.inactiveFoundsByStore),
                     ),
@@ -99,6 +101,7 @@ class _ProductByMyStorePageState extends State<ProductByMyStorePage> {
                       children: [
                         Expanded(
                           child: ButtonSmallDark(
+                            key: const Key("buttonActivedProducts"),
                             text: TextConstant.actives,
                             onPressed: () => controller.onItemTapped(0),
                           ),
@@ -108,6 +111,7 @@ class _ProductByMyStorePageState extends State<ProductByMyStorePage> {
                         ),
                         Expanded(
                           child: ButtonSmallLight(
+                            key: const Key("buttonSuspendedProducts"),
                             text: TextConstant.suspended,
                             onPressed: () => controller.onItemTapped(1),
                           ),
@@ -141,7 +145,9 @@ class _ProductByMyStorePageState extends State<ProductByMyStorePage> {
                 IndexedStack(
                   index: controller.currentIndex,
                   children: [
-                    ProductActiveByStoreScreenWidget(storeId: store.id,),
+                    ProductActiveByStoreScreenWidget(
+                      storeId: store.id,
+                    ),
                     ProductInactiveByStoreScreenWidget(storeId: store.id),
                   ],
                 ),

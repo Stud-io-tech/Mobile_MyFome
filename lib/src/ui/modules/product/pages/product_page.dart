@@ -96,11 +96,13 @@ class _ProductPageState extends State<ProductPage> {
                           mainAxisExtent: 270,
                         ),
                         itemCount:
-                            productController.productFilterListActive?.length ?? 0,
+                            productController.productFilterListActive?.length ??
+                                0,
                         itemBuilder: (context, index) {
                           final product =
                               productController.productFilterListActive?[index];
                           return ProductItem(
+                            key: const Key("selectItemProduct"),
                             image: product!.image,
                             name: product.name,
                             quantity:

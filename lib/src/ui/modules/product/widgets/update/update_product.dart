@@ -99,6 +99,7 @@ class _UpdateProductState extends State<UpdateProduct> {
       ),
       bottomNavigationBar: Observer(builder: (_) {
         return ButtonLarge(
+          key: const Key('buttonUpdateProduct'),
           isLoading: productController.isLoading,
           text: TextConstant.save,
           icon: IconConstant.success,

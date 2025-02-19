@@ -72,7 +72,8 @@ class _ProductInactiveScreenWidgetState
                 builder: (context) => ModalSheet(
                   iconBack: IconConstant.arrowLeft,
                   title: TextConstant.reactivedProductTitle,
-                  description: TextConstant.reactivedProductMessage(product.name),
+                  description:
+                      TextConstant.reactivedProductMessage(product.name),
                   cancelText: TextConstant.no,
                   continueText: TextConstant.yes,
                   isLoading: productController.isLoading,

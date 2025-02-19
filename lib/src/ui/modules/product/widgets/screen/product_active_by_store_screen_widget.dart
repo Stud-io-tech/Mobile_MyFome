@@ -63,6 +63,7 @@ class _ProductActiveByStoreScreenWidget
           itemBuilder: (context, index) {
             final product = productController.productFilterListActiveByStore?[index];
             return ProductItem(
+              key: const Key("selectItemProduct"),
               icon: IconConstant.remove,
               onTapIcon: () => showCustomModalBottomSheet(
                 context: context,

@@ -94,6 +94,7 @@ class ProductDetailScreenWidget extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: ButtonLarge(
+        key: const Key("openAlertOrder"),
         text: TextConstant.placeOrder,
         icon: IconConstant.cart,
         onPressed: () => showDialog(

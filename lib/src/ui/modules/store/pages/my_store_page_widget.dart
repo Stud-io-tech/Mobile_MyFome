@@ -100,6 +100,7 @@ class _MyStorePageState extends State<MyStorePage> {
                       children: [
                         TextHeadlineH2(text: TextConstant.storeProducts),
                         LinkSeeMore(
+                          key: const Key("goToMyProducts"),
                           text: TextConstant.seeMore,
                           onTap: () => Navigator.of(context)
                               .pushReplacementNamed('/product/my',

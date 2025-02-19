@@ -41,6 +41,7 @@ class ProductRegisterForm extends StatelessWidget {
         children: [
           Observer(builder: (_) {
             return InputUploadImage(
+              key: const Key("imageProductRegister"),
               image: uploadController.selectedImageFile,
               onTap: uploadController.uploadImage,
               labelText: TextConstant.image,
@@ -49,6 +50,7 @@ class ProductRegisterForm extends StatelessWidget {
             );
           }),
           InputForm(
+            key: const Key("nameProductRegister"),
             hintText: TextConstant.productName,
             controller: nameEC,
             textInputAction: TextInputAction.next,
@@ -58,6 +60,7 @@ class ProductRegisterForm extends StatelessWidget {
             ),
           ),
           InputForm(
+            key: const Key("descriptionProductRegister"),
             hintText: TextConstant.productDescription,
             controller: descriptionEC,
             maxLines: 3,
@@ -71,6 +74,7 @@ class ProductRegisterForm extends StatelessWidget {
             children: [
               Expanded(
                 child: InputForm(
+                  key: const Key("priceProductRegister"),
                   prefix: "R\$ ",
                   inputFormatters: MaskToken.currencyInput,
                   hintText: TextConstant.productPrice,
@@ -89,6 +93,7 @@ class ProductRegisterForm extends StatelessWidget {
               ),
               Expanded(
                 child: InputForm(
+                  key: const Key("amountProductRegister"),
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   keyBoardType:
                       const TextInputType.numberWithOptions(decimal: true),

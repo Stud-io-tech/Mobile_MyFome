@@ -91,6 +91,7 @@ class _RegisterStoreState extends State<RegisterProduct> {
       ),
       bottomNavigationBar: Observer(builder: (_) {
         return ButtonLarge(
+          key: const Key('buttonRegisterProduct'),
           isLoading: productController.isLoading,
           text: TextConstant.save,
           icon: IconConstant.success,

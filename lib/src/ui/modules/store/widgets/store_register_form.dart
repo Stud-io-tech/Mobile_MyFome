@@ -39,7 +39,7 @@ class StoreRegisterForm extends StatelessWidget {
         children: [
           Observer(builder: (_) {
             return InputUploadImage(
-              key: const Key("imageProductRegister"),
+              key: const Key("imageStoreRegister"),
               image: uploadController.selectedImageFile,
               onTap: uploadController.uploadImage,
               labelText: TextConstant.image,
@@ -48,7 +48,7 @@ class StoreRegisterForm extends StatelessWidget {
             );
           }),
           InputForm(
-            key: const Key("nameProductRegister"),
+            key: const Key("nameStoreRegister"),
             hintText: TextConstant.storeName,
             controller: nameEC,
             textInputAction: TextInputAction.next,
@@ -58,7 +58,7 @@ class StoreRegisterForm extends StatelessWidget {
             ),
           ),
           InputForm(
-            key: const Key("descriptionProductRegister"),
+            key: const Key("descriptionStoreRegister"),
             hintText: TextConstant.storeDescription,
             maxLines: 3,
             controller: descriptionEC,
@@ -69,7 +69,7 @@ class StoreRegisterForm extends StatelessWidget {
             ),
           ),
           InputForm(
-            key: const Key("whatsappProductRegister"),
+            key: const Key("whatsappStoreRegister"),
             inputFormatters: MaskToken.phoneInput,
             validator: Validatorless.multiple(
               [

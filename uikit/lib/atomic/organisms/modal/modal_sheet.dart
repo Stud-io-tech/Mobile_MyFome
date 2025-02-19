@@ -66,6 +66,7 @@ class ModalSheet extends StatelessWidget {
                 ),
                 Expanded(
                   child: ButtonProgress(
+                    key: const Key("confirm"),
                     isLoading: isLoading,
                     text: continueText,
                     onPressed: continueOnTap,
