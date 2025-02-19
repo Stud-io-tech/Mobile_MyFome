@@ -88,6 +88,7 @@ class _UpdateStoreState extends State<UpdateStore> {
       ),
       bottomNavigationBar: Observer(builder: (_) {
         return ButtonLarge(
+          key: const Key('buttonUpdateStore'),
           isLoading: storeController.isLoading,
           text: TextConstant.save,
           icon: IconConstant.success,

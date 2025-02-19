@@ -21,13 +21,12 @@ class ImageDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: BoxConstraints(
-        minHeight: MediaQuery.of(context).size.width,
-        minWidth: double.infinity
-      ),
+          minHeight: MediaQuery.of(context).size.width,
+          minWidth: double.infinity),
       child: Stack(
         children: [
           Image.network(
-            image != null? image! : '', 
+            image != null ? image! : '',
             fit: BoxFit.cover,
             width: double.infinity,
             height: MediaQuery.of(context).size.width,
@@ -46,6 +45,7 @@ class ImageDetail extends StatelessWidget {
                 ),
                 iconRigth != null
                     ? IconButtonLargeDark(
+                        key: const Key("goToEditing"),
                         onTap: onTapIconRight!,
                         icon: iconRigth!,
                       )

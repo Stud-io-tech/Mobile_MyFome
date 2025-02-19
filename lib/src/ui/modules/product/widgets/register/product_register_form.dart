@@ -60,6 +60,7 @@ class ProductRegisterForm extends StatelessWidget {
           InputForm(
             hintText: TextConstant.productDescription,
             controller: descriptionEC,
+            maxLines: 3,
             textInputAction: TextInputAction.next,
             labelText: TextConstant.description,
             validator: Validatorless.required(

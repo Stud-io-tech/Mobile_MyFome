@@ -18,11 +18,6 @@ class ProductUpdateForm extends StatelessWidget {
   final TextEditingController amountEC;
   final String image;
 
-  final FocusNode nameFocusNode = FocusNode();
-  final FocusNode descriptionFocusNode = FocusNode();
-  final FocusNode priceFocusNode = FocusNode();
-  final FocusNode amountFocusNode = FocusNode();
-
   ProductUpdateForm({
     super.key,
     required this.formKey,
@@ -63,6 +58,7 @@ class ProductUpdateForm extends StatelessWidget {
           InputForm(
             hintText: TextConstant.productDescription,
             controller: descriptionEC,
+            maxLines: 3,
             textInputAction: TextInputAction.next,
             labelText: TextConstant.description,
             validator: Validatorless.required(

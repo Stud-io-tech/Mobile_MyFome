@@ -78,6 +78,7 @@ class _RegisterStoreState extends State<RegisterStore> {
       ),
       bottomNavigationBar: Observer(builder: (_) {
         return ButtonLarge(
+          key: const Key("buttonRegisterStore"),
           isLoading: storeController.isLoading,
           text: TextConstant.save,
           icon: IconConstant.success,

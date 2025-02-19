@@ -59,8 +59,10 @@ class StoreUpdateForm extends StatelessWidget {
             ),
           ),
           InputForm(
+            key: const Key('descriptionStoreUpdate'),
             hintText: TextConstant.storeDescription,
             controller: descriptionEC,
+            maxLines: 3,
             textInputAction: TextInputAction.next,
             labelText: TextConstant.description,
             validator: Validatorless.required(
