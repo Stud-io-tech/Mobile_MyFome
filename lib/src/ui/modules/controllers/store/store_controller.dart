@@ -1,6 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
 import 'package:my_fome/src/domain/dtos/stores/store_detail_dto.dart';
+import 'package:my_fome/src/domain/dtos/stores/store_register_dto.dart';
+import 'package:my_fome/src/domain/dtos/stores/store_update_dto.dart';
 
 import 'package:my_fome/src/ui/viewmodels/stores/store_view_model.dart';
 
@@ -26,7 +29,6 @@ abstract class StoreControllerBase with Store {
   @computed
   StoreDetailDto? get store => storeViewModel.store;
 
-
   listStore() async {
     await storeViewModel.list();
   }
@@ -37,5 +39,14 @@ abstract class StoreControllerBase with Store {
 
   detailStore(String id) async {
     await storeViewModel.detail(id);
+  }
+
+  register(StoreRegisterDto store, XFile image) async {
+    await storeViewModel.register(store, image);
+  }
+
+  update(String id, StoreUpdateDto store, {XFile? image}) async {
+    await storeViewModel.update(id, store, image: image);
+    await detailStore(id);
   }
 }

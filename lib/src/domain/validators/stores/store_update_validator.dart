@@ -3,7 +3,6 @@ import 'package:my_fome/src/domain/dtos/stores/store_update_dto.dart';
 
 class StoreUpadteValidator extends LucidValidator<StoreUpdateDto> {
   StoreUpadteValidator() {
-    ruleFor((e) => e.id, key: "id").notEmptyOrNull();
     ruleFor((e) => e.name, key: "name")
         .when((entity) => entity.name != null)
         .notEmptyOrNull();

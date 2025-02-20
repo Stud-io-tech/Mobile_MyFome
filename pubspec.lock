@@ -1101,10 +1101,10 @@ packages:
     dependency: "direct main"
     description:
       name: validatorless
-      sha256: ddb46df636114b3322d289489164cac309767b157191ba43c7ad49b28c2b57c7
+      sha256: cba8b7e315bc59bef31aa84bdabe8382f606e5cfc777cab14fdbd55dba0a97a3
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.3"
+    version: "1.2.4"
   vector_graphics:
     dependency: transitive
     description:

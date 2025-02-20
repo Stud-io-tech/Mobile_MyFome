@@ -1,19 +1,28 @@
+import 'dart:typed_data';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:my_fome/src/data/repositories/products/produtc_repository_impl.dart';
+import 'package:my_fome/src/domain/dtos/products/product_register_dto.dart';
+import 'package:my_fome/src/domain/dtos/products/product_update_dto.dart';
 import 'package:my_fome/src/domain/repositories/products/produtc_repository.dart';
 import 'package:my_fome/src/data/services/client/client_service.dart';
 
 class ClientMock extends Mock implements ClientService {}
 
+class XFileMock extends Mock implements XFile {}
+
 void main() {
   late ClientMock clientMock;
   late ProdutcRepository productRepositoryMock;
+  late XFileMock imageMock;
 
   setUp(() {
     clientMock = ClientMock();
     productRepositoryMock = ProdutcRepositoryImpl(clientService: clientMock);
+    imageMock = XFileMock();
   });
 
   group("Testando as operações do ProductRepository, usando mocks", () {
@@ -199,6 +208,116 @@ void main() {
 
         expect(listProduct.isError(), isTrue);
         verify(() => clientMock.get(any())).called(1);
+      });
+    });
+
+    group("Testando o register.", () {
+      final storeRegisterDto = ProductRegisterDto(
+        name: "Novo Produto",
+        description: "Descrição do novo produto",
+        price: "12.9",
+        amount: "1",
+        storeId: "1",
+      );
+
+      test("Deve registrar um produto com sucesso.", () async {
+        when(() => imageMock.readAsBytes())
+            .thenAnswer((_) async => Uint8List(10));
+        when(() => imageMock.name).thenReturn("image.png");
+
+        final response = Response(
+          requestOptions: RequestOptions(),
+          data: {"product": storeRegisterDto.toMap()},
+        );
+
+        when(() => clientMock.post(any(), any(),
+                requiresAuth: any(named: "requiresAuth"),
+                contentType: any(named: "contentType")))
+            .thenAnswer((_) async => response);
+
+        final result =
+            await productRepositoryMock.register(storeRegisterDto, imageMock);
+
+        expect(result.isSuccess(), isTrue);
+        verify(() => clientMock.post(any(), any(),
+            requiresAuth: true, contentType: 'multipart/form-data')).called(1);
+      });
+    });
+
+    group("Testando o update.", () {
+      final productUpdateDto = ProductUpdateDto(
+          name: "Produto Atualizado",
+          description: "Descrição do produto atualizado",
+          price: "12.9",
+          amount: "1",
+          storeId: "1");
+      test("Deve atualizar uma loja com sucesso.", () async {
+        when(() => imageMock.readAsBytes())
+            .thenAnswer((_) async => Uint8List(10));
+        when(() => imageMock.name).thenReturn("image.png");
+
+        final response = Response(
+          requestOptions: RequestOptions(),
+          data: {"product": productUpdateDto.toMap()},
+        );
+
+        when(() => clientMock.post(any(), any(),
+                requiresAuth: any(named: "requiresAuth"),
+                contentType: any(named: "contentType")))
+            .thenAnswer((_) async => response);
+
+        final result = await productRepositoryMock.update("1", productUpdateDto,
+            image: imageMock);
+
+        expect(result.isSuccess(), isTrue);
+        verify(() => clientMock.post(any(), any(),
+            requiresAuth: true, contentType: 'multipart/form-data')).called(1);
+      });
+    });
+    group("Testando o toggleActive.", () {
+      test("Deve alternar o status de um produto com sucesso.", () async {
+        final response = Response(
+          requestOptions: RequestOptions(),
+          data: {
+            "product": {
+              "id": "1",
+              "name": "Cachorro Quente Padrão 270g",
+              "description": "...",
+              "image": "image.png",
+              "active": false,
+              "amount": 20,
+              "price": "10.0",
+              "store_id": "1",
+            }
+          },
+        );
+
+        when(() =>
+                clientMock.put(any(), requiresAuth: any(named: "requiresAuth")))
+            .thenAnswer((_) async => response);
+
+        final result = await productRepositoryMock.toggleActive("1");
+
+        expect(result.isSuccess(), isTrue);
+        expect(result.getOrNull()?.id, equals("1"));
+
+        verify(() => clientMock.put(any(), requiresAuth: true)).called(1);
+      });
+
+      test("Deve retornar erro ao tentar alternar o status de um produto.",
+          () async {
+        final response = DioException(
+          requestOptions: RequestOptions(),
+        );
+
+        when(() =>
+                clientMock.put(any(), requiresAuth: any(named: "requiresAuth")))
+            .thenThrow(response);
+
+        final result = await productRepositoryMock.toggleActive("1");
+
+        expect(result.isError(), isTrue);
+        verify(() => clientMock.put(any(), requiresAuth: true)).called(1);
       });
     });
   });

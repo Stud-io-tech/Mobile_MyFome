@@ -5,14 +5,14 @@ import 'package:uikit/uikit.dart';
 class StoreItem extends StatelessWidget {
   final String name;
   final String description;
-  final String image;
+  final String? image;
   final String icon;
   final void Function() onTap;
   const StoreItem({
     super.key,
     required this.name,
     required this.description,
-    required this.image,
+    this.image,
     required this.icon,
     required this.onTap,
   });
@@ -53,7 +53,7 @@ class StoreItem extends StatelessWidget {
               height: 45,
               width: 45,
               child: Image.network(
-                image,
+                image != null? image! : '',
                 fit: BoxFit.contain,
               ),
             ),

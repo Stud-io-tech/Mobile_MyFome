@@ -3,6 +3,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mobx/mobx.dart';
 import 'package:my_fome/src/data/exceptions/rest_exception.dart';
 import 'package:my_fome/src/data/services/messages/result_message_service.dart';
+import 'package:my_fome/src/domain/dtos/stores/store_detail_dto.dart';
 import 'package:my_fome/src/domain/dtos/users/user_detail_dto.dart';
 import 'package:my_fome/src/domain/dtos/users/user_register_dto.dart';
 
@@ -13,6 +14,7 @@ import 'package:my_fome/src/data/services/auth/auth_google_service.dart';
 import 'package:my_fome/src/data/services/local/local_storage_service.dart';
 import 'package:my_fome/src/domain/dtos/users/user_login_dto.dart';
 import 'package:my_fome/src/domain/repositories/users/user_repository.dart';
+import 'package:result_dart/result_dart.dart';
 
 part 'auth_view_model.g.dart';
 
@@ -39,6 +41,9 @@ abstract class AuthViewModelBase with Store {
   @observable
   UserDetailDto? userDetailDto;
 
+  @observable
+  StoreDetailDto? myStore;
+
   @action
   Future login() async {
     isLoading = true;
@@ -57,8 +62,10 @@ abstract class AuthViewModelBase with Store {
           LocalStorageConstant.accesstoken,
           result.getOrThrow().token,
         );
-        resultMessageService.showMessageSuccess(TextConstant.sucessLoggingAccountTitle,
-            TextConstant.sucessLoggingAccountMessage, IconConstant.success);
+        resultMessageService.showMessageSuccess(
+            TextConstant.sucessLoggingAccountTitle,
+            TextConstant.sucessLoggingAccountMessage,
+            IconConstant.success);
       },
       (failure) async {
         if (failure is RestException && failure.statusCode == 404) {
@@ -116,6 +123,22 @@ abstract class AuthViewModelBase with Store {
 
     result.fold((success) => userDetailDto = success, (failure) => null);
 
+    isLoading = false;
+  }
+
+  @action
+  Future getStore() async {
+    isLoading = true;
+
+    final result = await userRepository.getStoreByUser();
+
+    result.fold((success) {
+      if (success is Unit) {
+        myStore = null;
+      } else if (success is StoreDetailDto) {
+        myStore = success;
+      }
+    }, (failure) => myStore = null);
     isLoading = false;
   }
 }

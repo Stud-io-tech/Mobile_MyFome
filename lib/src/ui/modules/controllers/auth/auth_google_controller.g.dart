@@ -23,12 +23,20 @@ mixin _$AuthGoogleController on AuthGoogleControllerBase, Store {
       (_$userComputed ??= Computed<UserDetailDto?>(() => super.user,
               name: 'AuthGoogleControllerBase.user'))
           .value;
+  Computed<StoreDetailDto?>? _$storeComputed;
+
+  @override
+  StoreDetailDto? get store =>
+      (_$storeComputed ??= Computed<StoreDetailDto?>(() => super.store,
+              name: 'AuthGoogleControllerBase.store'))
+          .value;
 
   @override
   String toString() {
     return '''
 isLoading: ${isLoading},
-user: ${user}
+user: ${user},
+store: ${store}
     ''';
   }
 }

@@ -7,7 +7,7 @@ import 'package:result_dart/result_dart.dart';
 abstract interface class StoreRepository {
   AsyncResult<List<StoreDetailDto>> list();
   AsyncResult<StoreRegisterDto> register(StoreRegisterDto store, XFile image);
-  AsyncResult<StoreUpdateDto> update(
-      String id, StoreUpdateDto store, XFile? image);
+  AsyncResult<StoreUpdateDto> update(String id, StoreUpdateDto store,
+      {XFile? image});
   AsyncResult<StoreDetailDto> detail(String id);
 }

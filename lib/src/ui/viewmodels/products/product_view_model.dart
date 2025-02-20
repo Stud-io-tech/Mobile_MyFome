@@ -1,3 +1,4 @@
+import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
 import 'package:my_fome/src/constants/icon_constant.dart';
 import 'package:my_fome/src/constants/text_constant.dart';
@@ -98,9 +99,9 @@ abstract class ProductViewModelBase with Store {
   }
 
   @action
-  Future register(ProductRegisterDto product) async {
+  Future register(ProductRegisterDto product, XFile image) async {
     isLoading = true;
-    final result = await productRepository.register(product);
+    final result = await productRepository.register(product, image);
     result.fold(
       (success) => resultMessageService.showMessageSuccess(
           TextConstant.sucessCreatingProductTitle,
@@ -113,9 +114,9 @@ abstract class ProductViewModelBase with Store {
   }
 
   @action
-  Future update(String id, ProductUpdateDto product) async {
+  Future update(String id, ProductUpdateDto product, {XFile? image}) async {
     isLoading = true;
-    final result = await productRepository.update(id, product);
+    final result = await productRepository.update(id, product, image: image);
     result.fold(
       (success) => resultMessageService.showMessageSuccess(
           TextConstant.sucessUpdatingProductTitle,
@@ -127,9 +128,9 @@ abstract class ProductViewModelBase with Store {
     isLoading = false;
   }
 
-  Future changeActiveStatus(String id) async {
+  Future toggleActive(String id) async {
     isLoading = true;
-    final result = await productRepository.changeActiveStatus(id);
+    final result = await productRepository.toggleActive(id);
     result.fold(
       (success) {
         if (success.active) {

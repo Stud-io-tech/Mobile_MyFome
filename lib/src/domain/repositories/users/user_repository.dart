@@ -8,4 +8,5 @@ abstract interface class UserRepository {
   AsyncResult<UserTokenDto> login(UserLoginDto login);
   AsyncResult<UserRegisterDto> register(UserRegisterDto register);
   AsyncResult<UserDetailDto> detail();
+  AsyncResult<Object> getStoreByUser();
 }

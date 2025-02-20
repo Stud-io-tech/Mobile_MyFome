@@ -45,11 +45,10 @@ class ClientServiceImpl implements ClientService {
   }
 
   @override
-  Future patch(String uri, Object value,
+  Future put(String uri,
       {bool requiresAuth = false,
       String contentType = Headers.jsonContentType}) async {
-    return await dio.patch(uri,
-        data: value,
+    return await dio.put(uri,
         options: Options(
             extra: {'requiredAuth': requiresAuth}, contentType: contentType));
   }

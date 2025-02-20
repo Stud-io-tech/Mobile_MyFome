@@ -5,9 +5,8 @@ class ProductRegisterValidator extends LucidValidator<ProductRegisterDto> {
   ProductRegisterValidator() {
     ruleFor((e) => e.name, key: "name").notEmptyOrNull();
     ruleFor((e) => e.description, key: "description").notEmptyOrNull();
-    ruleFor((e) => e.image, key: "image").isNotNull();
     ruleFor((e) => e.price, key: "price").isNotNull();
-    ruleFor((e) => e.quantity, key: "quantity").isNotNull();
+    ruleFor((e) => e.amount, key: "amout").isNotNull();
     ruleFor((e) => e.storeId, key: "storeId").notEmptyOrNull();
   }
 }

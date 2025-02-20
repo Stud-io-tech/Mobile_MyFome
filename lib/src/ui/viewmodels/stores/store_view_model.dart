@@ -76,22 +76,22 @@ abstract class StoreViewModelBase with Store {
           TextConstant.sucessCreatingStoreTitle,
           TextConstant.sucessCreatingStoreMessage,
           IconConstant.success),
-      resultMessageService
+      (failure) => resultMessageService
           .showMessageError(TextConstant.errorCreatingStoreMessage),
     );
     isLoading = false;
   }
 
   @action
-  Future update(String id, StoreUpdateDto store, XFile? image) async {
+  Future update(String id, StoreUpdateDto store, {XFile? image}) async {
     isLoading = true;
-    final result = await storeRepository.update(id, store, image);
+    final result = await storeRepository.update(id, store, image: image);
     result.fold(
       (success) => resultMessageService.showMessageSuccess(
           TextConstant.sucessUpdatingStoreTitle,
           TextConstant.sucessUpdatingStoreMessage,
           IconConstant.edit),
-      resultMessageService
+      (failure) => resultMessageService
           .showMessageError(TextConstant.errorUpdatingStoreMessage),
     );
     isLoading = false;

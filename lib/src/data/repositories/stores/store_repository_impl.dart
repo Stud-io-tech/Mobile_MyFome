@@ -40,27 +40,27 @@ class StoreRepositoryImpl implements StoreRepository {
   AsyncResult<StoreRegisterDto> register(
       StoreRegisterDto store, XFile image) async {
     try {
-      final FormData formDataStore = FormData.fromMap(store.toMap());
-
-      formDataStore.files.add(MapEntry(
-        'image',
-        MultipartFile.fromBytes(
+      final FormData formDataStore = FormData.fromMap({
+        'name': store.name,
+        'description': store.description,
+        'whatsapp': store.whatsapp,
+        'image': MultipartFile.fromBytes(
           await image.readAsBytes(),
           filename: image.name,
         ),
-      ));
-
-      debugPrint("FormData: ${formDataStore.files[0].value.filename}");
+      });
 
       final Response response = await clientService.post(
           ApiConstant.store, formDataStore,
           requiresAuth: true, contentType: 'multipart/form-data');
 
       final StoreRegisterDto resultStore =
-          StoreRegisterDto.fromMap(response.data);
+          StoreRegisterDto.fromMap(response.data['store']);
 
       return Success(resultStore);
     } on DioException catch (e) {
+      debugPrint(e.message);
+      debugPrint(e.response?.data);
       return Failure(
         RestException(
           message: TextConstant.errorCreatingStoreMessage,
@@ -72,21 +72,26 @@ class StoreRepositoryImpl implements StoreRepository {
 
   @override
   AsyncResult<StoreUpdateDto> update(
-      String id, StoreUpdateDto store, XFile? image) async {
+      String id, StoreUpdateDto store, {XFile? image}) async {
     try {
-      final FormData formDataStore = FormData.fromMap(store.toMap());
+      final FormData formDataStore = FormData.fromMap({
+        'name': store.name,
+        'description': store.description,
+        'whatsapp': store.whatsapp,
+        '_method': 'PUT',
+      });
+
       if (image != null) {
         formDataStore.files.add(MapEntry(
             'image',
-            MultipartFile.fromBytes(
-              await image.readAsBytes(),
-              filename: image.name,
-            )));
+            MultipartFile.fromBytes(await image.readAsBytes(),
+                filename: image.name)));
       }
-      final Response response = await clientService.patch(
+
+      final Response response = await clientService.post(
           "${ApiConstant.store}/$id", formDataStore,
           requiresAuth: true, contentType: 'multipart/form-data');
-      final StoreUpdateDto resultStore = StoreUpdateDto.fromMap(response.data);
+      final StoreUpdateDto resultStore = StoreUpdateDto.fromMap(response.data['store']);
       return Success(resultStore);
     } on DioException catch (e) {
       return Failure(

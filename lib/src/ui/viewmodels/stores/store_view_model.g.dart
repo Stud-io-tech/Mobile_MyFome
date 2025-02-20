@@ -118,8 +118,8 @@ mixin _$StoreViewModel on StoreViewModelBase, Store {
       AsyncAction('StoreViewModelBase.update', context: context);
 
   @override
-  Future<dynamic> update(String id, StoreUpdateDto store, XFile? image) {
-    return _$updateAsyncAction.run(() => super.update(id, store, image));
+  Future<dynamic> update(String id, StoreUpdateDto store, {XFile? image}) {
+    return _$updateAsyncAction.run(() => super.update(id, store, image: image));
   }
 
   late final _$detailAsyncAction =

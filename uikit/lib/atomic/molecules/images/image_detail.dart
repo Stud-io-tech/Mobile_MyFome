@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:uikit/uikit.dart';
 
 class ImageDetail extends StatelessWidget {
-  final String image;
+  final String? image;
   final String iconLeft;
   final String? iconRigth;
   final void Function() onTapIconLeft;
   final void Function()? onTapIconRight;
   const ImageDetail({
     super.key,
-    required this.image,
+    this.image,
     required this.iconLeft,
     this.iconRigth,
     required this.onTapIconLeft,
@@ -27,7 +27,7 @@ class ImageDetail extends StatelessWidget {
       child: Stack(
         children: [
           Image.network(
-            image, 
+            image != null? image! : '', 
             fit: BoxFit.cover,
             width: double.infinity,
             height: MediaQuery.of(context).size.width,

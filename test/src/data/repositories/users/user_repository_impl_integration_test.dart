@@ -56,8 +56,8 @@ void main() {
     group("Testando o Register.", () {
       test("Deve verificar se é possível registro de uma conta inexistente.",
           () async {
-        final user = UserRegisterDto(
-            name: "martins", email: "martins@gmail.com");
+        final user =
+            UserRegisterDto(name: "martins", email: "martins@gmail.com");
         final result = await userRepository.register(user);
         expect(result.isSuccess(), isTrue);
       });
@@ -82,6 +82,22 @@ void main() {
         await localStorageService.put(LocalStorageConstant.accesstoken, token);
 
         final result = await userRepository.detail();
+
+        expect(result.isSuccess(), isTrue);
+      });
+    });
+
+    group("Testando o getStoreByUser de Usuário.", () {
+      test("Deve verificar se é possível mostrar os dados de loja.",
+          () async {
+        final resultLogin = await userRepository
+            .login(UserLoginDto(email: "lazaroalexandre2002@gmail.com"));
+
+        final token = resultLogin.getOrThrow().token;
+
+        await localStorageService.put(LocalStorageConstant.accesstoken, token);
+
+        final result = await userRepository.getStoreByUser();
 
         expect(result.isSuccess(), isTrue);
       });
