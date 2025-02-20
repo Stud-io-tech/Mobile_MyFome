@@ -7,7 +7,7 @@ import 'package:uikit/uikit.dart';
 
 import 'package:my_fome/src/constants/icon_constant.dart';
 import 'package:my_fome/src/constants/text_constant.dart';
-import 'package:my_fome/src/ui/modules/controllers/uploads/upload_controller.dart';
+import 'package:my_fome/src/ui/controllers/uploads/upload_controller.dart';
 import 'package:validatorless/validatorless.dart';
 
 class StoreUpdateForm extends StatelessWidget {
@@ -59,8 +59,10 @@ class StoreUpdateForm extends StatelessWidget {
             ),
           ),
           InputForm(
+            key: const Key('descriptionStoreUpdate'),
             hintText: TextConstant.storeDescription,
             controller: descriptionEC,
+            maxLines: 3,
             textInputAction: TextInputAction.next,
             labelText: TextConstant.description,
             validator: Validatorless.required(

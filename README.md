@@ -14,6 +14,9 @@ Após a configuração, volte ao projeto e execute os seguintes comandos no term
 
 - Baixar e instalar dependências:
     - flutter pub get
+    - cd uikit/
+    - flutter pub get
+    - cd ..
   
 - Crie o build do gerenciamento de estado:
     - dart run build_runner build

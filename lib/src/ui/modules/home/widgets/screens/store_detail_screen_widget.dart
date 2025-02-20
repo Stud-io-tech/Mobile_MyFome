@@ -6,8 +6,9 @@ import 'package:my_fome/src/constants/icon_constant.dart';
 import 'package:my_fome/src/constants/text_constant.dart';
 
 import 'package:my_fome/src/domain/dtos/stores/store_detail_dto.dart';
-import 'package:my_fome/src/ui/modules/controllers/product/product_controller.dart';
+import 'package:my_fome/src/ui/controllers/product/product_controller.dart';
 import 'package:my_fome/src/ui/modules/home/widgets/screens/product_detail_screen_widget.dart';
+import 'package:my_fome/src/ui/modules/product/pages/product_by_store_page.dart';
 import 'package:uikit/uikit.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -22,7 +23,7 @@ class StoreDetailScreenWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    productController.listProductsByStore(store.id);
+    productController.listProductsActiveByStore(store.id);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -68,14 +69,22 @@ class StoreDetailScreenWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       TextHeadlineH2(text: TextConstant.storeProducts),
-                      LinkSeeMore(text: TextConstant.seeMore, onTap: () {}),
+                      LinkSeeMore(
+                        text: TextConstant.seeMore,
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                ProductByStorePage(store: store),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(
                     height: SizeToken.sm,
                   ),
                   Observer(builder: (context) {
-                    final products = productController.productsByStore;
+                    final products = productController.productFilterListActiveByStore;
                     if (productController.isLoading) {
                       return const Center(
                         child: CircularProgressIndicator(),
@@ -97,14 +106,14 @@ class StoreDetailScreenWidget extends StatelessWidget {
                           crossAxisSpacing: 15,
                           mainAxisExtent: 175,
                         ),
-                        itemCount: productController.productsByStore != null
-                            ? (productController.productsByStore!.length > 5
+                        itemCount: productController.productFilterListActiveByStore != null
+                            ? (productController.productFilterListActiveByStore!.length > 5
                                 ? 5
-                                : productController.productsByStore!.length)
+                                : productController.productFilterListActiveByStore!.length)
                             : 0,
                         itemBuilder: (context, index) {
                           final product =
-                              productController.productsByStore?[index];
+                              productController.productFilterListActiveByStore?[index];
                           return ProductItem(
                             image: product!.image,
                             name: product.name,

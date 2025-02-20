@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mobx/mobx.dart';
 import 'package:my_fome/src/data/exceptions/rest_exception.dart';
@@ -45,15 +44,10 @@ abstract class AuthViewModelBase with Store {
   StoreDetailDto? myStore;
 
   @action
-  Future login() async {
+  login() async {
     isLoading = true;
-
     googleCredentials = await authGoogleService.login();
-
-    if (googleCredentials == null) return;
-
     final user = UserLoginDto(email: googleCredentials!.email);
-
     final result = await userRepository.login(user);
 
     result.fold(
@@ -97,6 +91,8 @@ abstract class AuthViewModelBase with Store {
             TextConstant.sucessCreatingAccountMessage,
             IconConstant.success);
         await login();
+        await details();
+        await getStore();
       },
       (failure) => resultMessageService
           .showMessageError(TextConstant.errorCreatingAccountMessage),

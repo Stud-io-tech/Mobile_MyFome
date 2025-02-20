@@ -27,12 +27,12 @@ abstract class AuthGoogleControllerBase with Store {
 
   login() async {
     await authViewModel.login();
-    load();
+    await load();
   }
 
   logout() async {
     await authViewModel.logout();
-    load();
+    await load();
   }
 
   load() async {

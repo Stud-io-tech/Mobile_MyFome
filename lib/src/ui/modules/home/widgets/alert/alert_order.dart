@@ -72,10 +72,10 @@ class AlertOrder extends StatelessWidget {
                   width: SizeToken.sm,
                 ),
                 IconLargeDark(
+                  key: const Key("incrementProductOnOrder"),
                   isBackgroundColor: true,
                   onTap: () {
                     orderController.increment(product.amount);
-                    debugPrint(orderController.value.toString());
                   },
                   icon: IconConstant.add,
                 ),
@@ -105,12 +105,11 @@ class AlertOrder extends StatelessWidget {
       actionsPadding: EdgeInsets.zero,
       actions: [
         ButtonLarge(
+          key: const Key("finalizeOrder"),
           text: TextConstant.placeOrder,
           icon: IconConstant.success,
           onPressed: () => launchUrlString(
-              'https://wa.me/$whatsapp?text=Olá, $store!%0A%0AEu gostaria de comprar *${orderController.value} ${product.name}*.%0A%0A*Valor Total:* ${TextConstant.monetaryValue(
-            orderController.totalValue
-          )}'),
+              'https://wa.me/$whatsapp?text=Olá, $store!%0A%0AEu gostaria de comprar *${orderController.value} ${product.name}*.%0A%0A*Valor Total:* ${TextConstant.monetaryValue(orderController.totalValue)}'),
         ),
       ],
     );

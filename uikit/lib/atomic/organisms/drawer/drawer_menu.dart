@@ -65,10 +65,7 @@ class DrawerMenu extends StatelessWidget {
                       const SizedBox(
                         width: 15,
                       ),
-                      SvgPicture.asset(
-                        logo,
-                        height: SizeToken.xxl
-                      ),
+                      SvgPicture.asset(logo, height: SizeToken.xxl),
                     ],
                   ),
                 ),
@@ -83,6 +80,7 @@ class DrawerMenu extends StatelessWidget {
                       onPressed: firstOnPressed,
                     ),
                     MenuItem(
+                      key: const Key('productsNavigator'),
                       text: secoundText,
                       icon: secoundIcon,
                       onPressed: secoundOnPressed,
@@ -100,6 +98,7 @@ class DrawerMenu extends StatelessWidget {
                       text: fourthText,
                       icon: fourthIcon,
                       onPressed: fourthOnPressed,
+                      key: const Key('myStoreNavigator'),
                     ),
                   ],
                 ),

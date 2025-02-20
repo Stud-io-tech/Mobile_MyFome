@@ -54,6 +54,7 @@ class SnackBarListview extends SnackBar {
                 onTap: () {
                   ScaffoldMessenger.of(context).hideCurrentSnackBar();
                 },
+                key: const Key('messageButton'),
                 icon: iconTrailing,
               ),
             ),

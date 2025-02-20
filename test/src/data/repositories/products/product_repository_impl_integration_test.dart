@@ -61,14 +61,14 @@ void main() {
 
     group("Testando o listInactive.", () {
       test("Deve verificar que a lista de produtos não seja vazia.", () async {
-        final listProduct = await productRepository.listInactive();
+        final listProduct = await productRepository.listInactiveByStore("id...");
         expect(listProduct.isSuccess(), isFalse);
       });
 
       test("Deve verificar que existe a produto chamada 'pp'.", () async {
         late bool hasStore = true;
 
-        final listStore = await productRepository.listInactive();
+        final listStore = await productRepository.listInactiveByStore("id...");
 
         listStore.onSuccess((success) => hasStore = success.any(
               (element) => element.name == "pp",
@@ -83,7 +83,7 @@ void main() {
         await userRepository.login(UserLoginDto(email: "lazaro@gmail.com"));
 
         final listProduct = await productRepository
-            .listByStore("9e20aade-d0a6-4a15-9996-c2389401520c");
+            .listActiveByStore("9e20aade-d0a6-4a15-9996-c2389401520c");
 
         expect(listProduct.isSuccess(), isTrue);
       });
@@ -92,7 +92,7 @@ void main() {
           () async {
         await userRepository.login(UserLoginDto(email: "lazaro@gmail.com"));
 
-        final listStore = await productRepository.listByStore("9e20aade");
+        final listStore = await productRepository.listActiveByStore("9e20aade");
 
         expect(listStore.isError(), isTrue);
       });

@@ -19,6 +19,8 @@ final class TextConstant {
 
   static String logoutAccountTitle = 'Sair da Conta?';
   static String suspendProductTitle = 'Suspender o Produto?';
+  static String reactivedProductTitle = 'Reativar o Produto?';
+
   static String sucessLoggingAccountMessage = 'Que tal fazer um pedido?';
   static String sucessLoggingOutAccountMessage =
       'Você saiu da conta. Volte sempre!';
@@ -62,7 +64,9 @@ final class TextConstant {
   static String no = 'Não';
   static String storeProducts = 'Produtos da Loja';
   static String newProduct = 'Novo Produto';
-    static String newStore = 'Nova Loja';
+  static String newStore = 'Nova Loja';
+  static String updateProduct = 'Editar Produto';
+  static String updateStore = 'Editar Loja';
 
   static String editProduct = 'Editar Produto';
 
@@ -74,7 +78,10 @@ final class TextConstant {
   static String logoutAccountMessage(String userEmail) =>
       'Ao confirmar, a conta com o email "$userEmail" será desvinculada do sistema até que seja realizado um novo login.';
   static String suspendProductMessage(String productName) =>
-      'Ao confirmar a suspensão do produto "$productName", os usuários não poderão mais ver o produto no sistema até que seja reativado novamente.';
+      'Ao confirmar a suspensão, o produto "$productName" será arquivado para os usuários até que seja reativado novamente.';
+  static String reactivedProductMessage(String productName) =>
+      'Ao confirmar a reativação, o produto "$productName" será ativo para o público.';
+
   static String found(int value) => "$value Encontrados";
   static String cityState(String city, String state) => "$city - $state";
   static String storeWhatsapp(String store) =>
@@ -90,7 +97,7 @@ final class TextConstant {
   static String storeNotFound = 'Loja não encontrada!';
   static String name = 'Nome';
   static String description = 'Descrição';
-  static String quantity = 'Quantidade';
+  static String amount = 'Quantidade';
   static String price = 'Preço';
   static String whatsapp = 'Whatsapp';
   static String costPerShipping = 'Custo por Frete';
@@ -100,12 +107,16 @@ final class TextConstant {
   static String addQuantity = 'Adicionar quantidade';
 
   static String requiredLogin = 'Você precisa fazer login!';
-    static String loggin = 'Fazer Login';
+  static String loggin = 'Fazer Login';
 
   static String total = 'Total:';
 
-    static String storeName = 'Nome da loja';
-    static String storeDescription = 'Descrição da loja';
-    static String storeWhatsappNumber = 'Whatsapp da loja';
+  static String storeName = 'Nome da loja';
+  static String storeDescription = 'Descrição da loja';
+  static String storeWhatsappNumber = 'Whatsapp da loja';
 
+  static String productName = 'Nome do produto';
+  static String productDescription = 'Descrição do produto';
+  static String productPrice = 'Preço do produto';
+  static String productAmount = 'Quantidade do produto';
 }

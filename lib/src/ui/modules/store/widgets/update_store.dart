@@ -4,13 +4,13 @@ import 'package:flutter_getit/flutter_getit.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:my_fome/src/domain/dtos/stores/store_detail_dto.dart';
 import 'package:my_fome/src/domain/dtos/stores/store_update_dto.dart';
-import 'package:my_fome/src/ui/modules/controllers/store/store_controller.dart';
+import 'package:my_fome/src/ui/controllers/store/store_controller.dart';
 import 'package:my_fome/src/ui/modules/store/widgets/store_update_form.dart';
 import 'package:uikit/uikit.dart';
 
 import 'package:my_fome/src/constants/icon_constant.dart';
 import 'package:my_fome/src/constants/text_constant.dart';
-import 'package:my_fome/src/ui/modules/controllers/uploads/upload_controller.dart';
+import 'package:my_fome/src/ui/controllers/uploads/upload_controller.dart';
 
 class UpdateStore extends StatefulWidget {
   const UpdateStore({super.key});
@@ -69,7 +69,7 @@ class _UpdateStoreState extends State<UpdateStore> {
                         icon: IconConstant.arrowLeft,
                       ),
                       const SizedBox(width: SizeToken.sm),
-                      TextHeadlineH2(text: TextConstant.newStore),
+                      TextHeadlineH2(text: TextConstant.updateStore),
                     ],
                   ),
                 ],
@@ -88,6 +88,7 @@ class _UpdateStoreState extends State<UpdateStore> {
       ),
       bottomNavigationBar: Observer(builder: (_) {
         return ButtonLarge(
+          key: const Key('buttonUpdateStore'),
           isLoading: storeController.isLoading,
           text: TextConstant.save,
           icon: IconConstant.success,

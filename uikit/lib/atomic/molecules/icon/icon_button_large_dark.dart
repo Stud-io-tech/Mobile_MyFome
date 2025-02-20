@@ -16,7 +16,7 @@ class IconButtonLargeDark extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconDefault(
-      padding: SizeToken.sm,
+      padding:  SizeToken.sm,
       onTap: onTap,
       isBackgroundColor: isBackgroundColor,
       icon: icon,

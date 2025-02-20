@@ -101,12 +101,14 @@ void main() {
       test(
         "Deve verificar se é possível registro de uma conta inexistente.",
         () async {
-          final registerTest = UserRegisterDto(
-              name: "Luis", email: "luismartins@gmail.com", image: "image.png");
+          final registerTest =
+              UserRegisterDto(name: "Luis", email: "luismartins@gmail.com");
 
           final response = Response(
             requestOptions: RequestOptions(),
-            data: registerTest.toMap(),
+            data: {
+              'user': registerTest.toMap(),
+            },
           );
 
           when(
@@ -115,8 +117,8 @@ void main() {
 
           final result = await userRepositoryMock.register(registerTest);
 
-          final userExist = dataBaseTest["user"]!.any(
-            (element) => element["email"] == registerTest.email,
+          final userExist = dataBaseTest['user']!.any(
+            (element) => element['email'] == registerTest.email,
           );
 
           expect(result.isSuccess(), isTrue);
@@ -155,7 +157,7 @@ void main() {
         },
       );
     });
-    
+
     group("Testando o detalhe do usuário.", () {
       test(
         "Deve retornar os detalhes do usuário com sucesso.",
@@ -274,6 +276,5 @@ void main() {
         },
       );
     });
-
   });
 }

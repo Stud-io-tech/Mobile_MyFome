@@ -41,20 +41,38 @@ mixin _$ProductViewModel on ProductViewModelBase, Store {
     });
   }
 
-  late final _$productsListInactiveAtom =
-      Atom(name: 'ProductViewModelBase.productsListInactive', context: context);
+  late final _$productsListInactiveByStoreAtom = Atom(
+      name: 'ProductViewModelBase.productsListInactiveByStore',
+      context: context);
 
   @override
-  List<ProductDetailDto>? get productsListInactive {
-    _$productsListInactiveAtom.reportRead();
-    return super.productsListInactive;
+  List<ProductDetailDto>? get productsListInactiveByStore {
+    _$productsListInactiveByStoreAtom.reportRead();
+    return super.productsListInactiveByStore;
   }
 
   @override
-  set productsListInactive(List<ProductDetailDto>? value) {
-    _$productsListInactiveAtom.reportWrite(value, super.productsListInactive,
-        () {
-      super.productsListInactive = value;
+  set productsListInactiveByStore(List<ProductDetailDto>? value) {
+    _$productsListInactiveByStoreAtom
+        .reportWrite(value, super.productsListInactiveByStore, () {
+      super.productsListInactiveByStore = value;
+    });
+  }
+
+  late final _$productsListActiveByStoreAtom = Atom(
+      name: 'ProductViewModelBase.productsListActiveByStore', context: context);
+
+  @override
+  List<ProductDetailDto>? get productsListActiveByStore {
+    _$productsListActiveByStoreAtom.reportRead();
+    return super.productsListActiveByStore;
+  }
+
+  @override
+  set productsListActiveByStore(List<ProductDetailDto>? value) {
+    _$productsListActiveByStoreAtom
+        .reportWrite(value, super.productsListActiveByStore, () {
+      super.productsListActiveByStore = value;
     });
   }
 
@@ -75,68 +93,88 @@ mixin _$ProductViewModel on ProductViewModelBase, Store {
     });
   }
 
-  late final _$productFilterListInactiveAtom = Atom(
-      name: 'ProductViewModelBase.productFilterListInactive', context: context);
+  late final _$productFilterListInactiveByStoreAtom = Atom(
+      name: 'ProductViewModelBase.productFilterListInactiveByStore',
+      context: context);
 
   @override
-  List<ProductDetailDto>? get productFilterListInactive {
-    _$productFilterListInactiveAtom.reportRead();
-    return super.productFilterListInactive;
+  List<ProductDetailDto>? get productFilterListInactiveByStore {
+    _$productFilterListInactiveByStoreAtom.reportRead();
+    return super.productFilterListInactiveByStore;
   }
 
   @override
-  set productFilterListInactive(List<ProductDetailDto>? value) {
-    _$productFilterListInactiveAtom
-        .reportWrite(value, super.productFilterListInactive, () {
-      super.productFilterListInactive = value;
+  set productFilterListInactiveByStore(List<ProductDetailDto>? value) {
+    _$productFilterListInactiveByStoreAtom
+        .reportWrite(value, super.productFilterListInactiveByStore, () {
+      super.productFilterListInactiveByStore = value;
     });
   }
 
-  late final _$productsByStoreAtom =
-      Atom(name: 'ProductViewModelBase.productsByStore', context: context);
+  late final _$productFilterListActiveByStoreAtom = Atom(
+      name: 'ProductViewModelBase.productFilterListActiveByStore',
+      context: context);
 
   @override
-  List<ProductDetailDto>? get productsByStore {
-    _$productsByStoreAtom.reportRead();
-    return super.productsByStore;
+  List<ProductDetailDto>? get productFilterListActiveByStore {
+    _$productFilterListActiveByStoreAtom.reportRead();
+    return super.productFilterListActiveByStore;
   }
 
   @override
-  set productsByStore(List<ProductDetailDto>? value) {
-    _$productsByStoreAtom.reportWrite(value, super.productsByStore, () {
-      super.productsByStore = value;
+  set productFilterListActiveByStore(List<ProductDetailDto>? value) {
+    _$productFilterListActiveByStoreAtom
+        .reportWrite(value, super.productFilterListActiveByStore, () {
+      super.productFilterListActiveByStore = value;
     });
   }
 
-  late final _$activeFoundsAtom =
-      Atom(name: 'ProductViewModelBase.activeFounds', context: context);
+  late final _$foundActiveAtom =
+      Atom(name: 'ProductViewModelBase.foundActive', context: context);
 
   @override
-  int get activeFounds {
-    _$activeFoundsAtom.reportRead();
-    return super.activeFounds;
+  int get foundActive {
+    _$foundActiveAtom.reportRead();
+    return super.foundActive;
   }
 
   @override
-  set activeFounds(int value) {
-    _$activeFoundsAtom.reportWrite(value, super.activeFounds, () {
-      super.activeFounds = value;
+  set foundActive(int value) {
+    _$foundActiveAtom.reportWrite(value, super.foundActive, () {
+      super.foundActive = value;
     });
   }
 
-  late final _$inactiveFoundsAtom =
-      Atom(name: 'ProductViewModelBase.inactiveFounds', context: context);
+  late final _$foundActiveByStoreAtom =
+      Atom(name: 'ProductViewModelBase.foundActiveByStore', context: context);
 
   @override
-  int get inactiveFounds {
-    _$inactiveFoundsAtom.reportRead();
-    return super.inactiveFounds;
+  int get foundActiveByStore {
+    _$foundActiveByStoreAtom.reportRead();
+    return super.foundActiveByStore;
   }
 
   @override
-  set inactiveFounds(int value) {
-    _$inactiveFoundsAtom.reportWrite(value, super.inactiveFounds, () {
-      super.inactiveFounds = value;
+  set foundActiveByStore(int value) {
+    _$foundActiveByStoreAtom.reportWrite(value, super.foundActiveByStore, () {
+      super.foundActiveByStore = value;
+    });
+  }
+
+  late final _$foundInactiveByStoreAtom =
+      Atom(name: 'ProductViewModelBase.foundInactiveByStore', context: context);
+
+  @override
+  int get foundInactiveByStore {
+    _$foundInactiveByStoreAtom.reportRead();
+    return super.foundInactiveByStore;
+  }
+
+  @override
+  set foundInactiveByStore(int value) {
+    _$foundInactiveByStoreAtom.reportWrite(value, super.foundInactiveByStore,
+        () {
+      super.foundInactiveByStore = value;
     });
   }
 
@@ -146,14 +184,6 @@ mixin _$ProductViewModel on ProductViewModelBase, Store {
   @override
   Future<dynamic> listActive() {
     return _$listActiveAsyncAction.run(() => super.listActive());
-  }
-
-  late final _$listInactiveAsyncAction =
-      AsyncAction('ProductViewModelBase.listInactive', context: context);
-
-  @override
-  Future<dynamic> listInactive() {
-    return _$listInactiveAsyncAction.run(() => super.listInactive());
   }
 
   late final _$registerAsyncAction =
@@ -171,6 +201,15 @@ mixin _$ProductViewModel on ProductViewModelBase, Store {
   Future<dynamic> update(String id, ProductUpdateDto product, {XFile? image}) {
     return _$updateAsyncAction
         .run(() => super.update(id, product, image: image));
+  }
+
+  late final _$listInactiveByStoreAsyncAction =
+      AsyncAction('ProductViewModelBase.listInactiveByStore', context: context);
+
+  @override
+  Future<dynamic> listInactiveByStore(String id) {
+    return _$listInactiveByStoreAsyncAction
+        .run(() => super.listInactiveByStore(id));
   }
 
   late final _$ProductViewModelBaseActionController =
@@ -192,12 +231,14 @@ mixin _$ProductViewModel on ProductViewModelBase, Store {
     return '''
 isLoading: ${isLoading},
 productsListActive: ${productsListActive},
-productsListInactive: ${productsListInactive},
+productsListInactiveByStore: ${productsListInactiveByStore},
+productsListActiveByStore: ${productsListActiveByStore},
 productFilterListActive: ${productFilterListActive},
-productFilterListInactive: ${productFilterListInactive},
-productsByStore: ${productsByStore},
-activeFounds: ${activeFounds},
-inactiveFounds: ${inactiveFounds}
+productFilterListInactiveByStore: ${productFilterListInactiveByStore},
+productFilterListActiveByStore: ${productFilterListActiveByStore},
+foundActive: ${foundActive},
+foundActiveByStore: ${foundActiveByStore},
+foundInactiveByStore: ${foundInactiveByStore}
     ''';
   }
 }

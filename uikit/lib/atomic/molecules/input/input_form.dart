@@ -12,6 +12,8 @@ class InputForm extends StatelessWidget {
   final TextInputType? keyBoardType;
   final List<TextInputFormatter>? inputFormatters;
   final String? Function(String?)? validator;
+  final String? prefix;
+
 
   const InputForm({
     super.key,
@@ -22,7 +24,7 @@ class InputForm extends StatelessWidget {
     this.keyBoardType,
     this.inputFormatters,
     this.validator,
-    required this.labelText,
+    required this.labelText, this.prefix,
   });
 
   @override
@@ -36,6 +38,7 @@ class InputForm extends StatelessWidget {
           height: SizeToken.xs,
         ),
         InputDefault(
+          prefix: prefix,
           paddingLeftPrefix: SizeToken.sm,
           keyBoardType: keyBoardType,
           maxLines: maxLines,

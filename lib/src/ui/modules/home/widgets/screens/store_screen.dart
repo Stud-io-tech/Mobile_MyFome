@@ -4,17 +4,27 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:my_fome/src/constants/icon_constant.dart';
 import 'package:my_fome/src/constants/image_error_constant.dart';
 import 'package:my_fome/src/constants/text_constant.dart';
-import 'package:my_fome/src/ui/modules/controllers/store/store_controller.dart';
+import 'package:my_fome/src/ui/controllers/store/store_controller.dart';
 import 'package:my_fome/src/ui/modules/home/widgets/screens/store_detail_screen_widget.dart';
 import 'package:uikit/uikit.dart';
 
-class StoreScreen extends StatelessWidget {
-  StoreScreen({super.key});
+class StoreScreen extends StatefulWidget {
+  const StoreScreen({super.key});
+
+  @override
+  State<StoreScreen> createState() => _StoreScreenState();
+}
+
+class _StoreScreenState extends State<StoreScreen> {
   final storeController = Injector.get<StoreController>();
+  @override
+  void initState() {
+    super.initState();
+    storeController.listStore();
+  }
 
   @override
   Widget build(BuildContext context) {
-    storeController.listStore();
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

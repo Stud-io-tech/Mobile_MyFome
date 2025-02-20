@@ -4,7 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:my_fome/src/constants/icon_constant.dart';
 import 'package:my_fome/src/constants/logo_constant.dart';
 import 'package:my_fome/src/constants/text_constant.dart';
-import 'package:my_fome/src/ui/modules/controllers/auth/auth_google_controller.dart';
+import 'package:my_fome/src/ui/controllers/auth/auth_google_controller.dart';
 import 'package:my_fome/src/ui/modules/home/controllers/button_navigator/button_navigator_menu_controller.dart';
 import 'package:my_fome/src/ui/modules/home/widgets/screens/home_screen_widget.dart';
 import 'package:my_fome/src/ui/modules/home/widgets/screens/product_screen.dart';
@@ -13,16 +13,30 @@ import 'package:uikit/uikit.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final controller = ButtonNavigatorMenuController();
+
   final authController = Injector.get<AuthGoogleController>();
+
   final GlobalKey<ScaffoldState> drawerKey = GlobalKey<ScaffoldState>();
+
+  Future<void> loading() async => await authController.load();
+
+  @override
+  void initState() {
+    super.initState();
+    loading();
+  }
 
   @override
   Widget build(BuildContext context) {
-    authController.load();
     return Scaffold(
       key: drawerKey,
       appBar: PreferredSize(
@@ -36,6 +50,7 @@ class HomePage extends StatelessWidget {
               leading: Padding(
                 padding: const EdgeInsets.all(3.5),
                 child: IconButtonLargeDark(
+                    key: const Key('drawerButton'),
                     icon: IconConstant.menu,
                     onTap: () => drawerKey.currentState?.openDrawer()),
               ),
@@ -53,6 +68,7 @@ class HomePage extends StatelessWidget {
                           child: Image.network(authController.user!.image!));
                     }
                     return IconButtonLargeDark(
+                      key: const Key('loginButton'),
                       icon: IconConstant.user,
                       onTap: () => authController.login(),
                     );
@@ -63,7 +79,8 @@ class HomePage extends StatelessWidget {
           )),
       drawer: DrawerMenu(
         firstOnPressed: () => Navigator.of(context).pushReplacementNamed('/'),
-        secoundOnPressed: () {},
+        secoundOnPressed: () =>
+            Navigator.of(context).pushReplacementNamed('/product'),
         thirdOnPressed: () =>
             Navigator.of(context).pushReplacementNamed('/store'),
         fourthOnPressed: () {
@@ -114,8 +131,8 @@ class HomePage extends StatelessWidget {
         child: Observer(builder: (_) {
           return IndexedStack(
             index: controller.currentIndex,
-            children: [
-              const HomeScreenWidget(),
+            children: const [
+              HomeScreenWidget(),
               ProductScreen(),
               StoreScreen(),
             ],

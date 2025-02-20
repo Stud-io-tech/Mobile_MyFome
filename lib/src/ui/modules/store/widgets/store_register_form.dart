@@ -7,7 +7,7 @@ import 'package:uikit/uikit.dart';
 
 import 'package:my_fome/src/constants/icon_constant.dart';
 import 'package:my_fome/src/constants/text_constant.dart';
-import 'package:my_fome/src/ui/modules/controllers/uploads/upload_controller.dart';
+import 'package:my_fome/src/ui/controllers/uploads/upload_controller.dart';
 import 'package:validatorless/validatorless.dart';
 
 class StoreRegisterForm extends StatelessWidget {
@@ -39,6 +39,7 @@ class StoreRegisterForm extends StatelessWidget {
         children: [
           Observer(builder: (_) {
             return InputUploadImage(
+              key: const Key("imageStoreRegister"),
               image: uploadController.selectedImageFile,
               onTap: uploadController.uploadImage,
               labelText: TextConstant.image,
@@ -47,6 +48,7 @@ class StoreRegisterForm extends StatelessWidget {
             );
           }),
           InputForm(
+            key: const Key("nameStoreRegister"),
             hintText: TextConstant.storeName,
             controller: nameEC,
             textInputAction: TextInputAction.next,
@@ -56,7 +58,9 @@ class StoreRegisterForm extends StatelessWidget {
             ),
           ),
           InputForm(
+            key: const Key("descriptionStoreRegister"),
             hintText: TextConstant.storeDescription,
+            maxLines: 3,
             controller: descriptionEC,
             textInputAction: TextInputAction.next,
             labelText: TextConstant.description,
@@ -65,6 +69,7 @@ class StoreRegisterForm extends StatelessWidget {
             ),
           ),
           InputForm(
+            key: const Key("whatsappStoreRegister"),
             inputFormatters: MaskToken.phoneInput,
             validator: Validatorless.multiple(
               [

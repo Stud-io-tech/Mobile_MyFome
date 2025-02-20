@@ -4,17 +4,28 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:my_fome/src/constants/icon_constant.dart';
 import 'package:my_fome/src/constants/image_error_constant.dart';
 import 'package:my_fome/src/constants/text_constant.dart';
-import 'package:my_fome/src/ui/modules/controllers/product/product_controller.dart';
+import 'package:my_fome/src/ui/controllers/product/product_controller.dart';
 import 'package:my_fome/src/ui/modules/home/widgets/screens/product_detail_screen_widget.dart';
 import 'package:uikit/uikit.dart';
 
-class ProductScreen extends StatelessWidget {
-  ProductScreen({super.key});
+class ProductScreen extends StatefulWidget {
+  const ProductScreen({super.key});
+
+  @override
+  State<ProductScreen> createState() => _ProductScreenState();
+}
+
+class _ProductScreenState extends State<ProductScreen> {
   final productController = Injector.get<ProductController>();
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     productController.listProductsActive();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +58,7 @@ class ProductScreen extends StatelessWidget {
                 child: CircularProgressIndicator(),
               );
             }
-            if (productController.productsActive!.isEmpty) {
+            if (productController.productFilterListActive!.isEmpty) {
               return BannerError(
                   image: ImageErrorConstant.empty,
                   text: TextConstant.productNotFound);
@@ -63,9 +74,9 @@ class ProductScreen extends StatelessWidget {
                 crossAxisSpacing: 15,
                 mainAxisExtent: 270,
               ),
-              itemCount: productController.productsActive?.length ?? 0,
+              itemCount: productController.productFilterListActive?.length ?? 0,
               itemBuilder: (context, index) {
-                final product = productController.productsActive?[index];
+                final product = productController.productFilterListActive?[index];
                 return ProductItem(
                   image: product!.image,
                   name: product.name,

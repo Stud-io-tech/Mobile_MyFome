@@ -64,8 +64,10 @@ class ProductItem extends StatelessWidget {
                     ? Positioned(
                         top: SizeToken.xs,
                         right: SizeToken.xs,
-                        child:
-                            IconButtonMediumDark(onTap: onTapIcon!, icon: icon!),
+                        child: IconButtonMediumDark(
+                            key: const Key("openModalConfirmProduct"),
+                            onTap: onTapIcon!,
+                            icon: icon!),
                       )
                     : const SizedBox.shrink()
               ],

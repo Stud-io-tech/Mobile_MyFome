@@ -26,22 +26,29 @@ abstract class ProductViewModelBase with Store {
   List<ProductDetailDto>? productsListActive;
 
   @observable
-  List<ProductDetailDto>? productsListInactive;
+  List<ProductDetailDto>? productsListInactiveByStore;
 
+  @observable
+  List<ProductDetailDto>? productsListActiveByStore;
+  
   @observable
   List<ProductDetailDto>? productFilterListActive;
 
   @observable
-  List<ProductDetailDto>? productFilterListInactive;
+  List<ProductDetailDto>? productFilterListInactiveByStore;
+  
+  @observable
+  List<ProductDetailDto>? productFilterListActiveByStore;
+
 
   @observable
-  List<ProductDetailDto>? productsByStore;
+  int foundActive = 0;
 
   @observable
-  int activeFounds = 0;
+  int foundActiveByStore = 0;
 
   @observable
-  int inactiveFounds = 0;
+  int foundInactiveByStore = 0;
 
   @action
   Future listActive() async {
@@ -51,23 +58,7 @@ abstract class ProductViewModelBase with Store {
       (success) {
         productsListActive = success;
         productFilterListActive = productsListActive;
-        activeFounds = productFilterListActive?.length ?? 0;
-      },
-      (failure) => resultMessageService
-          .showMessageError(TextConstant.errorListProductsMessage),
-    );
-    isLoading = false;
-  }
-
-  @action
-  Future listInactive() async {
-    isLoading = true;
-    final result = await productRepository.listInactive();
-    result.fold(
-      (success) {
-        productsListInactive = success;
-        productFilterListInactive = productsListInactive;
-        inactiveFounds = productFilterListInactive?.length ?? 0;
+        foundActive = productFilterListActive?.length ?? 0;
       },
       (failure) => resultMessageService
           .showMessageError(TextConstant.errorListProductsMessage),
@@ -82,19 +73,27 @@ abstract class ProductViewModelBase with Store {
           ?.where((element) =>
               element.name.toLowerCase().contains(name.toLowerCase()))
           .toList();
-      productFilterListInactive = productsListInactive
+      productFilterListInactiveByStore = productsListInactiveByStore
           ?.where((element) =>
               element.name.toLowerCase().contains(name.toLowerCase()))
           .toList();
 
-      activeFounds = productFilterListActive?.length ?? 0;
-      inactiveFounds = productFilterListInactive?.length ?? 0;
+      productFilterListActiveByStore = productsListActiveByStore
+          ?.where((element) =>
+              element.name.toLowerCase().contains(name.toLowerCase()))
+          .toList();
+
+      foundActive = productFilterListActive?.length ?? 0;
+      foundActiveByStore= productFilterListActiveByStore?.length ?? 0;
+      foundInactiveByStore = productFilterListInactiveByStore?.length ?? 0;
     } else {
       productFilterListActive = productsListActive;
-      productFilterListInactive = productsListInactive;
+      productFilterListActiveByStore = productsListActiveByStore;
+      productFilterListInactiveByStore = productsListInactiveByStore;
 
-      activeFounds = productFilterListActive?.length ?? 0;
-      inactiveFounds = productFilterListInactive?.length ?? 0;
+      foundActive = productFilterListActive?.length ?? 0;
+      foundInactiveByStore = productFilterListInactiveByStore?.length ?? 0;
+      foundActiveByStore = productFilterListActiveByStore?.length ?? 0;
     }
   }
 
@@ -107,7 +106,7 @@ abstract class ProductViewModelBase with Store {
           TextConstant.sucessCreatingProductTitle,
           TextConstant.sucessCreatingProductMessage,
           IconConstant.success),
-      resultMessageService
+      (failure) => resultMessageService
           .showMessageError(TextConstant.errorCreatingProductMessage),
     );
     isLoading = false;
@@ -122,7 +121,7 @@ abstract class ProductViewModelBase with Store {
           TextConstant.sucessUpdatingProductTitle,
           TextConstant.sucessUpdatingProductMessage,
           IconConstant.edit),
-      resultMessageService
+      (failure) => resultMessageService
           .showMessageError(TextConstant.errorUpdatingProductMessage),
     );
     isLoading = false;
@@ -151,11 +150,31 @@ abstract class ProductViewModelBase with Store {
     isLoading = false;
   }
 
-  Future listByStore(String id) async {
+  Future listActiveByStore(String id) async {
     isLoading = true;
-    final result = await productRepository.listByStore(id);
+    final result = await productRepository.listActiveByStore(id);
     result.fold(
-      (success) => productsByStore = success,
+      (success) {
+        productsListActiveByStore = success;
+        productFilterListActiveByStore = productsListActiveByStore;
+        foundActiveByStore = productsListActiveByStore?.length ?? 0;
+      },
+      (failure) => resultMessageService
+          .showMessageError(TextConstant.errorListProductsMessage),
+    );
+    isLoading = false;
+  }
+
+    @action
+  Future listInactiveByStore(String id) async {
+    isLoading = true;
+    final result = await productRepository.listInactiveByStore(id);
+    result.fold(
+      (success) {
+        productsListInactiveByStore = success;
+        productFilterListInactiveByStore = productsListInactiveByStore;
+        foundInactiveByStore = productFilterListInactiveByStore?.length ?? 0;
+      },
       (failure) => resultMessageService
           .showMessageError(TextConstant.errorListProductsMessage),
     );

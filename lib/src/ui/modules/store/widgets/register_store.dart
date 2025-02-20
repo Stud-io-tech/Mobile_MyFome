@@ -4,9 +4,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:my_fome/src/constants/icon_constant.dart';
 import 'package:my_fome/src/constants/text_constant.dart';
 import 'package:my_fome/src/domain/dtos/stores/store_register_dto.dart';
-import 'package:my_fome/src/ui/modules/controllers/auth/auth_google_controller.dart';
-import 'package:my_fome/src/ui/modules/controllers/store/store_controller.dart';
-import 'package:my_fome/src/ui/modules/controllers/uploads/upload_controller.dart';
+import 'package:my_fome/src/ui/controllers/auth/auth_google_controller.dart';
+import 'package:my_fome/src/ui/controllers/store/store_controller.dart';
+import 'package:my_fome/src/ui/controllers/uploads/upload_controller.dart';
 import 'package:my_fome/src/ui/modules/store/widgets/store_register_form.dart';
 import 'package:uikit/uikit.dart';
 
@@ -78,6 +78,7 @@ class _RegisterStoreState extends State<RegisterStore> {
       ),
       bottomNavigationBar: Observer(builder: (_) {
         return ButtonLarge(
+          key: const Key("buttonRegisterStore"),
           isLoading: storeController.isLoading,
           text: TextConstant.save,
           icon: IconConstant.success,

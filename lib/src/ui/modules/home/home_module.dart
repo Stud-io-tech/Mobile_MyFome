@@ -14,7 +14,7 @@ class HomeModule extends FlutterGetItModule {
 
   @override
   Map<String, WidgetBuilder> get pages => {
-        '/': (context) => HomePage(),
+        '/': (context) => const HomePage(),
         '/login': (context) => UserNotFoundPage(),
       };
 }
