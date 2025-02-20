@@ -36,13 +36,7 @@ class SnackBarListview extends SnackBar {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(SizeToken.xs),
               color: ColorToken.light,
-              boxShadow: const [
-                BoxShadow(
-                  color: ColorToken.semiDark,
-                  offset: Offset(0.0, 0.0),
-                  blurRadius: 200,
-                ),
-              ],
+              border: Border.all(color: ColorToken.neutral, width: 1.5)
             ),
             child: ListTile(
               minVerticalPadding: 0,

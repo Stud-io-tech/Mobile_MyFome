@@ -47,7 +47,7 @@ class DrawerMenu extends StatelessWidget {
     return Drawer(
       child: Padding(
         padding:
-            const EdgeInsets.only(top: SizeToken.xl3, bottom: SizeToken.md),
+            const EdgeInsets.only(top: SizeToken.xl4, bottom: SizeToken.md),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,

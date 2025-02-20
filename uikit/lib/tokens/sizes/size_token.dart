@@ -7,5 +7,6 @@ final class SizeToken {
   static const double xl = 30.0;
   static const double xxl = 35.0;
   static const double xl3 = 45.0;
-  static const double xl4 = 83.0;
+  static const double xl4 = 53.0;
+  static const double xl5 = 83.0;
 }

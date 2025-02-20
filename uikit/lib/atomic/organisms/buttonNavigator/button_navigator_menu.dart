@@ -27,7 +27,7 @@ class ButtonNavigatorMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: SizeToken.xl4,
+      height: SizeToken.xl5,
       child: BottomNavigationBar(
         onTap: onTap,
         currentIndex: currentIndex,

@@ -31,6 +31,9 @@ dependencies:
   jwt_decode: ^0.3.1
   flutter_launcher_icons: ^0.14.2
   flutter_native_splash: ^2.4.4
+  lucid_validation: ^1.2.0
+  result_dart: ^2.0.0
+
 
 flutter_native_splash:
   color: "#FFFFFF"
@@ -50,6 +53,7 @@ dev_dependencies:
   mobx_codegen: ^2.6.2
   build_runner: ^2.4.13
   flutter_lints: ^4.0.0
+  mocktail: ^1.0.4
 
 
 flutter:
@@ -59,6 +63,8 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/logos/
+    - assets/images/error/
+
   
   fonts:
     - family: Inter
