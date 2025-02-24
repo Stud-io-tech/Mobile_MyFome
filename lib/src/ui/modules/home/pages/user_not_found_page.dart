@@ -7,9 +7,20 @@ import 'package:my_fome/src/constants/text_constant.dart';
 import 'package:my_fome/src/ui/controllers/auth/auth_google_controller.dart';
 import 'package:uikit/uikit.dart';
 
-class UserNotFoundPage extends StatelessWidget {
-  UserNotFoundPage({super.key});
+class UserNotFoundPage extends StatefulWidget {
+  const UserNotFoundPage({super.key});
+
+  @override
+  State<UserNotFoundPage> createState() => _UserNotFoundPageState();
+}
+
+class _UserNotFoundPageState extends State<UserNotFoundPage> {
   final authController = Injector.get<AuthGoogleController>();
+  @override
+  void initState() {
+    super.initState();
+    authController.load();
+  }
 
   @override
   Widget build(BuildContext context) {
