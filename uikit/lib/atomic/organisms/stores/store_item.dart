@@ -5,14 +5,14 @@ import 'package:uikit/uikit.dart';
 class StoreItem extends StatelessWidget {
   final String name;
   final String description;
-  final String image;
+  final String? image;
   final String icon;
   final void Function() onTap;
   const StoreItem({
     super.key,
     required this.name,
     required this.description,
-    required this.image,
+    this.image,
     required this.icon,
     required this.onTap,
   });
@@ -21,15 +21,15 @@ class StoreItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(
+      borderRadius: BorderRadius. circular(
         SizeToken.xxs,
       ),
       child: Container(
         decoration: BoxDecoration(
             border: Border.all(
-                color: ColorToken.semiDark, width: 0.2),
+                color: ColorToken.neutral, width: 1.5),
             borderRadius: BorderRadius.circular(
-              SizeToken.xxs,
+              SizeToken.xs,
             ),),
             padding: const EdgeInsets.symmetric(horizontal: SizeToken.sm),
         child: ListTile(
@@ -53,8 +53,8 @@ class StoreItem extends StatelessWidget {
               height: 45,
               width: 45,
               child: Image.network(
-                image,
-                fit: BoxFit.cover,
+                image != null? image! : '',
+                fit: BoxFit.contain,
               ),
             ),
           ),

@@ -34,7 +34,7 @@ class ProductItem extends StatelessWidget {
       onTap: onTap,
       child: Container(
         constraints: BoxConstraints(
-          maxWidth: size.width < 375 ? double.infinity : 160,
+          maxWidth: size.width < 375 ? double.infinity : 175,
           maxHeight: 270,
         ),
         decoration: const BoxDecoration(
@@ -64,8 +64,10 @@ class ProductItem extends StatelessWidget {
                     ? Positioned(
                         top: SizeToken.xs,
                         right: SizeToken.xs,
-                        child:
-                            IconButtonMediumDark(onTap: onTapIcon!, icon: icon!),
+                        child: IconButtonMediumDark(
+                            key: const Key("openModalConfirmProduct"),
+                            onTap: onTapIcon!,
+                            icon: icon!),
                       )
                     : const SizedBox.shrink()
               ],
@@ -73,7 +75,7 @@ class ProductItem extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(SizeToken.xxs),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextLabelL5Dark(

@@ -20,7 +20,7 @@ dependencies:
   flutter_mobx: ^2.2.1+1
   shared_preferences: ^2.3.3
   dio: ^5.7.0
-  validatorless: ^1.2.3
+  validatorless: ^1.2.4
   get_it: ^7.7.0
   mask_text_input_formatter: ^2.9.0
   intl: ^0.19.0
@@ -31,6 +31,10 @@ dependencies:
   jwt_decode: ^0.3.1
   flutter_launcher_icons: ^0.14.2
   flutter_native_splash: ^2.4.4
+  lucid_validation: ^1.2.0
+  result_dart: ^2.0.0
+  envied: ^1.1.1
+
 
 flutter_native_splash:
   color: "#FFFFFF"
@@ -47,9 +51,13 @@ flutter_icons:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  integration_test:
+    sdk: flutter
   mobx_codegen: ^2.6.2
   build_runner: ^2.4.13
   flutter_lints: ^4.0.0
+  mocktail: ^1.0.4
+  envied_generator: ^1.1.1
 
 
 flutter:
@@ -59,6 +67,8 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/logos/
+    - assets/images/error/
+
   
   fonts:
     - family: Inter

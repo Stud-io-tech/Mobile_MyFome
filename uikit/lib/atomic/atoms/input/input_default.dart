@@ -5,10 +5,12 @@ import 'package:uikit/uikit.dart';
 
 class InputDefault extends StatelessWidget {
   final String? icon;
+  final String? prefix;
   final void Function()? onTap;
   final TextInputType? keyBoardType;
   final String hintText;
   final int maxLines;
+  final FocusNode? focusNode;
   final TextInputAction? textInputAction;
   final List<TextInputFormatter>? inputFormatters;
   final String? Function(String?)? validator;
@@ -18,10 +20,12 @@ class InputDefault extends StatelessWidget {
   const InputDefault({
     super.key,
     this.icon,
+    this.prefix,
     this.onTap,
     this.keyBoardType,
     required this.hintText,
     this.maxLines = 1,
+    this.focusNode,
     this.textInputAction,
     this.inputFormatters,
     this.validator,
@@ -33,6 +37,7 @@ class InputDefault extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      focusNode: focusNode,
       onTap: onTap,
       readOnly: onTap != null ? true : false,
       keyboardType: keyBoardType,
@@ -43,58 +48,62 @@ class InputDefault extends StatelessWidget {
       validator: validator ?? validator,
       inputFormatters: inputFormatters,
       decoration: InputDecoration(
-          filled: true,
-          fillColor: ColorToken.neutral,
-          contentPadding: const EdgeInsets.all(SizeToken.sm),
-          isDense: true,
-          prefixIconConstraints: const BoxConstraints(),
-          prefixIcon: Padding(
-            padding: EdgeInsets.only(right: paddingLeftPrefix != null? paddingLeftPrefix!: 0, left: SizeToken.xxs),
-            child: icon != null
-                ? IconLargeSemiDark(
-                    icon: icon!,
-                    padding: SizeToken.xs,
-                  )
-                : const SizedBox.shrink(),
+        filled: true,
+        fillColor: ColorToken.neutral,
+        contentPadding: const EdgeInsets.all(SizeToken.sm),
+        isDense: true,
+        prefix: prefix != null ? TextBodyB1Dark(text: prefix!) : null,
+        prefixIconConstraints: const BoxConstraints(),
+        prefixIcon: Padding(
+          padding: EdgeInsets.only(
+              right: paddingLeftPrefix != null ? paddingLeftPrefix! : 0,
+              left: SizeToken.xxs),
+          child: icon != null
+              ? IconLargeSemiDark(
+                  icon: icon!,
+                  padding: SizeToken.xs,
+                )
+              : const SizedBox.shrink(),
+        ),
+        focusedBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(SizeToken.xs),
           ),
-          focusedBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(SizeToken.xs),
-            ),
-            borderSide: BorderSide.none,
+          borderSide: BorderSide.none,
+        ),
+        errorBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(SizeToken.xs),
           ),
-          errorBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(SizeToken.xs),
-            ),
-            borderSide: BorderSide.none,
+          borderSide: BorderSide.none,
+        ),
+        enabledBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(SizeToken.xs),
           ),
-          enabledBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(SizeToken.xs),
-            ),
-            borderSide: BorderSide.none,
+          borderSide: BorderSide.none,
+        ),
+        disabledBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(SizeToken.xs),
           ),
-          disabledBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(SizeToken.xs),
-            ),
-            borderSide: BorderSide.none,
+          borderSide: BorderSide.none,
+        ),
+        focusedErrorBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(SizeToken.xs),
           ),
-          focusedErrorBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(SizeToken.xs),
-            ),
-            borderSide: BorderSide(color: ColorToken.danger, width: 1),
+          borderSide: BorderSide(color: ColorToken.danger, width: 1),
+        ),
+        border: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(SizeToken.xs),
           ),
-          border: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(SizeToken.xs),
-            ),
-            borderSide: BorderSide.none,
-          ),
-          hintText: hintText,
-          hintStyle: Style.b1(color: ColorToken.semiDark)),
+          borderSide: BorderSide.none,
+        ),
+        hintText: hintText,
+        hintStyle: Style.b1(color: ColorToken.semiDark),
+      ),
       onChanged: onChanged,
     );
   }

@@ -9,6 +9,7 @@ ThemeData get theme => ThemeData(
         titleSpacing: 0,
         toolbarHeight: kToolbarHeight,
         backgroundColor: ColorToken.light,
+        surfaceTintColor: ColorToken.light
       ),
     );
 

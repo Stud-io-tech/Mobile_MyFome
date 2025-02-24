@@ -12,26 +12,32 @@ Primeiramente, instale todas as configurações do flutter em sua máquina, caso
 
 Após a configuração, volte ao projeto e execute os seguintes comandos no terminal:
 
-- Baixar e instalar dependências:
+- Modifcar o caminho do gradle (Somente após o clone):
+  - Vá até o arquivo chamado gradle.proerties:
+    - android/gradle/wrapper/gradle-wrapper.properties
+
+  - Mude o caminho do distributionUrl para:
+    - distributionUrl=https\://services.gradle.org/distributions/gradle-8.3-all.zip
+
+- Baixar e instalar dependências (Somente após o clone):
     - flutter pub get
+    - cd uikit/
+    - flutter pub get
+    - cd ..
   
-- Crie o build do gerenciamento de estado:
+- Crie o build do gerenciamento de estado (Após o clone e em cada modificação do gerenciamento de estado):
     - dart run build_runner build
 
-- Esolher o dispositivo:
+- Esolher o dispositivo (Durante a execução do sistema):
     - flutter devices
 
-- Rodar o aplicativo:
+- Rodar o aplicativo (Durante a execução do sistema):
   - flutter run -d _nome_do_dispositivo_
 
-## Observações
+## Autor
 
-Caso esteja rodando o flutter pela primeira vez e não tenha conseguido instalar o aplicativo, faça as seguintes etapas:
+Olá, sou o Lázaro Alexandre, um desenvolvedor full stack e futuro analista de sistemas apaixonado por transformar vidas através da inovação tecnológica.
 
-- Vá até o arquivo chamado gradle.proerties:
-  - android/gradle.properties
+Para mais informações, acesse o meu portifólio: https://homolazarus.netlify.app/
 
-- Mude o caminho do distributionUrl para:
-  - distributionUrl=https\://services.gradle.org/distributions/gradle-8.3-all.zip
-
-- Se o problema persistir, crie um novo projeto flutter com a plataforma android, copie o caminho do distributionUrl e cole neste projeto flutter.
+Estarei te aguardando ^-^

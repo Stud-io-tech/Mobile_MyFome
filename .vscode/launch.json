@@ -1,0 +1,47 @@
+{
+    // Use o IntelliSense para saber mais sobre os atributos possíveis.
+    // Focalizar para exibir as descrições dos atributos existentes.
+    // Para obter mais informações, acesse: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": "Mobile_MyFome",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "a6ee7e9b"
+        },
+        {
+            "name": "Mobile_MyFome (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "Mobile_MyFome (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "uikit",
+            "cwd": "uikit",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "uikit (profile mode)",
+            "cwd": "uikit",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "uikit (release mode)",
+            "cwd": "uikit",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}
