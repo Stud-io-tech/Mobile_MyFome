@@ -112,6 +112,7 @@ abstract class AuthViewModelBase with Store {
     await localStorageService.delete(LocalStorageConstant.accesstoken);
     await authGoogleService.logout();
     await localStorageService.get(LocalStorageConstant.accesstoken);
+    myStore = null;
     userDetailDto = null;
     isLoading = false;
   }
@@ -121,7 +122,7 @@ abstract class AuthViewModelBase with Store {
     isLoading = true;
 
     final result = await userRepository.detail();
-      serverError = false;
+    serverError = false;
 
     result.fold((success) {
       serverError = false;
