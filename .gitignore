@@ -45,3 +45,8 @@ app.*.map.json
 
 # Google Credenciais
 lib/src/core/constants/google_constant.dart
+
+
+# Base Url Api
+.env
+env.g.dart

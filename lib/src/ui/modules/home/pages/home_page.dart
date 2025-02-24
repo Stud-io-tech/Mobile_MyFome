@@ -27,12 +27,10 @@ class _HomePageState extends State<HomePage> {
 
   final GlobalKey<ScaffoldState> drawerKey = GlobalKey<ScaffoldState>();
 
-  Future<void> loading() async => await authController.load();
-
   @override
   void initState() {
     super.initState();
-    loading();
+    authController.load();
   }
 
   @override

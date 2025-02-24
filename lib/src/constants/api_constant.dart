@@ -1,8 +1,10 @@
+import 'env/env.dart';
+
 final class ApiConstant {
-  static const String baseUrl = "http://192.168.146.32:8000/api";
-  static const String login = "$baseUrl/login";
-  static const String user = "$baseUrl/user";
-  static const String register = "$baseUrl/register";
-  static const String store = "$baseUrl/store";
-  static const String product = "$baseUrl/product";
+  static final String baseUrl = Env.baseUrl;
+  static final String login = "$baseUrl/login";
+  static final String user = "$baseUrl/user";
+  static final String register = "$baseUrl/register";
+  static final String store = "$baseUrl/store";
+  static final String product = "$baseUrl/product";
 }
