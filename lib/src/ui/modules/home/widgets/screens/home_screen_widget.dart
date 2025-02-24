@@ -35,9 +35,6 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
           children: [
             const SizedBox(height: SizeToken.md),
             Observer(builder: (_) {
-              if (authController.isLoading) {
-                return const Center(child: CircularProgressIndicator());
-              }
               return TextHeadlineH1(
                 text: TextConstant.helloUser(authController.user?.name),
               );
