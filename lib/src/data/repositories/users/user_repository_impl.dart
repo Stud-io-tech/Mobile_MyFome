@@ -91,7 +91,7 @@ class UserRepositoryImpl implements UserRepository {
       return Failure(
         RestException(
           message: TextConstant.errorDetailsUserMessage,
-          statusCode: e.hashCode,
+          statusCode: e.response?.statusCode ?? 500,
         ),
       );
     }

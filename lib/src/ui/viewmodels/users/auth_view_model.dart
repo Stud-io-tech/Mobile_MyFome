@@ -121,11 +121,16 @@ abstract class AuthViewModelBase with Store {
     isLoading = true;
 
     final result = await userRepository.detail();
+      serverError = false;
 
     result.fold((success) {
       serverError = false;
       userDetailDto = success;
-    }, (failure) => serverError = true);
+    }, (failure) {
+      if (failure is RestException && failure.statusCode == 500) {
+        serverError = true;
+      }
+    });
 
     isLoading = false;
   }
@@ -135,6 +140,7 @@ abstract class AuthViewModelBase with Store {
     isLoading = true;
 
     final result = await userRepository.getStoreByUser();
+    serverError = false;
 
     result.fold((success) {
       serverError = false;
@@ -144,7 +150,9 @@ abstract class AuthViewModelBase with Store {
         myStore = success;
       }
     }, (failure) {
-      serverError = true;
+      if (failure is RestException && failure.statusCode == 500) {
+        serverError = true;
+      }
       myStore = null;
     });
     isLoading = false;

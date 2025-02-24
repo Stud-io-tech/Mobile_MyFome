@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:my_fome/src/constants/icon_constant.dart';
 import 'package:my_fome/src/constants/image_error_constant.dart';
 import 'package:my_fome/src/constants/text_constant.dart';
+import 'package:my_fome/src/ui/controllers/auth/auth_google_controller.dart';
 import 'package:my_fome/src/ui/controllers/store/store_controller.dart';
 import 'package:my_fome/src/ui/modules/home/widgets/screens/store_detail_screen_widget.dart';
 import 'package:uikit/uikit.dart';
@@ -17,6 +18,7 @@ class StorePage extends StatefulWidget {
 
 class _StorePageState extends State<StorePage> {
   final storeController = Injector.get<StoreController>();
+  final authController = Injector.get<AuthGoogleController>();
   @override
   void initState() {
     super.initState();
@@ -50,9 +52,19 @@ class _StorePageState extends State<StorePage> {
                 ),
                 LinkSeeMore(
                   text: TextConstant.myStore,
-                  onTap: () =>
-                      Navigator.of(context).pushReplacementNamed('/store/my'),
-                )
+                  onTap: () {
+                    if (authController.user == null) {
+                      Navigator.of(context).pushReplacementNamed('/login');
+                      return;
+                    }
+                    if (authController.store != null) {
+                      Navigator.of(context).pushReplacementNamed('/store/my');
+                    } else {
+                      Navigator.of(context)
+                          .pushReplacementNamed('/store/register');
+                    }
+                  },
+                ),
               ],
             ),
             SingleChildScrollView(
