@@ -76,9 +76,7 @@ class _StorePageState extends State<StorePage> {
                   onChanged: storeController.filterStores,
                   hintText: TextConstant.search,
                   icon: IconConstant.search),
-              const SizedBox(
-                height: SizeToken.xxs,
-              ),
+          
               Observer(builder: (_) {
                 return Container(
                   padding: const EdgeInsets.only(right: SizeToken.xs),
@@ -88,9 +86,6 @@ class _StorePageState extends State<StorePage> {
                   ),
                 );
               }),
-              const SizedBox(
-                height: SizeToken.md,
-              ),
               Observer(builder: (_) {
                 if (storeController.isLoading) {
                   return const Center(
@@ -108,7 +103,10 @@ class _StorePageState extends State<StorePage> {
                       image: ImageErrorConstant.empty,
                       text: TextConstant.storeNotFound);
                 }
-                return ListView.builder(
+                return ListView.separated(
+                  separatorBuilder: (context, index) => const SizedBox(
+                     height: SizeToken.xs,
+                  ), 
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: storeController.stores?.length ?? 0,
