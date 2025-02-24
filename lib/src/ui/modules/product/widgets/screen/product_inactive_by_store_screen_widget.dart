@@ -45,6 +45,12 @@ class _ProductInactiveScreenWidgetState
             child: CircularProgressIndicator(),
           );
         }
+        if (productController.isServerError) {
+          return BannerError(
+            image: ImageErrorConstant.serverError,
+            text: TextConstant.serverError,
+          );
+        }
         if (productController.productFilterListInactiveByStore!.isEmpty) {
           return BannerError(
               image: ImageErrorConstant.empty,

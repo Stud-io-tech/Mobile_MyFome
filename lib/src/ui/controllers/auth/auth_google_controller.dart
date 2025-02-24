@@ -20,6 +20,9 @@ abstract class AuthGoogleControllerBase with Store {
   bool get isLoading => authViewModel.isLoading;
 
   @computed
+  bool get isServerError => authViewModel.serverError;
+
+  @computed
   UserDetailDto? get user => authViewModel.userDetailDto;
 
   @computed

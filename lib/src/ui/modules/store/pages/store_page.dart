@@ -85,6 +85,12 @@ class _StorePageState extends State<StorePage> {
                     child: CircularProgressIndicator(),
                   );
                 }
+                if (storeController.isServerError) {
+                  return BannerError(
+                    image: ImageErrorConstant.serverError,
+                    text: TextConstant.serverError,
+                  );
+                }
                 if (storeController.stores!.isEmpty) {
                   return BannerError(
                       image: ImageErrorConstant.empty,

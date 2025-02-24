@@ -44,6 +44,12 @@ class _ProductActiveByStoreScreenWidget
             child: CircularProgressIndicator(),
           );
         }
+        if (productController.isServerError) {
+          return BannerError(
+            image: ImageErrorConstant.serverError,
+            text: TextConstant.serverError,
+          );
+        }
         if (productController.productFilterListActiveByStore!.isEmpty) {
           return BannerError(
               image: ImageErrorConstant.empty,
@@ -59,9 +65,11 @@ class _ProductActiveByStoreScreenWidget
             crossAxisSpacing: 15,
             mainAxisExtent: 270,
           ),
-          itemCount: productController.productFilterListActiveByStore?.length ?? 0,
+          itemCount:
+              productController.productFilterListActiveByStore?.length ?? 0,
           itemBuilder: (context, index) {
-            final product = productController.productFilterListActiveByStore?[index];
+            final product =
+                productController.productFilterListActiveByStore?[index];
             return ProductItem(
               key: const Key("selectItemProduct"),
               icon: IconConstant.remove,

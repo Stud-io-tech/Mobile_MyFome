@@ -28,6 +28,9 @@ abstract class ProductControllerBase with Store {
 
   @computed
   bool get isLoading => productViewModel.isLoading;
+  
+  @computed
+  bool get isServerError => productViewModel.serverError;
 
   @computed
   List<ProductDetailDto>? get productFilterListActive =>

@@ -16,6 +16,13 @@ mixin _$AuthGoogleController on AuthGoogleControllerBase, Store {
       (_$isLoadingComputed ??= Computed<bool>(() => super.isLoading,
               name: 'AuthGoogleControllerBase.isLoading'))
           .value;
+  Computed<bool>? _$isServerErrorComputed;
+
+  @override
+  bool get isServerError =>
+      (_$isServerErrorComputed ??= Computed<bool>(() => super.isServerError,
+              name: 'AuthGoogleControllerBase.isServerError'))
+          .value;
   Computed<UserDetailDto?>? _$userComputed;
 
   @override
@@ -35,6 +42,7 @@ mixin _$AuthGoogleController on AuthGoogleControllerBase, Store {
   String toString() {
     return '''
 isLoading: ${isLoading},
+isServerError: ${isServerError},
 user: ${user},
 store: ${store}
     ''';

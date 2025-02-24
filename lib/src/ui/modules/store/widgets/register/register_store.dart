@@ -7,7 +7,7 @@ import 'package:my_fome/src/domain/dtos/stores/store_register_dto.dart';
 import 'package:my_fome/src/ui/controllers/auth/auth_google_controller.dart';
 import 'package:my_fome/src/ui/controllers/store/store_controller.dart';
 import 'package:my_fome/src/ui/controllers/uploads/upload_controller.dart';
-import 'package:my_fome/src/ui/modules/store/widgets/store_register_form.dart';
+import 'package:my_fome/src/ui/modules/store/widgets/register/store_register_form.dart';
 import 'package:uikit/uikit.dart';
 
 class RegisterStore extends StatefulWidget {

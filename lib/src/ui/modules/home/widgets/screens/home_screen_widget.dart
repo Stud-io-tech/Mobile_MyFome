@@ -64,6 +64,12 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
               if (productController.isLoading) {
                 return const Center(child: CircularProgressIndicator());
               }
+              if (productController.isServerError) {
+                return BannerError(
+                  image: ImageErrorConstant.serverError,
+                  text: TextConstant.serverError,
+                );
+              }
               if (productController.productFilterListActive == null ||
                   productController.productFilterListActive!.isEmpty) {
                 return BannerError(
