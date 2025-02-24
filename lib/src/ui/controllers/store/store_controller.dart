@@ -24,6 +24,9 @@ abstract class StoreControllerBase with Store {
   bool get isLoading => storeViewModel.isLoading;
 
   @computed
+  bool get isServerError => storeViewModel.serverError;
+
+  @computed
   List<StoreDetailDto>? get stores => storeViewModel.storeFilterList;
 
   @computed

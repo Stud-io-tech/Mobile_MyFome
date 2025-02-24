@@ -89,6 +89,22 @@ mixin _$StoreViewModel on StoreViewModelBase, Store {
     });
   }
 
+  late final _$serverErrorAtom =
+      Atom(name: 'StoreViewModelBase.serverError', context: context);
+
+  @override
+  bool get serverError {
+    _$serverErrorAtom.reportRead();
+    return super.serverError;
+  }
+
+  @override
+  set serverError(bool value) {
+    _$serverErrorAtom.reportWrite(value, super.serverError, () {
+      super.serverError = value;
+    });
+  }
+
   late final _$listAsyncAction =
       AsyncAction('StoreViewModelBase.list', context: context);
 
@@ -137,7 +153,8 @@ isLoading: ${isLoading},
 storesList: ${storesList},
 storeFilterList: ${storeFilterList},
 store: ${store},
-founds: ${founds}
+founds: ${founds},
+serverError: ${serverError}
     ''';
   }
 }

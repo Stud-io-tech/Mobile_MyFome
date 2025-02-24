@@ -90,6 +90,7 @@ final class TextConstant {
   static String actives = "Ativos";
   static const String search = 'Pesquisar...';
   static String save = 'Salvar';
+  static String serverError = 'O My Fome está fora do ar!';
   static String fieldError = "Campo obrigarório!";
   static String minCaractersPhone = 'O mínimo de caracters é 11!';
   static String maxCaractersPhone = 'O máximo de caracters é 11!';

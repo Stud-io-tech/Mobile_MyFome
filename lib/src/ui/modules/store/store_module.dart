@@ -2,8 +2,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_getit/flutter_getit.dart';
 import 'package:my_fome/src/ui/modules/store/pages/store_page.dart';
 import 'package:my_fome/src/ui/modules/store/pages/my_store_page_widget.dart';
-import 'package:my_fome/src/ui/modules/store/widgets/register_store.dart';
-import 'package:my_fome/src/ui/modules/store/widgets/update_store.dart';
+import 'package:my_fome/src/ui/modules/store/widgets/register/register_store.dart';
+import 'package:my_fome/src/ui/modules/store/widgets/update/update_store.dart';
 
 class StoreModule extends FlutterGetItModule {
 

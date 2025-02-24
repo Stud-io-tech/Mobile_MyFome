@@ -43,6 +43,9 @@ abstract class AuthViewModelBase with Store {
   @observable
   StoreDetailDto? myStore;
 
+  @observable
+  bool serverError = false;
+
   @action
   login() async {
     isLoading = true;
@@ -52,6 +55,7 @@ abstract class AuthViewModelBase with Store {
 
     result.fold(
       (success) async {
+        serverError = false;
         await localStorageService.put(
           LocalStorageConstant.accesstoken,
           result.getOrThrow().token,
@@ -65,6 +69,7 @@ abstract class AuthViewModelBase with Store {
         if (failure is RestException && failure.statusCode == 404) {
           await register();
         } else {
+          serverError = true;
           await logout();
           resultMessageService
               .showMessageError(TextConstant.errorLoggingAccountMessage);
@@ -77,26 +82,26 @@ abstract class AuthViewModelBase with Store {
   @action
   Future register() async {
     isLoading = true;
-
     final result = await userRepository.register(UserRegisterDto(
       name: googleCredentials!.displayName!,
       email: googleCredentials!.email,
       image: googleCredentials?.photoUrl,
     ));
 
-    result.fold(
-      (success) async {
-        resultMessageService.showMessageSuccess(
-            TextConstant.sucessCreatingAccountTitle,
-            TextConstant.sucessCreatingAccountMessage,
-            IconConstant.success);
-        await login();
-        await details();
-        await getStore();
-      },
-      (failure) => resultMessageService
-          .showMessageError(TextConstant.errorCreatingAccountMessage),
-    );
+    result.fold((success) async {
+      serverError = false;
+      resultMessageService.showMessageSuccess(
+          TextConstant.sucessCreatingAccountTitle,
+          TextConstant.sucessCreatingAccountMessage,
+          IconConstant.success);
+      await login();
+      await details();
+      await getStore();
+    }, (failure) {
+      serverError = true;
+      resultMessageService
+          .showMessageError(TextConstant.errorCreatingAccountMessage);
+    });
 
     isLoading = false;
   }
@@ -117,7 +122,10 @@ abstract class AuthViewModelBase with Store {
 
     final result = await userRepository.detail();
 
-    result.fold((success) => userDetailDto = success, (failure) => null);
+    result.fold((success) {
+      serverError = false;
+      userDetailDto = success;
+    }, (failure) => serverError = true);
 
     isLoading = false;
   }
@@ -129,12 +137,16 @@ abstract class AuthViewModelBase with Store {
     final result = await userRepository.getStoreByUser();
 
     result.fold((success) {
+      serverError = false;
       if (success is Unit) {
         myStore = null;
       } else if (success is StoreDetailDto) {
         myStore = success;
       }
-    }, (failure) => myStore = null);
+    }, (failure) {
+      serverError = true;
+      myStore = null;
+    });
     isLoading = false;
   }
 }

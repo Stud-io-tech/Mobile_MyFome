@@ -178,6 +178,22 @@ mixin _$ProductViewModel on ProductViewModelBase, Store {
     });
   }
 
+  late final _$serverErrorAtom =
+      Atom(name: 'ProductViewModelBase.serverError', context: context);
+
+  @override
+  bool get serverError {
+    _$serverErrorAtom.reportRead();
+    return super.serverError;
+  }
+
+  @override
+  set serverError(bool value) {
+    _$serverErrorAtom.reportWrite(value, super.serverError, () {
+      super.serverError = value;
+    });
+  }
+
   late final _$listActiveAsyncAction =
       AsyncAction('ProductViewModelBase.listActive', context: context);
 
@@ -238,7 +254,8 @@ productFilterListInactiveByStore: ${productFilterListInactiveByStore},
 productFilterListActiveByStore: ${productFilterListActiveByStore},
 foundActive: ${foundActive},
 foundActiveByStore: ${foundActiveByStore},
-foundInactiveByStore: ${foundInactiveByStore}
+foundInactiveByStore: ${foundInactiveByStore},
+serverError: ${serverError}
     ''';
   }
 }

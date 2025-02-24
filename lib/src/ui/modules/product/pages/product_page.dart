@@ -78,6 +78,12 @@ class _ProductPageState extends State<ProductPage> {
                           child: CircularProgressIndicator(),
                         );
                       }
+                      if (productController.isServerError) {
+                        return BannerError(
+                          image: ImageErrorConstant.serverError,
+                          text: TextConstant.serverError,
+                        );
+                      }
                       if (productController.productFilterListActive!.isEmpty) {
                         return BannerError(
                             image: ImageErrorConstant.empty,

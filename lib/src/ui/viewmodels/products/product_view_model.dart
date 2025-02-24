@@ -30,16 +30,15 @@ abstract class ProductViewModelBase with Store {
 
   @observable
   List<ProductDetailDto>? productsListActiveByStore;
-  
+
   @observable
   List<ProductDetailDto>? productFilterListActive;
 
   @observable
   List<ProductDetailDto>? productFilterListInactiveByStore;
-  
+
   @observable
   List<ProductDetailDto>? productFilterListActiveByStore;
-
 
   @observable
   int foundActive = 0;
@@ -50,19 +49,23 @@ abstract class ProductViewModelBase with Store {
   @observable
   int foundInactiveByStore = 0;
 
+  @observable
+  bool serverError = false;
+
   @action
   Future listActive() async {
     isLoading = true;
     final result = await productRepository.listActive();
-    result.fold(
-      (success) {
-        productsListActive = success;
-        productFilterListActive = productsListActive;
-        foundActive = productFilterListActive?.length ?? 0;
-      },
-      (failure) => resultMessageService
-          .showMessageError(TextConstant.errorListProductsMessage),
-    );
+    result.fold((success) {
+      serverError = false;
+      productsListActive = success;
+      productFilterListActive = productsListActive;
+      foundActive = productFilterListActive?.length ?? 0;
+    }, (failure) {
+      serverError = true;
+      resultMessageService
+          .showMessageError(TextConstant.errorListProductsMessage);
+    });
     isLoading = false;
   }
 
@@ -84,7 +87,7 @@ abstract class ProductViewModelBase with Store {
           .toList();
 
       foundActive = productFilterListActive?.length ?? 0;
-      foundActiveByStore= productFilterListActiveByStore?.length ?? 0;
+      foundActiveByStore = productFilterListActiveByStore?.length ?? 0;
       foundInactiveByStore = productFilterListInactiveByStore?.length ?? 0;
     } else {
       productFilterListActive = productsListActive;
@@ -101,14 +104,17 @@ abstract class ProductViewModelBase with Store {
   Future register(ProductRegisterDto product, XFile image) async {
     isLoading = true;
     final result = await productRepository.register(product, image);
-    result.fold(
-      (success) => resultMessageService.showMessageSuccess(
+    result.fold((success) {
+      serverError = false;
+      resultMessageService.showMessageSuccess(
           TextConstant.sucessCreatingProductTitle,
           TextConstant.sucessCreatingProductMessage,
-          IconConstant.success),
-      (failure) => resultMessageService
-          .showMessageError(TextConstant.errorCreatingProductMessage),
-    );
+          IconConstant.success);
+    }, (failure) {
+      serverError = true;
+      resultMessageService
+          .showMessageError(TextConstant.errorCreatingProductMessage);
+    });
     isLoading = false;
   }
 
@@ -116,68 +122,74 @@ abstract class ProductViewModelBase with Store {
   Future update(String id, ProductUpdateDto product, {XFile? image}) async {
     isLoading = true;
     final result = await productRepository.update(id, product, image: image);
-    result.fold(
-      (success) => resultMessageService.showMessageSuccess(
+    result.fold((success) {
+      serverError = false;
+      resultMessageService.showMessageSuccess(
           TextConstant.sucessUpdatingProductTitle,
           TextConstant.sucessUpdatingProductMessage,
-          IconConstant.edit),
-      (failure) => resultMessageService
-          .showMessageError(TextConstant.errorUpdatingProductMessage),
-    );
+          IconConstant.edit);
+    }, (failure) {
+      serverError = true;
+      resultMessageService
+          .showMessageError(TextConstant.errorUpdatingProductMessage);
+    });
     isLoading = false;
   }
 
   Future toggleActive(String id) async {
     isLoading = true;
     final result = await productRepository.toggleActive(id);
-    result.fold(
-      (success) {
-        if (success.active) {
-          resultMessageService.showMessageSuccess(
-              TextConstant.sucessRestoreProductTitle,
-              TextConstant.sucessRestoreProductMessage,
-              IconConstant.restore);
-        } else {
-          resultMessageService.showMessageSuccess(
-              TextConstant.sucessSuspendingProductTitle,
-              TextConstant.sucessSuspendingProductMessage,
-              IconConstant.remove);
-        }
-      },
-      (failure) => resultMessageService
-          .showMessageError(TextConstant.errorExecutingProductMessage),
-    );
+    result.fold((success) {
+      serverError = false;
+      if (success.active) {
+        resultMessageService.showMessageSuccess(
+            TextConstant.sucessRestoreProductTitle,
+            TextConstant.sucessRestoreProductMessage,
+            IconConstant.restore);
+      } else {
+        resultMessageService.showMessageSuccess(
+            TextConstant.sucessSuspendingProductTitle,
+            TextConstant.sucessSuspendingProductMessage,
+            IconConstant.remove);
+      }
+    }, (failure) {
+      serverError = true;
+      resultMessageService
+          .showMessageError(TextConstant.errorExecutingProductMessage);
+    });
     isLoading = false;
   }
 
   Future listActiveByStore(String id) async {
     isLoading = true;
     final result = await productRepository.listActiveByStore(id);
-    result.fold(
-      (success) {
-        productsListActiveByStore = success;
-        productFilterListActiveByStore = productsListActiveByStore;
-        foundActiveByStore = productsListActiveByStore?.length ?? 0;
-      },
-      (failure) => resultMessageService
-          .showMessageError(TextConstant.errorListProductsMessage),
-    );
+    result.fold((success) {
+      serverError = false;
+      productsListActiveByStore = success;
+      productFilterListActiveByStore = productsListActiveByStore;
+      foundActiveByStore = productsListActiveByStore?.length ?? 0;
+    }, (failure) {
+      serverError = true;
+      resultMessageService
+          .showMessageError(TextConstant.errorListProductsMessage);
+    });
     isLoading = false;
   }
 
-    @action
+  @action
   Future listInactiveByStore(String id) async {
     isLoading = true;
     final result = await productRepository.listInactiveByStore(id);
-    result.fold(
-      (success) {
-        productsListInactiveByStore = success;
-        productFilterListInactiveByStore = productsListInactiveByStore;
-        foundInactiveByStore = productFilterListInactiveByStore?.length ?? 0;
-      },
-      (failure) => resultMessageService
-          .showMessageError(TextConstant.errorListProductsMessage),
-    );
+    result.fold((success) {
+      serverError = false;
+      productsListInactiveByStore = success;
+      productFilterListInactiveByStore = productsListInactiveByStore;
+      foundInactiveByStore = productFilterListInactiveByStore?.length ?? 0;
+    }, (failure) {
+      serverError = true;
+      resultMessageService
+          .showMessageError(TextConstant.errorListProductsMessage);
+    });
     isLoading = false;
   }
 }

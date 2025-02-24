@@ -22,6 +22,13 @@ mixin _$StoreController on StoreControllerBase, Store {
       (_$isLoadingComputed ??= Computed<bool>(() => super.isLoading,
               name: 'StoreControllerBase.isLoading'))
           .value;
+  Computed<bool>? _$isServerErrorComputed;
+
+  @override
+  bool get isServerError =>
+      (_$isServerErrorComputed ??= Computed<bool>(() => super.isServerError,
+              name: 'StoreControllerBase.isServerError'))
+          .value;
   Computed<List<StoreDetailDto>?>? _$storesComputed;
 
   @override
@@ -42,6 +49,7 @@ mixin _$StoreController on StoreControllerBase, Store {
     return '''
 founds: ${founds},
 isLoading: ${isLoading},
+isServerError: ${isServerError},
 stores: ${stores},
 store: ${store}
     ''';

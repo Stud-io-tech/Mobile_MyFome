@@ -39,10 +39,18 @@ class UserNotFoundPage extends StatelessWidget {
               ],
             ),
             const Spacer(),
-            BannerError(
-              image: ImageErrorConstant.login,
-              text: TextConstant.requiredLogin,
-            ),
+            Observer(builder: (_) {
+              if (authController.isServerError) {
+                return BannerError(
+                  image: ImageErrorConstant.serverError,
+                  text: TextConstant.serverError,
+                );
+              }
+              return BannerError(
+                image: ImageErrorConstant.login,
+                text: TextConstant.requiredLogin,
+              );
+            }),
             const Spacer(),
             const Spacer()
           ],

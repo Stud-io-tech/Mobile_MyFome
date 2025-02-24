@@ -73,6 +73,22 @@ mixin _$AuthViewModel on AuthViewModelBase, Store {
     });
   }
 
+  late final _$serverErrorAtom =
+      Atom(name: 'AuthViewModelBase.serverError', context: context);
+
+  @override
+  bool get serverError {
+    _$serverErrorAtom.reportRead();
+    return super.serverError;
+  }
+
+  @override
+  set serverError(bool value) {
+    _$serverErrorAtom.reportWrite(value, super.serverError, () {
+      super.serverError = value;
+    });
+  }
+
   late final _$loginAsyncAction =
       AsyncAction('AuthViewModelBase.login', context: context);
 
@@ -119,7 +135,8 @@ mixin _$AuthViewModel on AuthViewModelBase, Store {
 isLoading: ${isLoading},
 googleCredentials: ${googleCredentials},
 userDetailDto: ${userDetailDto},
-myStore: ${myStore}
+myStore: ${myStore},
+serverError: ${serverError}
     ''';
   }
 }

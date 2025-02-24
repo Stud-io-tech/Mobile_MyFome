@@ -25,7 +25,7 @@ class ProductByStorePage extends StatefulWidget {
 class _ProductByStorePageState extends State<ProductByStorePage> {
   final productController = Injector.get<ProductController>();
 
-@override
+  @override
   void initState() {
     super.initState();
     productController.listProductsActiveByStore(widget.store.id);
@@ -71,8 +71,8 @@ class _ProductByStorePageState extends State<ProductByStorePage> {
                       padding: const EdgeInsets.only(right: SizeToken.xs),
                       alignment: Alignment.centerRight,
                       child: TextBodyB2SemiDark(
-                        text:
-                            TextConstant.found(productController.activeFoundsByStore),
+                        text: TextConstant.found(
+                            productController.activeFoundsByStore),
                       ),
                     );
                   }),
@@ -86,7 +86,14 @@ class _ProductByStorePageState extends State<ProductByStorePage> {
                           child: CircularProgressIndicator(),
                         );
                       }
-                      if (productController.productFilterListActiveByStore!.isEmpty) {
+                      if (productController.isServerError) {
+                        return BannerError(
+                          image: ImageErrorConstant.serverError,
+                          text: TextConstant.serverError,
+                        );
+                      }
+                      if (productController
+                          .productFilterListActiveByStore!.isEmpty) {
                         return BannerError(
                             image: ImageErrorConstant.empty,
                             text: TextConstant.productNotFound);
@@ -103,11 +110,12 @@ class _ProductByStorePageState extends State<ProductByStorePage> {
                           crossAxisSpacing: 15,
                           mainAxisExtent: 270,
                         ),
-                        itemCount:
-                            productController.productFilterListActiveByStore?.length ?? 0,
+                        itemCount: productController
+                                .productFilterListActiveByStore?.length ??
+                            0,
                         itemBuilder: (context, index) {
-                          final product =
-                              productController.productFilterListActiveByStore?[index];
+                          final product = productController
+                              .productFilterListActiveByStore?[index];
                           return ProductItem(
                             image: product!.image,
                             name: product.name,

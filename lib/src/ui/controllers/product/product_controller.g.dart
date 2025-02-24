@@ -37,6 +37,13 @@ mixin _$ProductController on ProductControllerBase, Store {
       (_$isLoadingComputed ??= Computed<bool>(() => super.isLoading,
               name: 'ProductControllerBase.isLoading'))
           .value;
+  Computed<bool>? _$isServerErrorComputed;
+
+  @override
+  bool get isServerError =>
+      (_$isServerErrorComputed ??= Computed<bool>(() => super.isServerError,
+              name: 'ProductControllerBase.isServerError'))
+          .value;
   Computed<List<ProductDetailDto>?>? _$productFilterListActiveComputed;
 
   @override
@@ -72,6 +79,7 @@ activeFounds: ${activeFounds},
 activeFoundsByStore: ${activeFoundsByStore},
 inactiveFoundsByStore: ${inactiveFoundsByStore},
 isLoading: ${isLoading},
+isServerError: ${isServerError},
 productFilterListActive: ${productFilterListActive},
 productFilterListInactiveByStore: ${productFilterListInactiveByStore},
 productFilterListActiveByStore: ${productFilterListActiveByStore}

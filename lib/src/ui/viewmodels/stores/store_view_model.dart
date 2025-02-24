@@ -37,19 +37,23 @@ abstract class StoreViewModelBase with Store {
   @observable
   int founds = 0;
 
+  @observable
+  bool serverError = false;
+
   @action
   Future list() async {
     isLoading = true;
     final result = await storeRepository.list();
-    result.fold(
-      (success) {
-        storesList = success;
-        storeFilterList = storesList;
-        founds = storeFilterList?.length ?? 0;
-      },
-      (failure) => resultMessageService
-          .showMessageError(TextConstant.errorListStoresMessage),
-    );
+    result.fold((success) {
+      serverError = false;
+      storesList = success;
+      storeFilterList = storesList;
+      founds = storeFilterList?.length ?? 0;
+    }, (failure) {
+      serverError = true;
+      resultMessageService
+          .showMessageError(TextConstant.errorListStoresMessage);
+    });
     isLoading = false;
   }
 
@@ -71,14 +75,17 @@ abstract class StoreViewModelBase with Store {
   Future register(StoreRegisterDto store, XFile image) async {
     isLoading = true;
     final result = await storeRepository.register(store, image);
-    result.fold(
-      (success) => resultMessageService.showMessageSuccess(
+    result.fold((success) {
+      serverError = false;
+      resultMessageService.showMessageSuccess(
           TextConstant.sucessCreatingStoreTitle,
           TextConstant.sucessCreatingStoreMessage,
-          IconConstant.success),
-      (failure) => resultMessageService
-          .showMessageError(TextConstant.errorCreatingStoreMessage),
-    );
+          IconConstant.success);
+    }, (failure) {
+      serverError = true;
+      resultMessageService
+          .showMessageError(TextConstant.errorCreatingStoreMessage);
+    });
     isLoading = false;
   }
 
@@ -86,14 +93,17 @@ abstract class StoreViewModelBase with Store {
   Future update(String id, StoreUpdateDto store, {XFile? image}) async {
     isLoading = true;
     final result = await storeRepository.update(id, store, image: image);
-    result.fold(
-      (success) => resultMessageService.showMessageSuccess(
+    result.fold((success) {
+      serverError = false;
+      resultMessageService.showMessageSuccess(
           TextConstant.sucessUpdatingStoreTitle,
           TextConstant.sucessUpdatingStoreMessage,
-          IconConstant.edit),
-      (failure) => resultMessageService
-          .showMessageError(TextConstant.errorUpdatingStoreMessage),
-    );
+          IconConstant.edit);
+    }, (failure) {
+      serverError = true;
+      resultMessageService
+          .showMessageError(TextConstant.errorUpdatingStoreMessage);
+    });
     isLoading = false;
   }
 
@@ -101,11 +111,14 @@ abstract class StoreViewModelBase with Store {
   Future detail(String id) async {
     isLoading = true;
     final result = await storeRepository.detail(id);
-    result.fold(
-      (success) => store = success,
-      (failure) => resultMessageService
-          .showMessageError(TextConstant.errorDetailsStoreMessage),
-    );
+    result.fold((success) {
+      serverError = false;
+      store = success;
+    }, (failure) {
+      serverError = true;
+      resultMessageService
+          .showMessageError(TextConstant.errorDetailsStoreMessage);
+    });
     isLoading = false;
   }
 }
