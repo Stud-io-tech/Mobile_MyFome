@@ -69,7 +69,6 @@ class _UserNotFoundPageState extends State<UserNotFoundPage> {
       ),
       bottomNavigationBar: Observer(builder: (_) {
         return ButtonLarge(
-          isLoading: authController.isLoading,
           text: TextConstant.loggin,
           icon: IconConstant.user,
           onPressed: () async {
